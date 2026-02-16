@@ -22,7 +22,7 @@
 9. [DRY — Don't Repeat Yourself](#9-dry--dont-repeat-yourself)
 10. [KISS — Keep It Simple, Stupid](#10-kiss--keep-it-simple-stupid)
 11. [YAGNI — You Aren't Gonna Need It](#11-yagni--you-arent-gonna-need-it)
-12. [Separation of Concerns](#12-separation-of-concerns)
+12. [Separation of Concerns (incl. i18n for HTML)](#12-separation-of-concerns)
 13. [Defensive Programming & Security](#13-defensive-programming--security)
 
 ### Part III — Naming Conventions by Language
@@ -124,6 +124,12 @@
 - Only exception: `<script src="...">` references to external files are allowed
 - Follow DRY principle: Reuse existing CSS/JS files across pages where possible
 - Create page-specific files only when functionality is truly unique to that page
+
+**Internationalization (i18n):**
+- 🚨 **CRITICAL**: ALL user-facing text in HTML must use i18n translation keys — never hardcode strings in markup
+- Support the 5 required languages: English (en), Spanish (es), Chinese (zh), Arabic (ar), French (fr)
+- Set `<html lang="...">` to the active locale and add `dir="rtl"` for Arabic
+- See §12 for full i18n rules, translation file structure, and checklist
 
 ---
 
@@ -396,7 +402,8 @@ When stuck or when solutions introduce new problems:
 - Confirm loading states (skeleton loaders, spinners) appear during async operations
 - Check animations and transitions work smoothly
 - Validate responsive layout on different viewport sizes
-- Confirm internationalization/localization keys are present (if applicable)
+- Confirm internationalization/localization keys are present for all user-facing text (see §12 i18n rules)
+- Verify translations exist in all 5 required locale files (en, es, zh, ar, fr)
 
 #### Pass 3 — Security & Edge Case Review
 - Check for XSS: all dynamic HTML uses proper escaping
@@ -617,6 +624,67 @@ View / Template     → Presentation and rendering
 - Dedicated CSS/JS files per page/feature when needed
 - Use a shared design system / CSS variables for consistent theming
 
+### Internationalization (i18n) for HTML
+
+🚨 **CRITICAL**: ALL user-facing text in generated HTML **must** use i18n — never hardcode strings directly in markup or templates.
+
+**Supported Languages (minimum 5):**
+
+| Code | Language |
+|------|----------|
+| `en` | English |
+| `es` | Spanish (Español) |
+| `zh` | Chinese (中文) |
+| `ar` | Arabic (العربية) |
+| `fr` | French (Français) |
+
+**Core Rules:**
+
+- **Never hardcode user-facing strings** in HTML templates — use translation keys (e.g., `{{ t('nav.home') }}`, `@lang('nav.home')`, `data-i18n="nav.home"`, or framework equivalent)
+- **Set the `lang` attribute** on the `<html>` element to reflect the active locale (e.g., `<html lang="en">`)
+- **Add `dir="rtl"`** when the active locale is RTL (e.g., Arabic): `<html lang="ar" dir="rtl">`
+- **Store translations** in structured locale files — one file per language (e.g., `locales/en.json`, `locales/es.json`, `locales/zh.json`, `locales/ar.json`, `locales/fr.json`)
+- **Use a flat or namespaced key structure** for translation files — keep keys organized by feature/page (e.g., `"nav.home"`, `"dashboard.title"`, `"errors.not_found"`)
+- **Include all 5 languages** when adding any new translation key — never add a key to only one locale file
+- **Use ICU MessageFormat or equivalent** for plurals, gender, and interpolation — avoid string concatenation for translated text
+- **Do not embed locale strings in JavaScript** — load translations from locale files or an API endpoint
+- **Format dates, numbers, and currencies** using locale-aware APIs (e.g., `Intl.DateTimeFormat`, `Intl.NumberFormat` in JS; equivalent libraries in other languages)
+
+**Translation File Example (JSON):**
+
+```json
+// locales/en.json
+{
+  "nav.home": "Home",
+  "nav.dashboard": "Dashboard",
+  "nav.settings": "Settings",
+  "common.save": "Save",
+  "common.cancel": "Cancel",
+  "errors.not_found": "Page not found"
+}
+```
+
+```json
+// locales/es.json
+{
+  "nav.home": "Inicio",
+  "nav.dashboard": "Panel",
+  "nav.settings": "Configuración",
+  "common.save": "Guardar",
+  "common.cancel": "Cancelar",
+  "errors.not_found": "Página no encontrada"
+}
+```
+
+**i18n Checklist (for every HTML change):**
+
+- [ ] All user-facing strings use translation keys — no hardcoded text in HTML
+- [ ] Translation keys added to all 5 locale files (en, es, zh, ar, fr)
+- [ ] `<html lang="...">` attribute set to active locale
+- [ ] RTL support included for Arabic (`dir="rtl"`)
+- [ ] Dates, numbers, and currencies use locale-aware formatting
+- [ ] No concatenated strings for translated text — use interpolation placeholders
+
 ### Why This Matters
 
 - **Maintainability** — styles/scripts in one place, easier to update
@@ -624,6 +692,8 @@ View / Template     → Presentation and rendering
 - **Performance** — browser caching of CSS/JS files
 - **CSP Compliance** — supports Content Security Policy without unsafe-inline
 - **Testability** — JavaScript logic can be tested independently
+- **Accessibility** — i18n ensures content is available to a global audience
+- **Correctness** — locale-aware formatting prevents display errors for dates, numbers, and currencies
 
 ---
 
