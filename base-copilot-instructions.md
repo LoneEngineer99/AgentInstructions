@@ -878,7 +878,7 @@ public function processOrder(string $orderId, float $amount, string $currency, b
 
 ### Inline Comments for Logical Steps (MANDATORY)
 
-🚨 **ALL function bodies MUST include inline comments** that describe each logical set of instructions. Every distinct step, operation, or block of related logic within a function must have a comment explaining what it does and why. Do NOT write uncommented blocks of code. Inline comments must have **no space** after `//` — write `//Comment` not `// Comment`.
+🚨 **ALL function bodies MUST include inline comments** that describe each logical set of instructions. Every distinct step, operation, or block of related logic within a function must have a comment explaining what it does and why. Do NOT write uncommented blocks of code. Inline comments must have **no space** after `//` — write `//Comment` not `// Comment`. **Note:** This no-space rule applies only to inline `//` comments. XML doc comments using `///` are a separate style and **must** include a space after `///` (e.g., `/// <summary>`).
 
 ```csharp
 public async Task<IActionResult> CreateLicense(string licenseKey, string userId, DateTime expirationDate, bool isActive)
@@ -937,7 +937,7 @@ For every function or method generated, verify:
 - [ ] All parameters are on the **same line** as the function declaration — no wrapping
 - [ ] XML block comment (`/// <summary>`, `/// <param>`, `/// <returns>`) is present above the function
 - [ ] Every logical step inside the function body has an inline comment explaining it
-- [ ] Inline comments use `//` with **no space** after the slashes (e.g., `//Comment` not `// Comment`)
+- [ ] Inline comments use `//` with **no space** after the slashes (e.g., `//Comment` not `// Comment`). This does **not** apply to `///` XML doc comments, which use a space after `///`.
 - [ ] `#region` / `#endregion` blocks have no blank lines between the directive and the content
 - [ ] Comments are clear, concise, and describe **what** and **why** — not just restating the code
 
