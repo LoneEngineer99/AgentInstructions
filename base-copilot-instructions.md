@@ -387,6 +387,18 @@ When stuck or when solutions introduce new problems:
 
 ## 7. Completion Criteria & Continuation
 
+### Pre-PR Code Cleanup (MANDATORY)
+
+🚨 **Before issuing a pull request**, run a full code cleanup pass on all changed files:
+
+- [ ] Remove all unused `using` / `import` / `require` / `include` statements
+- [ ] Remove all dead code (unreachable code, commented-out blocks, unused variables/methods)
+- [ ] Remove all temporary debug statements (`console.log`, `print`, `Debug.Log`, etc.)
+- [ ] Ensure consistent formatting (indentation, spacing, brace placement) per project conventions
+- [ ] Verify `#region` / `#endregion` blocks have **no blank lines** between `#region` and the first item, and **no blank lines** between the last item and `#endregion`
+- [ ] Remove trailing whitespace and ensure files end with a single newline
+- [ ] Resolve any compiler/linter warnings in changed files
+
 ### Mark Task Complete Only When
 
 - All TODO items are checked off
@@ -394,6 +406,7 @@ When stuck or when solutions introduce new problems:
 - Code follows project patterns (see Part II–IV)
 - Original requirements are fully satisfied
 - No regressions introduced
+- Pre-PR code cleanup completed (see above)
 - All temporary and failed files removed
 - Workspace is clean (`git status` shows only intended changes)
 - `.github/roadmap.md` is updated to reflect any changes to project state or progress (see §28)
@@ -924,6 +937,7 @@ For every function or method generated, verify:
 - [ ] XML block comment (`/// <summary>`, `/// <param>`, `/// <returns>`) is present above the function
 - [ ] Every logical step inside the function body has an inline comment explaining it
 - [ ] Inline comments use `//` with **no space** after the slashes (e.g., `//Comment` not `// Comment`)
+- [ ] `#region` / `#endregion` blocks have no blank lines between the directive and the content
 - [ ] Comments are clear, concise, and describe **what** and **why** — not just restating the code
 
 ---
@@ -952,9 +966,10 @@ For every function or method generated, verify:
 | Services | `{Entity}Service` | `UserService`, `EmailService` |
 | Repositories | `{Entity}Repository` | `UserRepository`, `TokenRepository` |
 
-**Code Organization:** Use `#region` blocks for logical grouping:
+**Code Organization:** Use `#region` blocks for logical grouping. There must be **no blank lines** between `#region` and the first item inside the region, and **no blank lines** between the last item and `#endregion`:
 
 ```csharp
+//✅ CORRECT — no blank lines between #region/#endregion and content
 #region Dependencies
 private readonly UserService _userService;
 #endregion
@@ -969,6 +984,13 @@ public MyController(UserService userService) { ... }
 
 #region Private Helpers
 //...
+#endregion
+
+//❌ WRONG — blank lines between #region/#endregion and content (NEVER do this)
+#region Dependencies
+
+private readonly UserService _userService;
+
 #endregion
 ```
 
