@@ -24,26 +24,27 @@
 11. [YAGNI — You Aren't Gonna Need It](#11-yagni--you-arent-gonna-need-it)
 12. [Separation of Concerns (incl. i18n for HTML)](#12-separation-of-concerns)
 13. [Defensive Programming & Security](#13-defensive-programming--security)
+14. [Code Formatting & Documentation Standards](#14-code-formatting--documentation-standards)
 
 ### Part III — Naming Conventions by Language
-14. [C# Naming Conventions](#14-c-naming-conventions)
-15. [C / C++ Naming Conventions](#15-c--c-naming-conventions)
-16. [PHP Naming Conventions](#16-php-naming-conventions)
-17. [JavaScript / TypeScript Naming Conventions](#17-javascript--typescript-naming-conventions)
-18. [SQL / Database Naming Conventions](#18-sql--database-naming-conventions)
-19. [CSS / SCSS Naming Conventions](#19-css--scss-naming-conventions)
-20. [General File & Directory Naming](#20-general-file--directory-naming)
+15. [C# Naming Conventions](#15-c-naming-conventions)
+16. [C / C++ Naming Conventions](#16-c--c-naming-conventions)
+17. [PHP Naming Conventions](#17-php-naming-conventions)
+18. [JavaScript / TypeScript Naming Conventions](#18-javascript--typescript-naming-conventions)
+19. [SQL / Database Naming Conventions](#19-sql--database-naming-conventions)
+20. [CSS / SCSS Naming Conventions](#20-css--scss-naming-conventions)
+21. [General File & Directory Naming](#21-general-file--directory-naming)
 
 ### Part IV — Project Context Guidelines
-21. [Project Context Documentation Rules](#21-project-context-documentation-rules)
-22. [Database Change Rules](#22-database-change-rules)
-23. [Site Templates & Design References](#23-site-templates--design-references)
+22. [Project Context Documentation Rules](#22-project-context-documentation-rules)
+23. [Database Change Rules](#23-database-change-rules)
+24. [Site Templates & Design References](#24-site-templates--design-references)
 
 ### Part V — Documentation & Self-Evolution
-24. [Keeping This Guide Up to Date](#24-keeping-this-guide-up-to-date)
-25. [Post-Task Summary Reports](#25-post-task-summary-reports)
-26. [Agent Work Ethic & Autonomy](#26-agent-work-ethic--autonomy)
-27. [Project Roadmap Management](#27-project-roadmap-management)
+25. [Keeping This Guide Up to Date](#25-keeping-this-guide-up-to-date)
+26. [Post-Task Summary Reports](#26-post-task-summary-reports)
+27. [Agent Work Ethic & Autonomy](#27-agent-work-ethic--autonomy)
+28. [Project Roadmap Management](#28-project-roadmap-management)
 
 ---
 
@@ -94,7 +95,7 @@
 - The project's `.github/copilot-instructions.md` serves as the cross-session memory store
 - **ALWAYS check `.github/copilot-instructions.md` at task start** — it contains project patterns, conventions, and solutions
 - **During work**: Apply remembered patterns to similar problems
-- **After completion**: Update `.github/copilot-instructions.md` with learnable patterns from successful work (see [§24](#24-keeping-this-guide-up-to-date))
+- **After completion**: Update `.github/copilot-instructions.md` with learnable patterns from successful work (see [§25](#25-keeping-this-guide-up-to-date))
 
 **What to Remember (update `.github/copilot-instructions.md` with):**
 - ✅ User-stated preferences (explicit instructions)
@@ -140,7 +141,7 @@
 ```markdown
 - [ ] CRITICAL: Read this guide (`.github/copilot-instructions.md` and `.github/base-copilot-instructions.md`) thoroughly
 - [ ] Read any additional docs: README.md, AGENTS.md, .agents/*.md
-- [ ] Check if `.github/roadmap.md` exists — if not, create it (see §27)
+- [ ] Check if `.github/roadmap.md` exists — if not, create it (see §28)
 - [ ] Identify project type, frameworks, and language constraints
 - [ ] Analyze existing tools: dependencies, scripts, build tools
 - [ ] Review similar files/components for established patterns
@@ -383,7 +384,7 @@ When stuck or when solutions introduce new problems:
 - No regressions introduced
 - All temporary and failed files removed
 - Workspace is clean (`git status` shows only intended changes)
-- `.github/roadmap.md` is updated to reflect any changes to project state or progress (see §27)
+- `.github/roadmap.md` is updated to reflect any changes to project state or progress (see §28)
 - Three-pass review completed (see below)
 
 ### Mandatory Three-Pass Review
@@ -588,7 +589,7 @@ The simplest solution that meets requirements is almost always the best.
 - Three similar lines of code is better than a premature abstraction.
 - Trust internal code and framework guarantees. Only validate at system boundaries (user input, external APIs).
 - Don't use feature flags or backwards-compatibility shims when you can just change the code.
-- Don't add docstrings, comments, or type annotations to code you didn't change.
+- Don't add type annotations or XML documentation to code you didn't write or modify — the documentation rules in §14 apply only to code the agent generates or changes.
 
 ---
 
@@ -732,9 +733,188 @@ View / Template     → Presentation and rendering
 
 ---
 
+## 14. Code Formatting & Documentation Standards
+
+🚨 **CRITICAL**: The following formatting and documentation rules apply to **ALL generated code**, regardless of language. These are **non-negotiable** and must be followed in every function, method, and procedure written by the agent.
+
+### Function Parameters — Same Line (MANDATORY)
+
+🚨 **ALL function/method parameters MUST be on the SAME LINE as the function declaration.** Do NOT wrap or split parameters across multiple lines. This is a **hard rule** — no exceptions.
+
+```csharp
+// ✅ CORRECT — all parameters on the same line
+public async Task<IActionResult> CreateLicense(string licenseKey, string userId, DateTime expirationDate, bool isActive)
+
+// ❌ WRONG — parameters split across multiple lines (NEVER do this)
+public async Task<IActionResult> CreateLicense(
+    string licenseKey,
+    string userId,
+    DateTime expirationDate,
+    bool isActive)
+```
+
+```javascript
+// ✅ CORRECT — all parameters on the same line
+function calculateTotal(price, taxRate, discount, quantity, currencyCode) {
+
+// ❌ WRONG — parameters wrapped to multiple lines (NEVER do this)
+function calculateTotal(
+    price,
+    taxRate,
+    discount,
+    quantity,
+    currencyCode
+) {
+```
+
+```c
+// ✅ CORRECT — all parameters on the same line
+ValidationResult* validate_license(const char* license_key, const char* hardware_id, int max_retries) {
+
+// ❌ WRONG — parameters on separate lines (NEVER do this)
+ValidationResult* validate_license(
+    const char* license_key,
+    const char* hardware_id,
+    int max_retries) {
+```
+
+```php
+// ✅ CORRECT — all parameters on the same line
+public function processOrder(string $orderId, float $amount, string $currency, bool $isExpress): OrderResult {
+
+// ❌ WRONG — parameters on separate lines (NEVER do this)
+public function processOrder(
+    string $orderId,
+    float $amount,
+    string $currency,
+    bool $isExpress
+): OrderResult {
+```
+
+**Why?** Keeping parameters on a single line improves scannability, simplifies diffs, and ensures consistent formatting across the codebase. If a function has so many parameters that the line is excessively long, that is a design signal to refactor (e.g., use a parameter object or request DTO) — not a reason to wrap lines. If a project linter enforces line-length wrapping, configure it to allow longer lines for function signatures or disable that specific rule for declarations.
+
+### XML Function Block Comments (MANDATORY)
+
+🚨 **ALL functions and methods MUST have XML documentation block comments.** Every function generated by the agent must include a `/// <summary>` block describing its purpose, `/// <param>` tags for each parameter, and a `/// <returns>` tag if it returns a value. This applies to **all languages** — use the XML `///` comment style universally.
+
+```csharp
+/// <summary>
+/// Creates a new license record and associates it with the specified user.
+/// </summary>
+/// <param name="licenseKey">The unique license key string.</param>
+/// <param name="userId">The UID of the user to associate the license with.</param>
+/// <param name="expirationDate">The date when the license expires.</param>
+/// <param name="isActive">Whether the license should be immediately active.</param>
+/// <returns>The created license wrapped in an IActionResult.</returns>
+public async Task<IActionResult> CreateLicense(string licenseKey, string userId, DateTime expirationDate, bool isActive)
+```
+
+```javascript
+/// <summary>
+/// Calculates the total cost including tax and discount for a given quantity.
+/// </summary>
+/// <param name="price">Unit price of the item.</param>
+/// <param name="taxRate">Tax rate as a decimal (e.g., 0.08 for 8%).</param>
+/// <param name="discount">Discount amount to subtract from the total.</param>
+/// <param name="quantity">Number of items purchased.</param>
+/// <param name="currencyCode">ISO 4217 currency code (e.g., "USD").</param>
+/// <returns>The calculated total as a formatted number.</returns>
+function calculateTotal(price, taxRate, discount, quantity, currencyCode) {
+```
+
+```c
+/// <summary>
+/// Validates a license key against the platform server.
+/// </summary>
+/// <param name="license_key">License key string (format: XXXXX-XXXXX-XXXXX).</param>
+/// <param name="hardware_id">SHA-256 hash of hardware identifiers.</param>
+/// <param name="max_retries">Maximum number of retry attempts on failure.</param>
+/// <returns>ValidationResult pointer (caller must free), or NULL on failure.</returns>
+ValidationResult* validate_license(const char* license_key, const char* hardware_id, int max_retries) {
+```
+
+```php
+/// <summary>
+/// Processes an order with the given amount and currency.
+/// </summary>
+/// <param name="orderId">The unique order identifier.</param>
+/// <param name="amount">The order total amount.</param>
+/// <param name="currency">ISO 4217 currency code.</param>
+/// <param name="isExpress">Whether to use express shipping.</param>
+/// <returns>The processed OrderResult.</returns>
+public function processOrder(string $orderId, float $amount, string $currency, bool $isExpress): OrderResult {
+```
+
+**Why?** XML block comments provide structured, parseable documentation that is understood by IDEs, documentation generators, and other developers. They ensure every function's purpose, inputs, and outputs are immediately clear without reading the implementation.
+
+### Inline Comments for Logical Steps (MANDATORY)
+
+🚨 **ALL function bodies MUST include inline comments** that describe each logical set of instructions. Every distinct step, operation, or block of related logic within a function must have a comment explaining what it does and why. Do NOT write uncommented blocks of code.
+
+```csharp
+public async Task<IActionResult> CreateLicense(string licenseKey, string userId, DateTime expirationDate, bool isActive)
+{
+    // Validate input parameters before processing
+    if (string.IsNullOrEmpty(licenseKey)) throw new ArgumentException("License key is required");
+    if (string.IsNullOrEmpty(userId)) throw new ArgumentException("User ID is required");
+
+    // Look up the user to ensure they exist
+    var user = await _userRepository.GetByUidAsync(userId);
+    if (user == null) return NotFound("User not found");
+
+    // Build the license entity with the provided details
+    var license = new License
+    {
+        Key = licenseKey,
+        UserId = user.Id,
+        ExpirationDate = expirationDate,
+        IsActive = isActive,
+        CreatedAt = DateTime.UtcNow
+    };
+
+    // Persist the license to the database
+    await _licenseRepository.CreateAsync(license);
+
+    // Return the created license as a success response
+    return CreatedAtAction(nameof(GetLicense), new { uid = license.Uid }, license.ToDto());
+}
+```
+
+```javascript
+function calculateTotal(price, taxRate, discount, quantity, currencyCode) {
+    // Calculate the subtotal from unit price and quantity
+    const subtotal = price * quantity;
+
+    // Apply the tax rate to the subtotal
+    const taxAmount = subtotal * taxRate;
+
+    // Subtract the discount from the taxed total
+    const total = subtotal + taxAmount - discount;
+
+    // Ensure the total is not negative
+    const finalTotal = Math.max(0, total);
+
+    // Format the result with the appropriate currency
+    return new Intl.NumberFormat('en-US', { style: 'currency', currency: currencyCode }).format(finalTotal);
+}
+```
+
+**Why?** Inline comments make code self-documenting at the implementation level. They allow any developer (or AI agent) to immediately understand the purpose of each code block without tracing through the logic. This is especially critical for complex functions, multi-step workflows, and business logic.
+
+### Code Formatting & Documentation Checklist
+
+For every function or method generated, verify:
+
+- [ ] All parameters are on the **same line** as the function declaration — no wrapping
+- [ ] XML block comment (`/// <summary>`, `/// <param>`, `/// <returns>`) is present above the function
+- [ ] Every logical step inside the function body has an inline comment explaining it
+- [ ] Comments are clear, concise, and describe **what** and **why** — not just restating the code
+
+---
+
 # Part III — Naming Conventions by Language
 
-## 14. C# Naming Conventions
+## 15. C# Naming Conventions
 
 | Element | Convention | Example |
 |---------|------------|---------|
@@ -789,7 +969,7 @@ public async Task<IActionResult> GetMyEndpoints([FromQuery] PaginationParams pag
 
 ---
 
-## 15. C / C++ Naming Conventions
+## 16. C / C++ Naming Conventions
 
 ### C (C11)
 
@@ -829,7 +1009,7 @@ ValidationResult* validate_license(const char* license_key, const char* hardware
 
 ---
 
-## 16. PHP Naming Conventions
+## 17. PHP Naming Conventions
 
 | Element | Convention | Example |
 |---------|------------|---------|
@@ -845,7 +1025,7 @@ ValidationResult* validate_license(const char* license_key, const char* hardware
 
 ---
 
-## 17. JavaScript / TypeScript Naming Conventions
+## 18. JavaScript / TypeScript Naming Conventions
 
 | Element | Convention | Example |
 |---------|------------|---------|
@@ -865,7 +1045,7 @@ ValidationResult* validate_license(const char* license_key, const char* hardware
 
 ---
 
-## 18. SQL / Database Naming Conventions
+## 19. SQL / Database Naming Conventions
 
 **Name Prefixes:** Use project-specific prefixes for all tables to avoid collisions and clarify ownership (e.g., `fr_` for FastRider, `hf_` for HyperFleet, `app_` for shared application tables).
 
@@ -891,7 +1071,7 @@ Every primary entity should have TWO identifiers:
 
 ---
 
-## 19. CSS / SCSS Naming Conventions
+## 20. CSS / SCSS Naming Conventions
 
 | Element | Convention | Example |
 |---------|------------|---------|
@@ -925,7 +1105,7 @@ Every primary entity should have TWO identifiers:
 
 ---
 
-## 20. General File & Directory Naming
+## 21. General File & Directory Naming
 
 | Element | Convention | Example |
 |---------|------------|---------|
@@ -944,7 +1124,7 @@ Every primary entity should have TWO identifiers:
 
 > **⚠️ IMPORTANT**: This section contains **rules and guidelines** for how agents should document project context. All actual project-specific details (project overview, repository structure, architecture, build commands, database schema, etc.) belong **exclusively** in the project's `copilot-instructions.md` file — **never in this base file**.
 
-## 21. Project Context Documentation Rules
+## 22. Project Context Documentation Rules
 
 All project-specific information must be documented in the project's `copilot-instructions.md`. This base file must **never** contain project-specific details, placeholders, or templates that invite modification.
 
@@ -971,7 +1151,7 @@ The following information should be maintained in the project's `copilot-instruc
 
 ---
 
-## 22. Database Change Rules
+## 23. Database Change Rules
 
 When making database changes in any project, ensure ALL of these are in sync:
 
@@ -992,7 +1172,7 @@ When making database changes in any project, ensure ALL of these are in sync:
 
 ---
 
-## 23. Site Templates & Design References
+## 24. Site Templates & Design References
 
 ### Template Discovery & Usage
 
@@ -1040,7 +1220,7 @@ When copying an element from a template page, check for and include:
 
 # Part V — Documentation & Self-Evolution
 
-## 24. Keeping This Guide Up to Date
+## 25. Keeping This Guide Up to Date
 
 ### When to Update
 
@@ -1065,10 +1245,10 @@ Update the corresponding sections in `copilot-instructions.md`:
 - Update the Repository Structure tree
 - Add new architecture patterns if they differ from existing ones
 - Update build commands if they change
-- Update database schema documentation (following the rules in §22 of this base file)
+- Update database schema documentation (following the rules in §23 of this base file)
 - Add new shared utilities to the DRY section (§9)
 - Update the Current Implementation Status section
-- Update `.github/roadmap.md` with current progress and any changes to planned work (see §27)
+- Update `.github/roadmap.md` with current progress and any changes to planned work (see §28)
 
 ### How to Update
 
@@ -1081,7 +1261,7 @@ Update the corresponding sections in `copilot-instructions.md`:
 
 ---
 
-## 25. Post-Task Summary Reports
+## 26. Post-Task Summary Reports
 
 **REQUIRED: Every agent session that completes significant work MUST create a post-task summary document in the `UpdateReports/` directory.**
 
@@ -1183,7 +1363,7 @@ If additional work is needed after a report is created, update the existing docu
 
 ---
 
-## 26. Agent Work Ethic & Autonomy
+## 27. Agent Work Ethic & Autonomy
 
 ### Core Principles
 
@@ -1207,7 +1387,7 @@ If additional work is needed after a report is created, update the existing docu
 
 9. **Update `.github/copilot-instructions.md`** after every major modification so the next agent task starts with accurate context. **Never modify `.github/base-copilot-instructions.md`.**
 
-10. **Maintain the project roadmap** (`.github/roadmap.md`) — update it after every task to reflect current progress, completed work, and remaining items (see §27).
+10. **Maintain the project roadmap** (`.github/roadmap.md`) — update it after every task to reflect current progress, completed work, and remaining items (see §28).
 
 11. **Create post-task summary reports** with screenshots for every significant session.
 
@@ -1263,7 +1443,7 @@ Agents are **allowed and encouraged** to generate and incorporate media:
 
 ---
 
-## 27. Project Roadmap Management
+## 28. Project Roadmap Management
 
 **REQUIRED: Every project MUST have a `.github/roadmap.md` file that serves as the living document for project progress and planning.**
 
