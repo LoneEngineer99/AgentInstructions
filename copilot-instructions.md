@@ -133,12 +133,11 @@ Before making ANY code changes, conduct a thorough discovery session with the pr
     - How to run tests?
     - How to lint/format code?
 
-12. **What testing strategy should be used?**
-    - Unit testing framework and coverage expectations
-    - Integration testing approach
-    - E2E testing tools and scope
-    - Performance testing needs
-    - Test data management strategy
+12. **What validation and quality assurance strategy should be used?**
+    - How should features be validated (manual testing, build checks, end-to-end runs)?
+    - Integration testing approach (if applicable)
+    - Performance validation needs
+    - Are there any existing automated testing requirements or expectations?
 
 13. **What are the code quality standards?**
     - Linting rules and configuration

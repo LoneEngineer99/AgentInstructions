@@ -156,8 +156,9 @@
 - [ ] Execute work step-by-step without asking for permission
 - [ ] Make file changes immediately after analysis
 - [ ] Debug and resolve issues as they arise
-- [ ] If an error occurs, state what you think caused it and what you'll test next
+- [ ] If an error occurs, state what you think caused it and what you'll try next
 - [ ] Run builds after each significant change
+- [ ] Verify features work correctly (expected outputs, integration points, error scenarios)
 - [ ] Continue working until ALL requirements satisfied
 ```
 
@@ -187,11 +188,11 @@ For complex tasks, create comprehensive TODO lists:
 - [ ] Phase 2: Implementation
   - [ ] 2.1: Create/modify core components
   - [ ] 2.2: Add error handling and validation
-  - [ ] 2.3: Implement tests for new functionality
+  - [ ] 2.3: Verify feature works end-to-end (manual testing, build, run)
 - [ ] Phase 3: Integration and Validation
-  - [ ] 3.1: Test integration with existing systems
+  - [ ] 3.1: Validate integration with existing systems
   - [ ] 3.2: Run full build and fix any regressions
-  - [ ] 3.3: Verify all requirements are met
+  - [ ] 3.3: Verify all functional requirements are met
   - [ ] 3.4: Run three-pass review (see §7)
 ```
 
@@ -199,7 +200,7 @@ For complex tasks, create comprehensive TODO lists:
 
 - Break complex tasks into 3–5 phases minimum
 - Each phase should have 2–5 specific sub-tasks
-- Include testing and validation in every phase
+- Include functional validation in every phase
 - Consider error scenarios and edge cases
 - Include project-specific checks: shared utilities, database sync, locale files (if applicable)
 
@@ -305,7 +306,7 @@ When encountering issues requiring research:
 
 Always announce before actions:
 
-- "I'll research the existing testing setup"
+- "I'll research the existing project setup"
 - "Now analyzing the current dependencies"
 - "Running builds to validate changes"
 - "Cleaning up temporary files from previous attempt"
@@ -1165,7 +1166,7 @@ If additional work is needed after a report is created, update the existing docu
 - Security enhancements
 - Performance improvements
 - Code organization
-- Testing approaches
+- Validation approaches
 - Documentation format
 - UI/UX implementation details
 
@@ -1175,7 +1176,7 @@ After completing work, immediately:
 
 - Implement the next feature from the roadmap
 - Fix discovered issues or technical debt
-- Add missing tests
+- Verify functionality works end-to-end
 - Improve documentation
 - Refactor as needed
 - Update `.github/copilot-instructions.md` with new patterns and progress
