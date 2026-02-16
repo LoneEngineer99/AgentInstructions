@@ -589,7 +589,7 @@ The simplest solution that meets requirements is almost always the best.
 - Three similar lines of code is better than a premature abstraction.
 - Trust internal code and framework guarantees. Only validate at system boundaries (user input, external APIs).
 - Don't use feature flags or backwards-compatibility shims when you can just change the code.
-- Don't add type annotations to code you didn't change.
+- Don't add type annotations or XML documentation to code you didn't write or modify — the documentation rules in §14 apply only to code the agent generates or changes.
 
 ---
 
@@ -791,7 +791,7 @@ public function processOrder(
 ): OrderResult {
 ```
 
-**Why?** Keeping parameters on a single line improves scannability, simplifies diffs, and ensures consistent formatting across the codebase. If a function has so many parameters that the line is excessively long, that is a design signal to refactor (e.g., use a parameter object or request DTO) — not a reason to wrap lines.
+**Why?** Keeping parameters on a single line improves scannability, simplifies diffs, and ensures consistent formatting across the codebase. If a function has so many parameters that the line is excessively long, that is a design signal to refactor (e.g., use a parameter object or request DTO) — not a reason to wrap lines. If a project linter enforces line-length wrapping, configure it to allow longer lines for function signatures or disable that specific rule for declarations.
 
 ### XML Function Block Comments (MANDATORY)
 
