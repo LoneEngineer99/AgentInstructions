@@ -1,4 +1,4 @@
-# 🚀 Starter Kit
+# 🚀 Agent Instructions
 
 A **two-file instruction system** for giving AI coding agents (GitHub Copilot, Claude, etc.) consistent rules, conventions, and project context across all your projects.
 
@@ -85,3 +85,4 @@ When starting a new conversation or task with an AI agent, you can instruct it t
 > *"Set up AI agent instructions for this project. Copy `copilot-instructions.md` from `https://raw.githubusercontent.com/LoneEngineer99/AgentInstructions/main/copilot-instructions.md` into `.github/copilot-instructions.md`. Do NOT copy `base-copilot-instructions.md` — it should always be read by URL from the Starter Kit repository. Then walk me through the project initialization questions."*
 
 GitHub Copilot and Claude will automatically load `copilot-instructions.md` when it exists in your project's `.github/` directory. The file instructs them to also fetch and read the base instructions from this repository.
+
