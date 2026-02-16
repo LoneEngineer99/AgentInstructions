@@ -467,15 +467,15 @@ Apply these five principles rigorously across all object-oriented code:
 Every class, module, or function should have **one reason to change**. One class, one purpose.
 
 ```csharp
-// ✅ Good — each class has a single responsibility
+//✅ Good — each class has a single responsibility
 public class LicenseService { /* License operations only */ }
 public class EmailService { /* Email sending only */ }
 
-// ❌ Bad — mixed responsibilities
+//❌ Bad — mixed responsibilities
 public class LicenseService
 {
     void CreateLicense() { }
-    void SendEmail() { }  // Wrong responsibility!
+    void SendEmail() { }  //Wrong responsibility!
 }
 ```
 
@@ -489,7 +489,7 @@ public interface IValidator<T>
     Task<bool> ValidateAsync(T entity);
 }
 
-// Add new validators without changing existing code
+//Add new validators without changing existing code
 public class StandardValidator : IValidator<License> { }
 public class EnterpriseValidator : IValidator<License> { }
 ```
@@ -503,16 +503,16 @@ Subtypes must be substitutable for their base types without altering correctness
 No client should be forced to depend on methods it does not use. Prefer small, focused interfaces over large monolithic ones.
 
 ```csharp
-// ✅ Good — small, focused interfaces
+//✅ Good — small, focused interfaces
 public interface ICreatable<T> { Task<T> CreateAsync(T entity); }
 public interface IValidatable<T> { Task<bool> ValidateAsync(T entity); }
 
-// ❌ Bad — fat interface forces unused dependencies
+//❌ Bad — fat interface forces unused dependencies
 public interface IEverything<T>
 {
     Task Create();
     Task Validate();
-    Task SendEmail();  // Unrelated — not every implementer sends email
+    Task SendEmail();  //Unrelated — not every implementer sends email
 }
 ```
 
@@ -521,14 +521,14 @@ public interface IEverything<T>
 High-level modules should not depend on low-level modules. Both should depend on abstractions. Inject dependencies through constructors; never instantiate concrete dependencies with `new` inside business logic.
 
 ```csharp
-// ✅ Good — depends on abstraction, injected
+//✅ Good — depends on abstraction, injected
 public class OrderController
 {
     private readonly IOrderService _service;
     public OrderController(IOrderService service) { _service = service; }
 }
 
-// ❌ Bad — depends on concrete class, hard-coded
+//❌ Bad — depends on concrete class, hard-coded
 public class OrderController
 {
     private readonly OrderService _service = new OrderService();
@@ -549,7 +549,7 @@ public class OrderController
 - If validation logic recurs, create a shared validation helper
 
 ```csharp
-// ❌ Bad — duplicated validation
+//❌ Bad — duplicated validation
 public void MethodA() {
     if (string.IsNullOrEmpty(email) || !email.Contains("@"))
         throw new ArgumentException("Invalid email");
@@ -559,7 +559,7 @@ public void MethodB() {
         throw new ArgumentException("Invalid email");
 }
 
-// ✅ Good — centralized
+//✅ Good — centralized
 private static void ValidateEmail(string email) {
     if (string.IsNullOrEmpty(email) || !email.Contains("@"))
         throw new ArgumentException("Invalid email");
@@ -654,7 +654,7 @@ View / Template     → Presentation and rendering
 **Translation File Example (JSON):**
 
 ```json
-// locales/en.json
+//locales/en.json
 {
   "nav.home": "Home",
   "nav.dashboard": "Dashboard",
@@ -666,7 +666,7 @@ View / Template     → Presentation and rendering
 ```
 
 ```json
-// locales/es.json
+//locales/es.json
 {
   "nav.home": "Inicio",
   "nav.dashboard": "Panel",
@@ -742,10 +742,10 @@ View / Template     → Presentation and rendering
 🚨 **ALL function/method parameters MUST be on the SAME LINE as the function declaration.** Do NOT wrap or split parameters across multiple lines. This is a **hard rule** — no exceptions.
 
 ```csharp
-// ✅ CORRECT — all parameters on the same line
+//✅ CORRECT — all parameters on the same line
 public async Task<IActionResult> CreateLicense(string licenseKey, string userId, DateTime expirationDate, bool isActive)
 
-// ❌ WRONG — parameters split across multiple lines (NEVER do this)
+//❌ WRONG — parameters split across multiple lines (NEVER do this)
 public async Task<IActionResult> CreateLicense(
     string licenseKey,
     string userId,
@@ -754,10 +754,10 @@ public async Task<IActionResult> CreateLicense(
 ```
 
 ```javascript
-// ✅ CORRECT — all parameters on the same line
+//✅ CORRECT — all parameters on the same line
 function calculateTotal(price, taxRate, discount, quantity, currencyCode) {
 
-// ❌ WRONG — parameters wrapped to multiple lines (NEVER do this)
+//❌ WRONG — parameters wrapped to multiple lines (NEVER do this)
 function calculateTotal(
     price,
     taxRate,
@@ -768,10 +768,10 @@ function calculateTotal(
 ```
 
 ```c
-// ✅ CORRECT — all parameters on the same line
+//✅ CORRECT — all parameters on the same line
 ValidationResult* validate_license(const char* license_key, const char* hardware_id, int max_retries) {
 
-// ❌ WRONG — parameters on separate lines (NEVER do this)
+//❌ WRONG — parameters on separate lines (NEVER do this)
 ValidationResult* validate_license(
     const char* license_key,
     const char* hardware_id,
@@ -779,10 +779,10 @@ ValidationResult* validate_license(
 ```
 
 ```php
-// ✅ CORRECT — all parameters on the same line
+//✅ CORRECT — all parameters on the same line
 public function processOrder(string $orderId, float $amount, string $currency, bool $isExpress): OrderResult {
 
-// ❌ WRONG — parameters on separate lines (NEVER do this)
+//❌ WRONG — parameters on separate lines (NEVER do this)
 public function processOrder(
     string $orderId,
     float $amount,
@@ -849,20 +849,20 @@ public function processOrder(string $orderId, float $amount, string $currency, b
 
 ### Inline Comments for Logical Steps (MANDATORY)
 
-🚨 **ALL function bodies MUST include inline comments** that describe each logical set of instructions. Every distinct step, operation, or block of related logic within a function must have a comment explaining what it does and why. Do NOT write uncommented blocks of code.
+🚨 **ALL function bodies MUST include inline comments** that describe each logical set of instructions. Every distinct step, operation, or block of related logic within a function must have a comment explaining what it does and why. Do NOT write uncommented blocks of code. Inline comments must have **no space** after `//` — write `//Comment` not `// Comment`.
 
 ```csharp
 public async Task<IActionResult> CreateLicense(string licenseKey, string userId, DateTime expirationDate, bool isActive)
 {
-    // Validate input parameters before processing
+    //Validate input parameters before processing
     if (string.IsNullOrEmpty(licenseKey)) throw new ArgumentException("License key is required");
     if (string.IsNullOrEmpty(userId)) throw new ArgumentException("User ID is required");
 
-    // Look up the user to ensure they exist
+    //Look up the user to ensure they exist
     var user = await _userRepository.GetByUidAsync(userId);
     if (user == null) return NotFound("User not found");
 
-    // Build the license entity with the provided details
+    //Build the license entity with the provided details
     var license = new License
     {
         Key = licenseKey,
@@ -872,29 +872,29 @@ public async Task<IActionResult> CreateLicense(string licenseKey, string userId,
         CreatedAt = DateTime.UtcNow
     };
 
-    // Persist the license to the database
+    //Persist the license to the database
     await _licenseRepository.CreateAsync(license);
 
-    // Return the created license as a success response
+    //Return the created license as a success response
     return CreatedAtAction(nameof(GetLicense), new { uid = license.Uid }, license.ToDto());
 }
 ```
 
 ```javascript
 function calculateTotal(price, taxRate, discount, quantity, currencyCode) {
-    // Calculate the subtotal from unit price and quantity
+    //Calculate the subtotal from unit price and quantity
     const subtotal = price * quantity;
 
-    // Apply the tax rate to the subtotal
+    //Apply the tax rate to the subtotal
     const taxAmount = subtotal * taxRate;
 
-    // Subtract the discount from the taxed total
+    //Subtract the discount from the taxed total
     const total = subtotal + taxAmount - discount;
 
-    // Ensure the total is not negative
+    //Ensure the total is not negative
     const finalTotal = Math.max(0, total);
 
-    // Format the result with the appropriate currency
+    //Format the result with the appropriate currency
     return new Intl.NumberFormat('en-US', { style: 'currency', currency: currencyCode }).format(finalTotal);
 }
 ```
@@ -908,6 +908,7 @@ For every function or method generated, verify:
 - [ ] All parameters are on the **same line** as the function declaration — no wrapping
 - [ ] XML block comment (`/// <summary>`, `/// <param>`, `/// <returns>`) is present above the function
 - [ ] Every logical step inside the function body has an inline comment explaining it
+- [ ] Inline comments use `//` with **no space** after the slashes (e.g., `//Comment` not `// Comment`)
 - [ ] Comments are clear, concise, and describe **what** and **why** — not just restating the code
 
 ---
@@ -948,11 +949,11 @@ public MyController(UserService userService) { ... }
 #endregion
 
 #region Public Methods
-// ...
+//...
 #endregion
 
 #region Private Helpers
-// ...
+//...
 #endregion
 ```
 
