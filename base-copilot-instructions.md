@@ -82,6 +82,7 @@
 - ❌ "dive into," "unleash," "in today's fast-paced world" → ✅ Direct, clear language
 - ❌ Repeating context every message → ✅ Reference work by step/phase number
 - ❌ "What were we working on?" after long conversations → ✅ Review TODO list to restore context
+- ❌ Finishing work without creating the post-task summary report → ✅ Always create the `UpdateReports/` summary before marking the task complete (see §26)
 
 ### Tool Usage Guidelines
 
@@ -168,6 +169,17 @@
 - [ ] Verify features work correctly (expected outputs, integration points, error scenarios)
 - [ ] Continue working until ALL requirements satisfied
 ```
+
+### Phase 4: Post-Task Reporting (MANDATORY)
+
+```markdown
+- [ ] Create post-task summary report in `UpdateReports/` (see §26)
+- [ ] Include minimum 5 screenshots of completed work
+- [ ] Update `.github/copilot-instructions.md` with new patterns and progress
+- [ ] Update `.github/roadmap.md` to reflect completed work (see §28)
+```
+
+> ⚠️ **A task is NOT complete until the post-task summary report exists.** Skipping this step is a task failure.
 
 ### Repository Conservation Rules
 
@@ -385,6 +397,7 @@ When stuck or when solutions introduce new problems:
 - All temporary and failed files removed
 - Workspace is clean (`git status` shows only intended changes)
 - `.github/roadmap.md` is updated to reflect any changes to project state or progress (see §28)
+- Post-task summary report created in `UpdateReports/` with screenshots (see §26) — **this is mandatory and must not be skipped**
 - Three-pass review completed (see below)
 
 ### Mandatory Three-Pass Review
@@ -453,6 +466,8 @@ When stuck or when solutions introduce new problems:
 **Clean:** Remove temporary files and failed code before proceeding
 
 **Finish:** Only stop when ALL TODO items are checked, builds pass, and workspace is clean
+
+**Report:** Create the post-task summary report in `UpdateReports/` before marking the task complete (see §26) — this is mandatory
 
 ---
 
@@ -1264,7 +1279,7 @@ Update the corresponding sections in `copilot-instructions.md`:
 
 ## 26. Post-Task Summary Reports
 
-**REQUIRED: Every agent session that completes significant work MUST create a post-task summary document in the `UpdateReports/` directory.**
+🚨 **NON-NEGOTIABLE: Every agent session that completes significant work MUST create a post-task summary document in the `UpdateReports/` directory. A task is NOT considered complete without this report. This is a mandatory deliverable — not optional.**
 
 ### Summary Document Requirements
 
