@@ -94,7 +94,7 @@ Before making ANY code changes, conduct a thorough discovery session with the pr
 
 6. **What are the deployment requirements?**
    - Hosting platform (cloud provider, on-premises, etc.)
-   - Container strategy (Docker, Kubernetes, none?)
+   - Container strategy (Docker, Kubernetes, none?) — **Default is NONE; do not use containerization unless the user explicitly requests it**
    - CI/CD pipeline requirements
    - Environment stages (dev, staging, production)
 

@@ -190,6 +190,7 @@
 - Maintain architectural consistency with existing patterns
 - Respect the existing package manager and framework choices
 - Follow existing naming conventions (see Part III)
+- 🚨 **NEVER introduce containerization** (Docker, docker-compose, Kubernetes, Dockerfiles, container orchestration, etc.) unless the user **explicitly requests** it. Do not suggest, create, or add any container-related files, configurations, or dependencies on your own
 
 ---
 
