@@ -82,7 +82,7 @@
 - ❌ "dive into," "unleash," "in today's fast-paced world" → ✅ Direct, clear language
 - ❌ Repeating context every message → ✅ Reference work by step/phase number
 - ❌ "What were we working on?" after long conversations → ✅ Review TODO list to restore context
-- ❌ Finishing work without creating the post-task summary report → ✅ Always create the `UpdateReports/` summary before marking the task complete (see §26)
+- ❌ Finishing work without creating the post-task summary report → ✅ Always create the `.github/update_reports/` summary before marking the task complete (see §26)
 
 ### Tool Usage Guidelines
 
@@ -117,7 +117,7 @@
 - Creating .md files in the project root causes disorganization
 - Document changes through commit messages and PR descriptions instead
 - Only create .md files when the user specifically asks for documentation by name/path
-- **Exception**: Updates to existing documentation (README.md, `.github/copilot-instructions.md`) and post-task summary reports in `UpdateReports/` are allowed
+- **Exception**: Updates to existing documentation (README.md, `.github/copilot-instructions.md`) and post-task summary reports in `.github/update_reports/` are allowed
 
 **CSS and JavaScript Management:**
 - 🚨 **CRITICAL**: ALL CSS must be in external .css files — never inline `<style>` tags
@@ -173,7 +173,7 @@
 ### Phase 4: Post-Task Reporting (MANDATORY)
 
 ```markdown
-- [ ] Create post-task summary report in `UpdateReports/` (see §26)
+- [ ] Create post-task summary report in `.github/update_reports/` (see §26)
 - [ ] Include minimum 5 screenshots of completed work
 - [ ] Update `.github/copilot-instructions.md` with new patterns and progress
 - [ ] Update `.github/roadmap.md` to reflect completed work (see §28)
@@ -411,7 +411,7 @@ When stuck or when solutions introduce new problems:
 - All temporary and failed files removed
 - Workspace is clean (`git status` shows only intended changes)
 - `.github/roadmap.md` is updated to reflect any changes to project state or progress (see §28)
-- Post-task summary report created in `UpdateReports/` with screenshots (see §26) — **this is mandatory and must not be skipped**
+- Post-task summary report created in `.github/update_reports/` with screenshots (see §26) — **this is mandatory and must not be skipped**
 - Three-pass review completed (see below)
 
 ### Mandatory Three-Pass Review
@@ -481,7 +481,7 @@ When stuck or when solutions introduce new problems:
 
 **Finish:** Only stop when ALL TODO items are checked, builds pass, and workspace is clean
 
-**Report:** Create the post-task summary report in `UpdateReports/` before marking the task complete (see §26) — this is mandatory
+**Report:** Create the post-task summary report in `.github/update_reports/` before marking the task complete (see §26) — this is mandatory
 
 ---
 
@@ -1302,13 +1302,13 @@ Update the corresponding sections in `copilot-instructions.md`:
 
 ## 26. Post-Task Summary Reports
 
-🚨 **NON-NEGOTIABLE: Every agent session that completes significant work MUST create a post-task summary document in the `UpdateReports/` directory. A task is NOT considered complete without this report. This is a mandatory deliverable — not optional.**
+🚨 **NON-NEGOTIABLE: Every agent session that completes significant work MUST create a post-task summary document in the `.github/update_reports/` directory. A task is NOT considered complete without this report. This is a mandatory deliverable — not optional.**
 
 ### Summary Document Requirements
 
 Each post-task summary must:
 
-1. **Be created in `UpdateReports/`** with filename format:
+1. **Be created in `.github/update_reports/`** with filename format:
    - `session-YYYY-MM-DD-descriptive-task-name.md`
    - Example: `session-2026-02-14-implement-user-authentication.md`
 
@@ -1316,7 +1316,7 @@ Each post-task summary must:
    - **Minimum 5 screenshots** of completed work
    - GIFs/videos encouraged for demonstrating interactions, animations, and multi-step workflows
    - Screenshots embedded inline using relative paths
-   - Media files stored in `UpdateReports/media/session-YYYY-MM-DD-task-name/`
+   - Media files stored in `.github/update_reports/img/session-YYYY-MM-DD-task-name/`
 
 3. **Follow this structure:**
 
@@ -1337,12 +1337,12 @@ Each post-task summary must:
 ### [Feature/Component 1]
 [Description]
 
-![Screenshot description](./media/session-YYYY-MM-DD-task/screenshot-1.png)
+![Screenshot description](./img/session-YYYY-MM-DD-task/screenshot-1.png)
 
 ### [Feature/Component 2]
 [Description]
 
-![Screenshot description](./media/session-YYYY-MM-DD-task/screenshot-2.png)
+![Screenshot description](./img/session-YYYY-MM-DD-task/screenshot-2.png)
 
 ## Key Changes
 
@@ -1353,10 +1353,10 @@ Each post-task summary must:
 ## Visual Documentation
 
 ### [Section 1]
-![Description](./media/session-YYYY-MM-DD-task/screenshot-3.png)
+![Description](./img/session-YYYY-MM-DD-task/screenshot-3.png)
 
 ### [Section 2]
-![Description](./media/session-YYYY-MM-DD-task/screenshot-4.png)
+![Description](./img/session-YYYY-MM-DD-task/screenshot-4.png)
 
 [Continue with all screenshots — minimum 5 total]
 
@@ -1376,7 +1376,7 @@ Each post-task summary must:
 
 ### Media Organization
 
-- Create subdirectory for each session: `UpdateReports/media/session-YYYY-MM-DD-task-name/`
+- Create subdirectory for each session: `.github/update_reports/img/session-YYYY-MM-DD-task-name/`
 - Name screenshots descriptively: `feature-name-view.png`, `dashboard-overview.png`
 - Use PNG for screenshots (lossless quality)
 - Use GIF for short animations (< 10 seconds)
@@ -1397,7 +1397,7 @@ If additional work is needed after a report is created, update the existing docu
 ### Additional Changes
 [Description of new work]
 
-![Additional screenshot](./media/session-YYYY-MM-DD-task/iteration-N-screenshot.png)
+![Additional screenshot](./img/session-YYYY-MM-DD-task/iteration-N-screenshot.png)
 ```
 
 ---
