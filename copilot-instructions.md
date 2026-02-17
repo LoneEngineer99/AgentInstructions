@@ -404,12 +404,12 @@ Once you have:
 ```
 ProjectRoot/
 ├── .github/
-│   └── copilot-instructions.md        # This file — project-specific agent context & rules
+│   ├── copilot-instructions.md        # This file — project-specific agent context & rules
+│   └── update_reports/                # Post-task summary documentation
+│       └── img/                       # Screenshots and media for reports
 ├── src/                               # Source code
 ├── tests/                             # Test files
 ├── docs/                              # Documentation
-├── UpdateReports/                     # Post-task summary documentation
-│   └── media/                         # Screenshots and media for reports
 └── README.md
 ```
 
