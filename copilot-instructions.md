@@ -35,6 +35,7 @@ If you are working inside the Starter Kit repository itself, you may read the fi
 ### 🚀 [NEW PROJECT INITIALIZATION](#-new-project-initialization) ← **DELETE THIS AFTER PROJECT SETUP**
 
 ### [Project Context & Architecture](#project-context--architecture)
+- [⚠️ CRITICAL — Mandatory File Updates After Every Change](#️-critical--mandatory-file-updates-after-every-change)
 - [Project Overview](#project-overview)
 - [Repository Structure](#repository-structure)
 - [Architecture Patterns](#architecture-patterns)
@@ -362,7 +363,82 @@ Create a comprehensive setup checklist for new developers:
 - [ ] Start development server: [command from Q11]
 ```
 
-### Step 6: Remove This Section
+### Step 6: GitHub Copilot Agent — Memory Initialization
+
+> **⚠️ CRITICAL — AGENT ONLY**: This step applies **exclusively** when the project is being initialized by the GitHub Copilot Agent (or any AI agent with access to the `store_memory` tool). Human developers may skip this step.
+
+When the GitHub Copilot Agent is running this initialization, it **MUST** store at least **30 GitHub memories** using the `store_memory` tool so that it (and future agent sessions) can quickly reference key project context without re-reading entire files. These memories serve as a fast-access knowledge base that persists across agent sessions.
+
+#### What to Store as Memories
+
+Memories should comprehensively cover the following categories. Aim for **at least 30 distinct memories** distributed across these areas:
+
+**From `copilot-instructions.md` (this file) — at least 8 memories:**
+1. Project name, description, and primary purpose
+2. Technology stack (backend, frontend, database, APIs)
+3. Authentication and authorization strategy
+4. Repository structure and key directory paths
+5. Build, run, and test commands
+6. Database schema location and migration strategy
+7. Current implementation status and phase
+8. Any project-specific overrides or rules
+
+**From `base-copilot-instructions.md` — at least 10 memories:**
+1. Core identity and execution protocol (§1–§2)
+2. TODO management and context maintenance rules (§3)
+3. Error debugging protocols (§4)
+4. Key software engineering principles enforced (§8–§11)
+5. Separation of concerns and i18n rules (§12)
+6. Security and defensive programming rules (§13)
+7. Code formatting and documentation standards (§14)
+8. Unit testing requirements and patterns (§15)
+9. Naming conventions for the project's primary language(s) (§16–§22)
+10. Post-task reporting and update requirements (§26–§27)
+
+**From `roadmap.md` — at least 5 memories:**
+1. Overall project vision and goals
+2. Current phase and milestone status
+3. Completed features and components
+4. Upcoming planned work items
+5. Known blockers or dependencies
+
+**From `README.md` and general project context — at least 7 memories:**
+1. Project overview and key features
+2. Getting started / setup instructions
+3. Contribution guidelines or team conventions
+4. External integrations and third-party services
+5. Design system, branding, or template references
+6. Deployment and environment configuration
+7. Any domain-specific terminology or business rules
+
+#### Memory Storage Guidelines
+
+- Each memory should be a **clear, concise, actionable fact** (under 200 characters — this is a `store_memory` tool constraint)
+- Include accurate **citations** (file path and line numbers) for each memory
+- Use descriptive **subjects** (e.g., "tech stack", "build commands", "auth strategy")
+- Provide a **reason** explaining why the memory is useful for future tasks
+- Categorize appropriately: use `general` for cross-cutting facts, `file_specific` for file-bound details, `bootstrap_and_build` for build/run info, and `user_preferences` for stated preferences
+
+#### Example Memories
+
+```
+Subject: "tech stack"
+Fact: "Backend uses ASP.NET Core 8 with Dapper for MySQL; frontend uses Razor Pages with Bootstrap 5."
+Category: general
+Citations: .github/copilot-instructions.md:<line range of Project Overview section>
+
+Subject: "build commands"  
+Fact: "Build with 'dotnet build', run with 'dotnet run --project src/Web', test with 'dotnet test'."
+Category: bootstrap_and_build
+Citations: .github/copilot-instructions.md:<line range of Build & Run Commands section>
+
+Subject: "roadmap status"
+Fact: "Phase 1 (Core Setup) complete; Phase 2 (User Management) in progress; Phase 3 (Dashboard) planned."
+Category: general
+Citations: .github/roadmap.md:<line range of current status>
+```
+
+### Step 7: Remove This Section
 
 Once you have:
 - ✅ Asked all discovery questions
@@ -370,6 +446,7 @@ Once you have:
 - ✅ Updated all project-specific sections with actual information
 - ✅ Updated README.md
 - ✅ Created developer setup instructions
+- ✅ Stored at least 30 GitHub memories (if running as a GitHub Copilot Agent)
 - ✅ Verified all placeholders are replaced with actual information
 
 **DELETE this entire "NEW PROJECT INITIALIZATION" section** from this file — everything between the `# 🚀 NEW PROJECT INITIALIZATION` heading and the `# Project Context & Architecture` heading.
@@ -377,6 +454,30 @@ Once you have:
 **Update the Table of Contents** to remove the reference to this section.
 
 **Commit the changes** with a message like: "Complete project initialization for [Project Name]"
+
+---
+
+# ⚠️ CRITICAL — Mandatory File Updates After Every Change
+
+> **🚨 NON-NEGOTIABLE**: After **every** code change that affects architecture, adds/removes features, modifies database schemas, completes roadmap items, or changes build/run/test commands, the agent **MUST** update the following files:
+
+### 1. `.github/copilot-instructions.md` (this file)
+- Update the **Current Implementation Status** section to reflect completed, in-progress, and planned work
+- Update the **Repository Structure** if new directories or key files were added
+- Update **Build & Run Commands** if they changed
+- Update **Database Schema & Migrations** if the schema changed
+- Update **Architecture Patterns** if new patterns were introduced
+- Add any new **Project-Specific Overrides** discovered during development
+- This file is the agent's **cross-session memory** — keeping it accurate ensures continuity
+
+### 2. `.github/roadmap.md`
+- Mark completed items as done
+- Update current phase and milestone progress
+- Add newly discovered work items or technical debt
+- Adjust timelines and priorities based on completed work
+- Reflect any scope changes or new requirements
+
+**Failure to update these files after changes means the task is NOT complete.** These updates are as important as the code changes themselves — they ensure that any future agent session (or human developer) starts with accurate, current project context.
 
 ---
 
