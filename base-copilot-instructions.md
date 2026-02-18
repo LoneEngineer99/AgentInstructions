@@ -662,6 +662,18 @@ View / Template     → Presentation and rendering
 - Dedicated CSS/JS files per page/feature when needed
 - Use a shared design system / CSS variables for consistent theming
 
+### Front-End Form Validation
+
+🚨 **CRITICAL**: ALL HTML forms **must** include client-side validation using the **FormValidation** library ([`@form-validation/bundle`](https://formvalidation.io/)).
+
+- Use `@form-validation/bundle` (version **2.4.0**+) for all form validation — this is the same library used in the Vuexy admin template
+- Every form with user input **must** have validation rules defined — no form should submit without client-side validation
+- Use the Bootstrap 5 plugin (`@form-validation/plugin-bootstrap5`) for consistent styling with Bootstrap-based projects
+- Keep validation logic in dedicated external `.js` files per form/page — never inline
+- Provide clear, user-friendly error messages for each validation rule
+- Combine client-side validation with server-side validation — client-side validation alone is **never** sufficient for security
+- Reference the Vuexy template's `form-validation.html` page for implementation patterns (see `site-templates.md` §5)
+
 ### Internationalization (i18n) for HTML
 
 🚨 **CRITICAL**: ALL user-facing text in generated HTML **must** use i18n — never hardcode strings directly in markup or templates.
