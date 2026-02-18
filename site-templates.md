@@ -94,7 +94,14 @@ Step 6 — Extract and adapt the HTML fragment
    → Keep all class names, data-* attributes, and aria-* attributes intact
      — these are required for JS plugins to initialize correctly.
 
-Step 7 — Verify in browser
+Step 7 — Check for useful media assets
+   → Templates often ship with images, illustrations, icons, and SVG
+     graphics (e.g., Vuexy's `assets/img/illustrations/`) that can be
+     reused during development as placeholders or final artwork.
+   → Copy any relevant media into the project's own assets directory,
+     following the same copy rules as CSS/JS (§1).
+
+Step 8 — Verify in browser
    → Confirm no 404 errors in the network tab for any asset.
    → Confirm the component renders and interactive behaviour works.
 ```
@@ -277,7 +284,7 @@ SiteTemplates/Nuron-NFT Marketplace/
 │   │       ├── savePopup.js       ← Save/bookmark popup
 │   │       └── nft.js             ← NFT-specific UI logic
 │   ├── fonts/                     ← Web fonts
-│   ├── images/                    ← Template images (replace with project images)
+│   ├── images/                    ← Template images — useful as placeholders or reference during development
 │   └── scss/                      ← SCSS source (for reference only; do not auto-compile)
 ```
 
@@ -583,6 +590,7 @@ SiteTemplates/Vuexy-Admin-Dashboard/
 │   ├── front-pages-no-customizer/              ← ✅ USE THIS for front pages
 │   ├── horizontal-menu-template-no-customizer/ ← ⛔ Avoid unless project requires horizontal nav
 │   └── html-starter/                           ← ⛔ Avoid — minimal scaffolding only
+├── assets/img/                                  ← Illustrations, backgrounds, and SVG graphics (useful for development — see §5.6)
 ├── fonts/                                       ← Iconify, Font Awesome, Flag Icons (copy if icons are used)
 ├── libs/                                        ← Source distribution of vendor libraries
 └── scss/                                        ← SCSS source (requires Gulp pipeline to compile)
@@ -647,6 +655,16 @@ Always inspect the specific HTML file to get the exact list for that page.
 | jstree | 3.3.17 | Tree view component |
 | HammerJS | 2.0.8 | Touch gesture recognition |
 
+### 5.6 Media Assets — Illustrations & Images
+
+Vuexy ships with a rich set of illustration images, SVG graphics, and background artwork inside `assets/img/`. These are particularly useful during development:
+
+- **Illustrations** (`assets/img/illustrations/`) — decorative illustrations used on auth pages, error pages, and empty-state screens. These can be reused directly in the project as placeholders or final artwork.
+- **Backgrounds** — background patterns and shapes used for section decoration.
+- **Icons / misc** — miscellaneous graphic assets used across dashboard and front pages.
+
+When building out pages, check `assets/img/` for ready-made visuals before creating custom graphics. Copy any used images into the project's own assets directory following the same rules as CSS/JS (§1) — do not hot-link into `SiteTemplates/`.
+
 ---
 
 ## 6. Extensibility — Adding a New Template
@@ -687,6 +705,10 @@ When a new template is added to `SiteTemplates/`, add an entry to the [Template 
 | Library | Version | Purpose |
 |---------|---------|---------|
 | [Name] | [x.x.x] | [What it does] |
+
+### [N].6 Media Assets (if applicable)
+
+[List any image, illustration, SVG, or other media directories included with the template that may be useful during development. Note subdirectories of interest (e.g., illustrations, backgrounds).]
 ```
 
 **Also update:**
