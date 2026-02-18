@@ -335,9 +335,9 @@ Fill in the implementation phases based on Q4, Q21:
 
 ### Step 4: Update Project README
 
-Based on the initialization answers, update `/README.md` with:
+Read the project's `roadmap.md` to understand the planned features, milestones, and project vision. Then, based on the roadmap and the initialization answers, create or update `/README.md` with:
 - Project name and description (Q1, Q2)
-- Key features (Q3)
+- Key features (Q3) — aligned with the roadmap's planned capabilities
 - Technology stack (Q5)
 - Getting started guide (Q11)
 - Contribution guidelines

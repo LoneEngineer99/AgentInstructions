@@ -412,6 +412,7 @@ When stuck or when solutions introduce new problems:
 - All temporary and failed files removed
 - Workspace is clean (`git status` shows only intended changes)
 - `.github/roadmap.md` is updated to reflect any changes to project state or progress (see §29)
+- `README.md` is updated to reflect any changes to features, tech stack, or build/run instructions (see §26)
 - Post-task summary report created in `.github/update_reports/` with screenshots (see §27) — **this is mandatory and must not be skipped**
 - Three-pass review completed (see below)
 
@@ -1413,6 +1414,13 @@ When copying an element from a template page, check for and include:
 > - Add newly discovered work items or technical debt
 > - Adjust timelines and priorities based on completed work
 > - Reflect any scope changes or new requirements
+>
+> **3. `README.md`:**
+> - Update project description if the scope or purpose changed
+> - Update the technology stack if new tools or frameworks were added
+> - Update getting started / build / run instructions if they changed
+> - Update key features list if features were added or removed
+> - Keep the README consistent with `copilot-instructions.md` and `roadmap.md`
 
 ### When to Update
 
@@ -1441,15 +1449,17 @@ Update the corresponding sections in `copilot-instructions.md`:
 - Add new shared utilities to the DRY section (§9)
 - Update the Current Implementation Status section
 - Update `.github/roadmap.md` with current progress and any changes to planned work (see §29)
+- Update `README.md` to reflect any changes to features, tech stack, or build/run instructions
 
 ### How to Update
 
 1. Make the code changes first
 2. Update the relevant sections of `.github/copilot-instructions.md`
-3. Ensure the Table of Contents still matches section headers
-4. Commit `.github/copilot-instructions.md` alongside the code changes
-5. **CRITICAL**: `.github/copilot-instructions.md` is the agent's memory — keeping it accurate ensures continuity across sessions
-6. **NEVER modify `.github/base-copilot-instructions.md`** — it contains shared base instructions
+3. Update `README.md` if the changes affect features, tech stack, or setup instructions
+4. Ensure the Table of Contents still matches section headers
+5. Commit `.github/copilot-instructions.md` and `README.md` alongside the code changes
+6. **CRITICAL**: `.github/copilot-instructions.md` is the agent's memory — keeping it accurate ensures continuity across sessions
+7. **NEVER modify `.github/base-copilot-instructions.md`** — it contains shared base instructions
 
 ---
 
