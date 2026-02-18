@@ -8,7 +8,9 @@ A **two-file instruction system** for giving AI coding agents (GitHub Copilot, C
 
 ```
 │   ├── copilot-instructions.md        # Project-specific agent guide (copy this to new projects)
-│   └── base-copilot-instructions.md   # Shared base agent rules (read by URL, never copy)
+│   ├── base-copilot-instructions.md   # Shared base agent rules (read by URL, never copy)
+│   ├── site-templates.md              # Reference guide for UI templates and components
+│   └── roadmap.md                     # Project roadmap and future enhancements
 ```
 
 ---
@@ -41,6 +43,16 @@ This repository contains a **two-file instruction system** that gives AI coding 
 - Security guidelines — input validation, XSS prevention, parameterized queries
 - Project context guidelines — rules for documenting project details in `copilot-instructions.md`
 - Post-task reporting — structured summary documents with screenshots
+
+**`site-templates.md`** (UI template reference):
+- Reference guide for reusing UI components and pages from template libraries
+- Critical rules for CSS/JS asset dependencies when copying components
+- Template registry with detailed documentation for each UI template
+- Agent workflows for properly extracting and reusing template components
+
+**`roadmap.md`** (project roadmap):
+- Project roadmap and planned enhancements
+- Future features and improvements to the instruction system
 
 ### ⚠️ Important: Never Copy `base-copilot-instructions.md`
 
