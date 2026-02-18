@@ -757,6 +757,53 @@ View / Template     → Presentation and rendering
 - Encrypt sensitive values at rest
 - Never log sensitive data (passwords, tokens, PII)
 
+### API Error Handling — Global Exception Handler Middleware
+
+🚨 **CRITICAL**: APIs must use a **global exception handler middleware** to catch and process unhandled exceptions. **Do NOT wrap individual controller action bodies in `try-catch` blocks** — this duplicates logic, clutters controllers, and violates DRY.
+
+**How it works:**
+
+1. Register a single middleware (e.g., `UseExceptionHandler`, `app.UseMiddleware<ExceptionHandlingMiddleware>()` in .NET, or `app.use(errorHandler)` in Express) that intercepts all unhandled exceptions.
+2. The middleware logs the error, maps it to an appropriate HTTP status code, and returns a consistent error response body.
+3. Controller actions remain clean — they only contain routing, request validation, and delegation to services.
+
+**Example — .NET Exception Handling Middleware:**
+
+```csharp
+public class ExceptionHandlingMiddleware
+{
+    private readonly RequestDelegate _next;
+    private readonly ILogger<ExceptionHandlingMiddleware> _logger;
+
+    public ExceptionHandlingMiddleware(RequestDelegate next, ILogger<ExceptionHandlingMiddleware> logger)
+    {
+        _next = next;
+        _logger = logger;
+    }
+
+    public async Task InvokeAsync(HttpContext context)
+    {
+        try
+        {
+            await _next(context); //Pass to next middleware / controller
+        }
+        catch (Exception ex)
+        {
+            _logger.LogError(ex, "Unhandled exception caught by global handler");
+            context.Response.StatusCode = StatusCodes.Status500InternalServerError;
+            await context.Response.WriteAsJsonAsync(new { error = "An unexpected error occurred." });
+        }
+    }
+}
+```
+
+**Why this matters:**
+
+- **DRY** — error handling logic lives in one place, not duplicated across every controller action
+- **Consistency** — all errors produce the same response shape
+- **Clean controllers** — actions stay focused on routing and delegation
+- **Maintainability** — changing error response format or logging requires editing one file
+
 ### General Security Checklist
 
 - [ ] All queries use parameterized inputs
@@ -766,6 +813,7 @@ View / Template     → Presentation and rendering
 - [ ] Rate limiting on auth and mutation endpoints
 - [ ] CSRF protection on forms
 - [ ] HTTPS enforced in production
+- [ ] Global exception handler middleware registered — no try-catch in controller actions
 
 ---
 
