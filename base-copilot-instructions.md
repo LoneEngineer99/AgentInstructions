@@ -1213,9 +1213,17 @@ When making database changes in any project, ensure ALL of these are in sync:
 
 ## 24. Site Templates & Design References
 
+### Shared Template Registry (Web Projects)
+
+> **For projects with a web front-end component:** the [AgentInstructions repository](https://github.com/LoneEngineer99/AgentInstructions) maintains a `site-templates.md` file containing the **up-to-date registry of all supported site templates** — including page catalogues, asset maps, third-party library inventories, and the mandatory CSS/JS dependency workflow.
+>
+> **Raw URL:** `https://raw.githubusercontent.com/LoneEngineer99/AgentInstructions/main/site-templates.md`
+>
+> Before creating or adapting any UI element for a web project, fetch and read this file. It supersedes any locally cached template information about which templates are available at the shared level. Project-specific template overrides and additions still live in the project's own `copilot-instructions.md`.
+
 ### Template Discovery & Usage
 
-Before creating UI elements, **always check** if templates have been documented in the project's `copilot-instructions.md`. If no templates are documented, **ask the user** if there are any HTML templates or design references that should be used for the project. Do not assume any specific template directories exist.
+Before creating UI elements, **always check** if templates have been documented in the project's `copilot-instructions.md`. If the project has a web front-end, also fetch the shared `site-templates.md` from the AgentInstructions repository (see above) for the complete list of available templates. If no templates are documented anywhere, **ask the user** if there are any HTML templates or design references that should be used for the project. Do not assume any specific template directories exist.
 
 **Ask the user:**
 1. Are there any HTML/CSS templates that should be used as a reference for UI elements (cards, tables, modals, forms, charts, navbars, etc.)?

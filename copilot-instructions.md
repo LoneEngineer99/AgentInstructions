@@ -459,9 +459,7 @@ ProjectRoot/
 
 ## Site Templates & Design References
 
-<!-- AGENT: Ask the user about HTML templates during project initialization (Q19). Document template sources here and store them as GitHub memories using store_memory. -->
-
-[No templates configured yet. During project initialization, ask the user if there are any HTML templates that should be used. Document template name(s), path(s), and purpose(s) here. Also store each template source as a GitHub memory using the `store_memory` tool. See base instructions (§24) for guidelines on how to use templates once they are identified.]
+[See base instructions (§24) for template discovery rules, the shared template registry, and the mandatory CSS/JS dependency workflow.]
 
 ---
 
