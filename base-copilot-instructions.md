@@ -646,6 +646,10 @@ Model / Entity      → Data structure definition
 View / Template     → Presentation and rendering
 ```
 
+### Database Access Tooling
+
+**For MySQL/MariaDB:** Use **Dapper** as the preferred data access library for repository implementations.
+
 ### CSS and JavaScript Separation
 
 - ALL CSS must be in external `.css` files — never inline `<style>` tags in templates
