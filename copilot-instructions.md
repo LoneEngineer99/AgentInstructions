@@ -2,6 +2,8 @@
 applyTo: '**'
 ---
 
+> **⚠️ IMPORTANT — Read Before Proceeding:** A single fetch to a remote repository's `.md` file may truncate the returned content, causing you to miss critical instructions. You **MUST** use multiple fetches (paginated or offset-based) to ensure you read **all** of the content in its entirety. Do not assume a single request has retrieved the full document.
+
 # Project Copilot Instructions — Agent Guide
 
 > **Purpose:** This document is the **single source of truth** for AI coding agents working on this project. It extends the base instructions with project-specific context. Read both this file and the base instructions fully before every task. Keep this file up to date after every major modification. **Continue working until the problem is completely solved.** Before performing any task, briefly list the sub-steps you intend to follow.

@@ -1,3 +1,5 @@
+> **⚠️ IMPORTANT — Read Before Proceeding:** A single fetch to a remote repository's `.md` file may truncate the returned content, causing you to miss critical instructions. You **MUST** use multiple fetches (paginated or offset-based) to ensure you read **all** of the content in its entirety. Do not assume a single request has retrieved the full document.
+
 # Base Copilot Instructions — Agent Guide
 
 > **⚠️ DO NOT MODIFY THIS FILE.** This is the shared base instructions document. It is referenced by `copilot-instructions.md` and must not be edited by agents. All project-specific customizations belong in `copilot-instructions.md`.
