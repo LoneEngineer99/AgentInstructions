@@ -748,6 +748,7 @@ View / Template     → Presentation and rendering
 - Validate resource ownership before allowing modifications
 - Never expose internal database IDs — use external UIDs or slugs
 - Use `[JsonIgnore]` or equivalent on internal ID properties in API responses
+- API routes targeting a specific resource by UID/ID must accept the identifier as a **route parameter** (e.g., `GET /api/users/{uid}`), not as a query string parameter (e.g., `GET /api/users?uid=abc`)
 
 ### Data Protection
 
