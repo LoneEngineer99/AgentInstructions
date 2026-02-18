@@ -25,26 +25,27 @@
 12. [Separation of Concerns (incl. i18n for HTML)](#12-separation-of-concerns)
 13. [Defensive Programming & Security](#13-defensive-programming--security)
 14. [Code Formatting & Documentation Standards](#14-code-formatting--documentation-standards)
+15. [Unit Testing](#15-unit-testing)
 
 ### Part III — Naming Conventions by Language
-15. [C# Naming Conventions](#15-c-naming-conventions)
-16. [C / C++ Naming Conventions](#16-c--c-naming-conventions)
-17. [PHP Naming Conventions](#17-php-naming-conventions)
-18. [JavaScript / TypeScript Naming Conventions](#18-javascript--typescript-naming-conventions)
-19. [SQL / Database Naming Conventions](#19-sql--database-naming-conventions)
-20. [CSS / SCSS Naming Conventions](#20-css--scss-naming-conventions)
-21. [General File & Directory Naming](#21-general-file--directory-naming)
+16. [C# Naming Conventions](#16-c-naming-conventions)
+17. [C / C++ Naming Conventions](#17-c--c-naming-conventions)
+18. [PHP Naming Conventions](#18-php-naming-conventions)
+19. [JavaScript / TypeScript Naming Conventions](#19-javascript--typescript-naming-conventions)
+20. [SQL / Database Naming Conventions](#20-sql--database-naming-conventions)
+21. [CSS / SCSS Naming Conventions](#21-css--scss-naming-conventions)
+22. [General File & Directory Naming](#22-general-file--directory-naming)
 
 ### Part IV — Project Context Guidelines
-22. [Project Context Documentation Rules](#22-project-context-documentation-rules)
-23. [Database Change Rules](#23-database-change-rules)
-24. [Site Templates & Design References](#24-site-templates--design-references)
+23. [Project Context Documentation Rules](#23-project-context-documentation-rules)
+24. [Database Change Rules](#24-database-change-rules)
+25. [Site Templates & Design References](#25-site-templates--design-references)
 
 ### Part V — Documentation & Self-Evolution
-25. [Keeping This Guide Up to Date](#25-keeping-this-guide-up-to-date)
-26. [Post-Task Summary Reports](#26-post-task-summary-reports)
-27. [Agent Work Ethic & Autonomy](#27-agent-work-ethic--autonomy)
-28. [Project Roadmap Management](#28-project-roadmap-management)
+26. [Keeping This Guide Up to Date](#26-keeping-this-guide-up-to-date)
+27. [Post-Task Summary Reports](#27-post-task-summary-reports)
+28. [Agent Work Ethic & Autonomy](#28-agent-work-ethic--autonomy)
+29. [Project Roadmap Management](#29-project-roadmap-management)
 
 ---
 
@@ -82,7 +83,7 @@
 - ❌ "dive into," "unleash," "in today's fast-paced world" → ✅ Direct, clear language
 - ❌ Repeating context every message → ✅ Reference work by step/phase number
 - ❌ "What were we working on?" after long conversations → ✅ Review TODO list to restore context
-- ❌ Finishing work without creating the post-task summary report → ✅ Always create the `.github/update_reports/` summary before marking the task complete (see §26)
+- ❌ Finishing work without creating the post-task summary report → ✅ Always create the `.github/update_reports/` summary before marking the task complete (see §27)
 
 ### Tool Usage Guidelines
 
@@ -96,7 +97,7 @@
 - The project's `.github/copilot-instructions.md` serves as the cross-session memory store
 - **ALWAYS check `.github/copilot-instructions.md` at task start** — it contains project patterns, conventions, and solutions
 - **During work**: Apply remembered patterns to similar problems
-- **After completion**: Update `.github/copilot-instructions.md` with learnable patterns from successful work (see [§25](#25-keeping-this-guide-up-to-date))
+- **After completion**: Update `.github/copilot-instructions.md` with learnable patterns from successful work (see [§26](#26-keeping-this-guide-up-to-date))
 
 **What to Remember (update `.github/copilot-instructions.md` with):**
 - ✅ User-stated preferences (explicit instructions)
@@ -142,7 +143,7 @@
 ```markdown
 - [ ] CRITICAL: Read this guide (`.github/copilot-instructions.md` and `.github/base-copilot-instructions.md`) thoroughly
 - [ ] Read any additional docs: README.md, AGENTS.md, .agents/*.md
-- [ ] Check if `.github/roadmap.md` exists — if not, create it (see §28)
+- [ ] Check if `.github/roadmap.md` exists — if not, create it (see §29)
 - [ ] Identify project type, frameworks, and language constraints
 - [ ] Analyze existing tools: dependencies, scripts, build tools
 - [ ] Review similar files/components for established patterns
@@ -173,10 +174,10 @@
 ### Phase 4: Post-Task Reporting (MANDATORY)
 
 ```markdown
-- [ ] Create post-task summary report in `.github/update_reports/` (see §26)
+- [ ] Create post-task summary report in `.github/update_reports/` (see §27)
 - [ ] Include minimum 5 screenshots of completed work
 - [ ] Update `.github/copilot-instructions.md` with new patterns and progress
-- [ ] Update `.github/roadmap.md` to reflect completed work (see §28)
+- [ ] Update `.github/roadmap.md` to reflect completed work (see §29)
 ```
 
 > ⚠️ **A task is NOT complete until the post-task summary report exists.** Skipping this step is a task failure.
@@ -410,8 +411,8 @@ When stuck or when solutions introduce new problems:
 - Pre-PR code cleanup completed (see above)
 - All temporary and failed files removed
 - Workspace is clean (`git status` shows only intended changes)
-- `.github/roadmap.md` is updated to reflect any changes to project state or progress (see §28)
-- Post-task summary report created in `.github/update_reports/` with screenshots (see §26) — **this is mandatory and must not be skipped**
+- `.github/roadmap.md` is updated to reflect any changes to project state or progress (see §29)
+- Post-task summary report created in `.github/update_reports/` with screenshots (see §27) — **this is mandatory and must not be skipped**
 - Three-pass review completed (see below)
 
 ### Mandatory Three-Pass Review
@@ -481,7 +482,7 @@ When stuck or when solutions introduce new problems:
 
 **Finish:** Only stop when ALL TODO items are checked, builds pass, and workspace is clean
 
-**Report:** Create the post-task summary report in `.github/update_reports/` before marking the task complete (see §26) — this is mandatory
+**Report:** Create the post-task summary report in `.github/update_reports/` before marking the task complete (see §27) — this is mandatory
 
 ---
 
@@ -947,9 +948,131 @@ For every function or method generated, verify:
 
 ---
 
+## 15. Unit Testing
+
+Write unit tests for business logic, services, and repository implementations to verify correctness and prevent regressions. Keep tests simple, focused, and fast — the goal is to catch real issues without overwhelming the development workflow.
+
+### Testing Framework
+
+**Preferred Framework:** Use **xUnit** for .NET/C# projects. For other languages, use the following standard frameworks:
+
+- **JavaScript/TypeScript:** Jest or Vitest
+- **PHP:** PHPUnit
+- **Python:** pytest
+- **Java:** JUnit 5
+- **Go:** built-in `testing` package
+
+### Core Testing Principles
+
+- **Test behavior, not implementation** — focus on inputs, outputs, and side effects, not internal details
+- **Keep tests simple** — avoid complex setup, mocking chains, or brittle assertions
+- **Test only what you own** — don't test framework code, third-party libraries, or trivial getters/setters
+- **Fast execution** — tests should complete quickly (under 1 second per test is ideal)
+- **No flakiness** — tests must be deterministic and produce the same result every time
+
+### What to Test
+
+✅ **Do test:**
+
+- Business logic and validation rules
+- Service methods with complex workflows
+- Repository methods with custom queries or data transformations
+- Edge cases and error conditions
+- Security-sensitive operations (authentication, authorization, data sanitization)
+
+❌ **Don't test:**
+
+- Simple properties or auto-properties (e.g., `{ get; set; }`)
+- Framework-provided functionality (e.g., ASP.NET Core routing, Entity Framework CRUD)
+- Third-party library internals
+- Private methods (test through public interfaces instead)
+- Configuration or environment-specific code that can't run in isolation
+
+### Avoiding Timeouts and Hangs
+
+🚨 **CRITICAL**: Tests must **never** timeout, hang, or introduce delays that could stall the test suite.
+
+**Rules:**
+
+- **No `Thread.Sleep`, `Task.Delay`, `setTimeout`, or similar blocking delays** — these slow down test execution and can cause timeouts
+- **Mock external dependencies** (databases, APIs, file systems) instead of hitting real resources
+- **Use in-memory alternatives** when possible (e.g., in-memory database for EF Core, in-memory cache for Redis)
+- **Set explicit timeouts** for async operations and fail fast if they're not met
+- **Avoid infinite loops or unbounded recursion** in test code
+- **Don't rely on timing or race conditions** — use deterministic synchronization patterns
+
+```csharp
+//❌ BAD — introduces a delay that slows down tests
+[Fact]
+public async Task ProcessOrder_Should_Complete()
+{
+    await Task.Delay(5000); //Don't do this!
+    var result = await _service.ProcessOrderAsync(orderId);
+    Assert.True(result.IsSuccess);
+}
+
+//✅ GOOD — no delays, uses mocked dependencies
+[Fact]
+public async Task ProcessOrder_Should_Complete()
+{
+    _mockPaymentService.Setup(x => x.ChargeAsync(It.IsAny<decimal>())).ReturnsAsync(true);
+    var result = await _service.ProcessOrderAsync(orderId);
+    Assert.True(result.IsSuccess);
+}
+```
+
+### Test Scope and Depth
+
+Tests should **not** be overly in-depth or exhaustive — maintaining tests shouldn't consume a massive portion of the development cycle.
+
+**Guidelines:**
+
+- **Focus on critical paths** — test the "happy path" and major error scenarios
+- **Limit test coverage goals** — aim for 60-80% coverage of business logic, not 100% coverage of everything
+- **Don't over-mock** — excessive mocking makes tests brittle and hard to maintain
+- **Keep test suites small** — if a test file exceeds 500 lines, consider splitting it by feature or responsibility
+- **Refactor tests when needed** — if tests become hard to read or maintain, simplify them or consolidate duplicates
+
+### Test Structure
+
+Use the **Arrange-Act-Assert (AAA)** pattern for clarity:
+
+```csharp
+[Fact]
+public async Task CreateLicense_Should_ReturnLicense_When_ValidInput()
+{
+    //Arrange — set up test data and dependencies
+    var userId = "user-123";
+    var licenseKey = "ABC-DEF-GHI";
+    _mockUserRepo.Setup(x => x.GetByUidAsync(userId)).ReturnsAsync(new User { Id = 1, Uid = userId });
+
+    //Act — execute the method under test
+    var result = await _service.CreateLicenseAsync(licenseKey, userId);
+
+    //Assert — verify the outcome
+    Assert.NotNull(result);
+    Assert.Equal(licenseKey, result.Key);
+}
+```
+
+### Testing Checklist
+
+When writing tests, verify:
+
+- [ ] Tests use xUnit (for C#) or the appropriate framework for the language
+- [ ] Tests follow the Arrange-Act-Assert pattern
+- [ ] Tests are focused on behavior, not implementation details
+- [ ] No delays (`Task.Delay`, `Thread.Sleep`, etc.) or blocking calls that could cause timeouts
+- [ ] External dependencies (databases, APIs, file systems) are mocked or use in-memory alternatives
+- [ ] Tests complete quickly (ideally under 1 second each)
+- [ ] Test names clearly describe what is being tested (e.g., `CreateLicense_Should_ThrowException_When_UserNotFound`)
+- [ ] Tests are deterministic and produce consistent results on every run
+
+---
+
 # Part III — Naming Conventions by Language
 
-## 15. C# Naming Conventions
+## 16. C# Naming Conventions
 
 | Element | Convention | Example |
 |---------|------------|---------|
@@ -1012,7 +1135,7 @@ public async Task<IActionResult> GetMyEndpoints([FromQuery] PaginationParams pag
 
 ---
 
-## 16. C / C++ Naming Conventions
+## 17. C / C++ Naming Conventions
 
 ### C (C11)
 
@@ -1052,7 +1175,7 @@ ValidationResult* validate_license(const char* license_key, const char* hardware
 
 ---
 
-## 17. PHP Naming Conventions
+## 18. PHP Naming Conventions
 
 | Element | Convention | Example |
 |---------|------------|---------|
@@ -1068,7 +1191,7 @@ ValidationResult* validate_license(const char* license_key, const char* hardware
 
 ---
 
-## 18. JavaScript / TypeScript Naming Conventions
+## 19. JavaScript / TypeScript Naming Conventions
 
 | Element | Convention | Example |
 |---------|------------|---------|
@@ -1088,7 +1211,7 @@ ValidationResult* validate_license(const char* license_key, const char* hardware
 
 ---
 
-## 19. SQL / Database Naming Conventions
+## 20. SQL / Database Naming Conventions
 
 **Name Prefixes:** Use project-specific prefixes for all tables to avoid collisions and clarify ownership (e.g., `fr_` for FastRider, `hf_` for HyperFleet, `app_` for shared application tables).
 
@@ -1114,7 +1237,7 @@ Every primary entity should have TWO identifiers:
 
 ---
 
-## 20. CSS / SCSS Naming Conventions
+## 21. CSS / SCSS Naming Conventions
 
 | Element | Convention | Example |
 |---------|------------|---------|
@@ -1148,7 +1271,7 @@ Every primary entity should have TWO identifiers:
 
 ---
 
-## 21. General File & Directory Naming
+## 22. General File & Directory Naming
 
 | Element | Convention | Example |
 |---------|------------|---------|
@@ -1167,7 +1290,7 @@ Every primary entity should have TWO identifiers:
 
 > **⚠️ IMPORTANT**: This section contains **rules and guidelines** for how agents should document project context. All actual project-specific details (project overview, repository structure, architecture, build commands, database schema, etc.) belong **exclusively** in the project's `copilot-instructions.md` file — **never in this base file**.
 
-## 22. Project Context Documentation Rules
+## 23. Project Context Documentation Rules
 
 All project-specific information must be documented in the project's `copilot-instructions.md`. This base file must **never** contain project-specific details, placeholders, or templates that invite modification.
 
@@ -1194,7 +1317,7 @@ The following information should be maintained in the project's `copilot-instruc
 
 ---
 
-## 23. Database Change Rules
+## 24. Database Change Rules
 
 When making database changes in any project, ensure ALL of these are in sync:
 
@@ -1215,7 +1338,7 @@ When making database changes in any project, ensure ALL of these are in sync:
 
 ---
 
-## 24. Site Templates & Design References
+## 25. Site Templates & Design References
 
 ### Shared Template Registry (Web Projects)
 
@@ -1271,7 +1394,7 @@ When copying an element from a template page, check for and include:
 
 # Part V — Documentation & Self-Evolution
 
-## 25. Keeping This Guide Up to Date
+## 26. Keeping This Guide Up to Date
 
 ### When to Update
 
@@ -1296,10 +1419,10 @@ Update the corresponding sections in `copilot-instructions.md`:
 - Update the Repository Structure tree
 - Add new architecture patterns if they differ from existing ones
 - Update build commands if they change
-- Update database schema documentation (following the rules in §23 of this base file)
+- Update database schema documentation (following the rules in §24 of this base file)
 - Add new shared utilities to the DRY section (§9)
 - Update the Current Implementation Status section
-- Update `.github/roadmap.md` with current progress and any changes to planned work (see §28)
+- Update `.github/roadmap.md` with current progress and any changes to planned work (see §29)
 
 ### How to Update
 
@@ -1312,7 +1435,7 @@ Update the corresponding sections in `copilot-instructions.md`:
 
 ---
 
-## 26. Post-Task Summary Reports
+## 27. Post-Task Summary Reports
 
 🚨 **NON-NEGOTIABLE: Every agent session that completes significant work MUST create a post-task summary document in the `.github/update_reports/` directory. A task is NOT considered complete without this report. This is a mandatory deliverable — not optional.**
 
@@ -1414,7 +1537,7 @@ If additional work is needed after a report is created, update the existing docu
 
 ---
 
-## 27. Agent Work Ethic & Autonomy
+## 28. Agent Work Ethic & Autonomy
 
 ### Core Principles
 
@@ -1438,7 +1561,7 @@ If additional work is needed after a report is created, update the existing docu
 
 9. **Update `.github/copilot-instructions.md`** after every major modification so the next agent task starts with accurate context. **Never modify `.github/base-copilot-instructions.md`.**
 
-10. **Maintain the project roadmap** (`.github/roadmap.md`) — update it after every task to reflect current progress, completed work, and remaining items (see §28).
+10. **Maintain the project roadmap** (`.github/roadmap.md`) — update it after every task to reflect current progress, completed work, and remaining items (see §29).
 
 11. **Create post-task summary reports** with screenshots for every significant session.
 
@@ -1494,7 +1617,7 @@ Agents are **allowed and encouraged** to generate and incorporate media:
 
 ---
 
-## 28. Project Roadmap Management
+## 29. Project Roadmap Management
 
 **REQUIRED: Every project MUST have a `.github/roadmap.md` file that serves as the living document for project progress and planning.**
 
