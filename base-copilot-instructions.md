@@ -1396,6 +1396,24 @@ When copying an element from a template page, check for and include:
 
 ## 26. Keeping This Guide Up to Date
 
+> **🚨 NON-NEGOTIABLE**: After **every** code change that affects architecture, adds/removes features, modifies database schemas, completes roadmap items, or changes build/run/test commands, the agent **MUST** update the following files. **Failure to update these files after changes means the task is NOT complete.** These updates are as important as the code changes themselves — they ensure that any future agent session (or human developer) starts with accurate, current project context.
+>
+> **1. `.github/copilot-instructions.md`:**
+> - Update the **Current Implementation Status** section to reflect completed, in-progress, and planned work
+> - Update the **Repository Structure** if new directories or key files were added
+> - Update **Build & Run Commands** if they changed
+> - Update **Database Schema & Migrations** if the schema changed
+> - Update **Architecture Patterns** if new patterns were introduced
+> - Add any new **Project-Specific Overrides** discovered during development
+> - This file is the agent's **cross-session memory** — keeping it accurate ensures continuity
+>
+> **2. `.github/roadmap.md`:**
+> - Mark completed items as done
+> - Update current phase and milestone progress
+> - Add newly discovered work items or technical debt
+> - Adjust timelines and priorities based on completed work
+> - Reflect any scope changes or new requirements
+
 ### When to Update
 
 Update `.github/copilot-instructions.md` (not this base file) after any of the following:
