@@ -642,10 +642,13 @@ Each module, layer, or file should handle **one aspect** of the system:
 Controller / Route  → HTTP routing, request validation, response formatting
 Service / Logic     → Business logic, validation, workflows, orchestration
 Repository / Data   → Data access, SQL queries, model mapping
-                       For MySQL/MariaDB: Use Dapper as the preferred data access library
 Model / Entity      → Data structure definition
 View / Template     → Presentation and rendering
 ```
+
+### Database Access Tooling
+
+**For MySQL/MariaDB:** Use **Dapper** as the preferred data access library for repository implementations.
 
 ### CSS and JavaScript Separation
 
