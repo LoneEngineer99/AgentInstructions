@@ -35,7 +35,6 @@ If you are working inside the Starter Kit repository itself, you may read the fi
 ### 🚀 [NEW PROJECT INITIALIZATION](#-new-project-initialization) ← **DELETE THIS AFTER PROJECT SETUP**
 
 ### [Project Context & Architecture](#project-context--architecture)
-- [⚠️ CRITICAL — Mandatory File Updates After Every Change](#️-critical--mandatory-file-updates-after-every-change)
 - [Project Overview](#project-overview)
 - [Repository Structure](#repository-structure)
 - [Architecture Patterns](#architecture-patterns)
@@ -454,30 +453,6 @@ Once you have:
 **Update the Table of Contents** to remove the reference to this section.
 
 **Commit the changes** with a message like: "Complete project initialization for [Project Name]"
-
----
-
-# ⚠️ CRITICAL — Mandatory File Updates After Every Change
-
-> **🚨 NON-NEGOTIABLE**: After **every** code change that affects architecture, adds/removes features, modifies database schemas, completes roadmap items, or changes build/run/test commands, the agent **MUST** update the following files:
-
-### 1. `.github/copilot-instructions.md` (this file)
-- Update the **Current Implementation Status** section to reflect completed, in-progress, and planned work
-- Update the **Repository Structure** if new directories or key files were added
-- Update **Build & Run Commands** if they changed
-- Update **Database Schema & Migrations** if the schema changed
-- Update **Architecture Patterns** if new patterns were introduced
-- Add any new **Project-Specific Overrides** discovered during development
-- This file is the agent's **cross-session memory** — keeping it accurate ensures continuity
-
-### 2. `.github/roadmap.md`
-- Mark completed items as done
-- Update current phase and milestone progress
-- Add newly discovered work items or technical debt
-- Adjust timelines and priorities based on completed work
-- Reflect any scope changes or new requirements
-
-**Failure to update these files after changes means the task is NOT complete.** These updates are as important as the code changes themselves — they ensure that any future agent session (or human developer) starts with accurate, current project context.
 
 ---
 
