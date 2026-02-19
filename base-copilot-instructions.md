@@ -193,7 +193,10 @@
 - Maintain architectural consistency with existing patterns
 - Respect the existing package manager and framework choices
 - Follow existing naming conventions (see Part III)
-- 🚨 **NEVER introduce containerization** (Docker, docker-compose, Kubernetes, Dockerfiles, container orchestration, etc.) unless the user **explicitly requests** it. Do not suggest, create, or add any container-related files, configurations, or dependencies on your own
+- 🚨 **NEVER introduce containerization** (Docker, docker-compose, Kubernetes, Dockerfiles, container orchestration, etc.) unless the user **explicitly requests** it. Do not suggest, create, or add any container-related files, configurations, or dependencies on your own. This includes:
+  - **Do NOT add containerization during roadmap planning** — never include Docker, Kubernetes, or containerization as planned items in `.github/roadmap.md` unless the user has explicitly requested it
+  - **Do NOT suggest containerization** — do not recommend or propose containerization as a solution or enhancement
+  - **Do NOT create container-related files** — no Dockerfiles, docker-compose.yml, Kubernetes manifests, or similar files
 
 ---
 
@@ -1784,6 +1787,7 @@ When updating the roadmap, ensure:
 - [ ] Known issues are documented
 - [ ] Milestones table is current
 - [ ] The file is committed alongside related code changes
+- [ ] 🚨 **Containerization is NOT included** — do not add Docker, Kubernetes, or any containerization-related items to the roadmap unless the user has explicitly requested it (see §2 Repository Conservation Rules)
 
 ---
 
