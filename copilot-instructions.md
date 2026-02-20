@@ -2,11 +2,13 @@
 applyTo: '**'
 ---
 
-> **⚠️ IMPORTANT — Read Before Proceeding:** A single fetch to a remote repository's `.md` file may truncate the returned content, causing you to miss critical instructions. You **MUST** use multiple fetches (paginated or offset-based) to ensure you read **all** of the content in its entirety. Do not assume a single request has retrieved the full document.
+> **⚠️ IMPORTANT — Reading Strategy:**
+> - **During project initialization only**: Perform a full read of both this file and `base-copilot-instructions.md` using multiple fetches (paginated or offset-based) to read all content in its entirety. Store at least 30 memories from this reading (see Step 6 in the Initialization Protocol below). A single fetch may truncate content — use multiple offset-based requests to read the entire document.
+> - **On regular tasks (outside initialization)**: Read the Table of Contents (section titles) of both files to orient yourself, then fetch and read only the specific sections relevant to your current task. Do **not** re-read the entire document from scratch on every iteration.
 
 # Project Copilot Instructions — Agent Guide
 
-> **Purpose:** This document is the **single source of truth** for AI coding agents working on this project. It extends the base instructions with project-specific context. Read both this file and the base instructions fully before every task. Keep this file up to date after every major modification. **Continue working until the problem is completely solved.** Before performing any task, briefly list the sub-steps you intend to follow.
+> **Purpose:** This document is the **single source of truth** for AI coding agents working on this project. It extends the base instructions with project-specific context. During project initialization, read both this file and the base instructions fully and store memories. On regular tasks, read the Table of Contents of both files and refer to specific sections as needed. Keep this file up to date after every major modification. **Continue working until the problem is completely solved.** Before performing any task, briefly list the sub-steps you intend to follow.
 
 ---
 
@@ -22,7 +24,7 @@ If you are working inside the Starter Kit repository itself, you may read the fi
 
 ### Rules for Base Instructions
 
-1. **ALWAYS fetch and read** the base instructions from the URL above at the start of every task.
+1. **During project initialization**: fetch and read the base instructions in full using multiple fetches (paginated if needed) and store memories. **On regular tasks**: fetch the Table of Contents, then read specific sections relevant to your task.
 2. **ALWAYS follow** all rules, conventions, principles, and standards defined in the base instructions.
 3. **NEVER copy** `base-copilot-instructions.md` into your project — always reference it by URL from the Starter Kit repository.
 4. **NEVER modify** `base-copilot-instructions.md` — it is a shared document used across multiple projects.

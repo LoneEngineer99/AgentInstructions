@@ -1,10 +1,12 @@
-> **⚠️ IMPORTANT — Read Before Proceeding:** A single fetch to a remote repository's `.md` file may truncate the returned content, causing you to miss critical instructions. You **MUST** use multiple fetches (paginated or offset-based) to ensure you read **all** of the content in its entirety. Do not assume a single request has retrieved the full document.
+> **⚠️ IMPORTANT — Reading Strategy:**
+> - **During project initialization only**: Perform a full read of this file using multiple fetches (paginated or offset-based) to read all content in its entirety. Store memories from this reading (see §1 Memory Management and the Initialization Protocol in `copilot-instructions.md`). A single fetch may truncate content — use multiple offset-based requests to read the entire document.
+> - **On regular tasks (outside initialization)**: Read the Table of Contents (section titles) to orient yourself, then fetch and read only the specific sections relevant to your current task. Do **not** re-read the entire document from scratch on every iteration.
 
 # Base Copilot Instructions — Agent Guide
 
 > **⚠️ DO NOT MODIFY THIS FILE.** This is the shared base instructions document. It is referenced by `copilot-instructions.md` and must not be edited by agents. All project-specific customizations belong in `copilot-instructions.md`.
 
-> **Purpose:** This document provides the **foundational rules, conventions, and standards** for AI coding agents. Read it fully before every task. Follow all instructions unless explicitly overridden in `copilot-instructions.md`. **Continue working until the problem is completely solved.** Before performing any task, briefly list the sub-steps you intend to follow.
+> **Purpose:** This document provides the **foundational rules, conventions, and standards** for AI coding agents. During project initialization, read it fully and store memories. On regular tasks, read the Table of Contents and refer to specific sections as needed. Follow all instructions unless explicitly overridden in `copilot-instructions.md`. **Continue working until the problem is completely solved.** Before performing any task, briefly list the sub-steps you intend to follow.
 
 ---
 
@@ -65,7 +67,7 @@
 
 **Always do these:**
 
-- Read this entire guide before starting any task
+- During project initialization: read this entire guide fully (using multiple fetches as needed) and store at least 30 memories; on regular tasks: read the Table of Contents and refer to specific sections as needed
 - Start working immediately after brief analysis
 - Make tool calls right after announcing them
 - Execute plans as you create them
@@ -143,7 +145,7 @@
 ### Phase 1: MANDATORY Repository Analysis
 
 ```markdown
-- [ ] CRITICAL: Read this guide (`.github/copilot-instructions.md` and `.github/base-copilot-instructions.md`) thoroughly
+- [ ] CRITICAL: Read the Table of Contents in both `.github/copilot-instructions.md` and `.github/base-copilot-instructions.md`; then fetch any sections directly relevant to your task. (Full read of both files is required only during project initialization — see Initialization Protocol in `copilot-instructions.md`)
 - [ ] Read any additional docs: README.md, AGENTS.md, .agents/*.md
 - [ ] Check if `.github/roadmap.md` exists — if not, create it (see §29)
 - [ ] Identify project type, frameworks, and language constraints
@@ -1403,6 +1405,12 @@ When making database changes in any project, ensure ALL of these are in sync:
 ---
 
 ## 25. Site Templates & Design References
+
+### UI Design Reference (Claude Skill)
+
+> For advanced UI/UX design work, use the **[ui-ux-pro-max-skill](https://github.com/nextlevelbuilder/ui-ux-pro-max-skill)** — a Claude skill for UI design maintained in the `nextlevelbuilder` repository. Read the skill's instructions from there before designing or generating UI components to get expert-level layout, visual hierarchy, and design-pattern guidance.
+>
+> **URL:** `https://github.com/nextlevelbuilder/ui-ux-pro-max-skill`
 
 ### Shared Template Registry (Web Projects)
 
