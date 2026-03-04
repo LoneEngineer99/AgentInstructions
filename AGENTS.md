@@ -1,10 +1,16 @@
-# AGENTS.md — The Single Source of Truth for All AI Agent Instructions
+# AGENTS.md — Canonical Rules for All AI Coding Agents
 
-> **🚨 CRITICAL — AGENTS MUST READ THIS ENTIRE FILE.**
-> This file consolidates ALL agent instructions into one document. There is no other file to read.
+> **🚨 CRITICAL — THIS IS THE CANONICAL RULES FILE.**
+> This file contains the **master rules, conventions, and standards** that all AI coding agents must follow.
 > A single fetch will truncate this content — use **multiple paginated/offset-based reads** to consume it fully.
 > - `copilot-instructions.md` is **deprecated** and redirects here (it remains only for backwards compatibility).
 > - `base-copilot-instructions.md` content is **fully included** below — do not fetch it separately.
+
+> **🏗️ How Projects Use This File:**
+> - **This file is NOT copied into projects.** It is always **read by URL** from this repository.
+> - **Each project has its own local `AGENTS.md`** that references this file for the base rules and contains the project's own notes, context, architecture, build commands, and status.
+> - **Canonical Rules URL:** `https://raw.githubusercontent.com/LoneEngineer99/AgentInstructions/main/AGENTS.md`
+> - See §30 for instructions on creating a project's local `AGENTS.md` with the correct template.
 
 > **📖 Reading Strategy:**
 > - **During project initialization**: Read this ENTIRE file using multiple fetches. Store at least **30 memories** (see §30, Step 6). This is mandatory — partial reads miss critical rules.
@@ -51,7 +57,7 @@
 25. [Site Templates & Design References](#25-site-templates--design-references)
 
 ### Part V — Documentation & Self-Evolution
-26. [Keeping This Guide Up to Date](#26-keeping-this-guide-up-to-date)
+26. [Keeping Project Documentation Up to Date](#26-keeping-project-documentation-up-to-date)
 27. [Post-Task Summary Reports](#27-post-task-summary-reports)
 28. [Agent Work Ethic & Autonomy](#28-agent-work-ethic--autonomy)
 29. [Project Roadmap Management](#29-project-roadmap-management)
@@ -59,7 +65,7 @@
 ### Part VI — New Project Initialization Protocol
 30. [New Project Initialization](#30-new-project-initialization)
 
-### Part VII — Project Context Template
+### Part VII — Local Project `AGENTS.md` Reference
 31. [Project Context Template](#31-project-context-template)
 
 ---
@@ -71,9 +77,9 @@
 - **Work autonomously** — research, debug, and fix issues without waiting for confirmation
 - **Replace anti-patterns**: "Would you like me to proceed?" → just proceed immediately
 - **Track progress** via TODO lists — review after each phase, never lose track
-- **Update `AGENTS.md`** (§31 Project Context Template) after every major code change (see §26)
+- **Update your project's local `AGENTS.md`** (project notes & context) after every major code change (see §26)
 - **Create post-task reports** in `.github/update_reports/` with minimum 5 screenshots (see §27)
-- **Update roadmap** (`.github/roadmap.md`) after every task (see §29)
+- **Update your project's roadmap** (`.github/roadmap.md`) after every task (see §29)
 - **Three-pass review** (functional, visual, security) is mandatory before task completion (see §7)
 - **No containerization** (Docker, Kubernetes) unless explicitly requested
 
@@ -124,12 +130,12 @@
 - Verify information is current and applies to the specific context
 
 **Memory Management:**
-- This file (`AGENTS.md`) serves as the cross-session memory store
-- **ALWAYS check this file at task start** — it contains project patterns, conventions, and solutions
+- The project's **local `AGENTS.md`** serves as the cross-session memory store for project-specific context
+- **ALWAYS check the local `AGENTS.md` at task start** — it contains project patterns, conventions, and solutions
 - **During work**: Apply remembered patterns to similar problems
-- **After completion**: Update `AGENTS.md` with learnable patterns from successful work (see [§26](#26-keeping-this-guide-up-to-date))
+- **After completion**: Update the project's local `AGENTS.md` with learnable patterns from successful work (see [§26](#26-keeping-this-guide-up-to-date))
 
-**What to Remember (update `AGENTS.md` with):**
+**What to Remember (update the project's local `AGENTS.md` with):**
 - ✅ User-stated preferences (explicit instructions)
 - ✅ Project-wide conventions (file organization, naming)
 - ✅ Recurring problem solutions (error fixes, config patterns)
@@ -171,7 +177,8 @@
 ### Phase 1: MANDATORY Repository Analysis
 
 ```markdown
-- [ ] CRITICAL: Read the Table of Contents of this file (`AGENTS.md`); then fetch any sections directly relevant to your task. (Full read is required only during project initialization — see §30)
+- [ ] CRITICAL: Read the project's local `AGENTS.md` for project-specific context and notes
+- [ ] CRITICAL: Fetch the canonical rules from this repo's `AGENTS.md` (by URL or locally); read the Table of Contents, then fetch sections relevant to your task. (Full read is required only during project initialization — see §30)
 - [ ] Read any additional docs: README.md, .agents/*.md
 - [ ] Check if `.github/roadmap.md` exists — if not, create it (see §29)
 - [ ] Identify project type, frameworks, and language constraints
@@ -206,8 +213,8 @@
 ```markdown
 - [ ] Create post-task summary report in `.github/update_reports/` (see §27)
 - [ ] Include minimum 5 screenshots of completed work
-- [ ] Update `AGENTS.md` with new patterns and progress
-- [ ] Update `.github/roadmap.md` to reflect completed work (see §29)
+- [ ] Update the project's local `AGENTS.md` with new patterns and progress
+- [ ] Update the project's `.github/roadmap.md` to reflect completed work and status (see §29)
 ```
 
 > ⚠️ **A task is NOT complete until the post-task summary report exists.** Skipping this step is a task failure.
@@ -347,7 +354,7 @@ When encountering issues requiring research:
 3. **Isolate the cause** — narrow down to the smallest failing unit
 4. **Fix the root cause** — don't patch symptoms
 5. **Verify the fix** — ensure the original error is gone and no regressions introduced
-6. **Document the fix** — if the error is likely to recur, add it to `AGENTS.md`
+6. **Document the fix** — if the error is likely to recur, add it to the project's local `AGENTS.md`
 
 ---
 
@@ -400,7 +407,7 @@ When stuck or when solutions introduce new problems:
   - Restore configuration files
 - [ ] VERIFY CLEAN: Check git status to ensure only intended changes remain
 - [ ] DOCUMENT: Record failed approach and specific reasons for failure
-- [ ] CHECK DOCS: Review `AGENTS.md` and any related documentation
+- [ ] CHECK DOCS: Review the project's local `AGENTS.md`, the canonical rules, and any related documentation
 - [ ] RESEARCH: Search online for alternative patterns using web search / `fetch`
 - [ ] AVOID: Don't repeat documented failed patterns
 - [ ] IMPLEMENT: Try new approach based on research and repository patterns
@@ -636,7 +643,7 @@ Before writing any utility function, CSS class, or helper:
 1. **Check existing shared files first** — utils.js, utilities.css, base classes
 2. **Use existing utilities** instead of creating local versions
 3. **Extend shared utilities** if a new common pattern emerges
-4. **Document additions** — update `AGENTS.md` when adding new shared utilities
+4. **Document additions** — update the project's local `AGENTS.md` when adding new shared utilities
 
 ---
 
@@ -1384,11 +1391,11 @@ Every primary entity should have TWO identifiers:
 
 ## 23. Project Context Documentation Rules
 
-All project-specific information must be documented in the Project Context Template (§31) of this file.
+All project-specific information must be documented in the **project's own local `AGENTS.md`** file — NOT in this canonical rules file.
 
-### What Belongs in `AGENTS.md`
+### What Belongs in the Project's Local `AGENTS.md`
 
-The following information should be maintained in the Project Context Template (§31):
+The following information should be maintained in the project's local `AGENTS.md`:
 
 - **Project Overview** — project name, description, components, tech stack
 - **Repository Structure** — directory tree showing actual project layout
@@ -1397,14 +1404,16 @@ The following information should be maintained in the Project Context Template (
 - **Database Schema & Migrations** — schema location, migration details, current tables
 - **Site Templates & Design References** — template sources and usage guidelines
 - **Current Implementation Status** — what's completed, in progress, and planned
-- **Project-Specific Overrides** — any rules that override this base document
+- **Project-Specific Overrides** — any rules that override the canonical rules
 
 ### Rules
 
-1. **Always update the Project Context Template (§31)** when project context changes
-2. **Use the initialization wizard (§30)** when setting up a new project
-3. **Reference Parts I–V for universal rules** — coding standards, naming conventions, principles
-4. **Reference §31 for project-specific context** — architecture, commands, status
+1. **Never put project-specific information in this canonical file** — it is shared across all projects
+2. **Always update the project's local `AGENTS.md`** when project context changes
+3. **Always update the project's `.github/roadmap.md`** with status changes after every task
+4. **Use the initialization wizard (§30)** when setting up a new project
+5. **Reference Parts I–V (this canonical file) for universal rules** — coding standards, naming conventions, principles
+6. **Reference the local `AGENTS.md` for project-specific context** — architecture, commands, status
 
 ---
 
@@ -1510,36 +1519,38 @@ When copying an element from a template page, check for and include:
 
 # Part V — Documentation & Self-Evolution
 
-## 26. Keeping This Guide Up to Date
+## 26. Keeping Project Documentation Up to Date
 
-> **🚨 NON-NEGOTIABLE**: After **every** code change that affects architecture, adds/removes features, modifies database schemas, completes roadmap items, or changes build/run/test commands, the agent **MUST** update the following files. **Failure to update these files after changes means the task is NOT complete.** These updates are as important as the code changes themselves — they ensure that any future agent session (or human developer) starts with accurate, current project context.
+> **🚨 NON-NEGOTIABLE**: After **every** code change that affects architecture, adds/removes features, modifies database schemas, completes roadmap items, or changes build/run/test commands, the agent **MUST** update the following files **in the project's repository**. **Failure to update these files after changes means the task is NOT complete.** These updates are as important as the code changes themselves — they ensure that any future agent session (or human developer) starts with accurate, current project context.
 >
-> **1. `AGENTS.md` (§31 — Project Context Template):**
+> **⚠️ IMPORTANT**: The files below refer to the **project's own local files** — NOT this canonical rules file. Never modify the canonical `AGENTS.md` in the AgentInstructions repository. Update the project's local `AGENTS.md` instead.
+>
+> **1. The project's local `AGENTS.md` (project notes & context):**
 > - Update the **Current Implementation Status** section to reflect completed, in-progress, and planned work
 > - Update the **Repository Structure** if new directories or key files were added
 > - Update **Build & Run Commands** if they changed
 > - Update **Database Schema & Migrations** if the schema changed
 > - Update **Architecture Patterns** if new patterns were introduced
 > - Add any new **Project-Specific Overrides** discovered during development
-> - This file is the agent's **cross-session memory** — keeping it accurate ensures continuity
+> - The local `AGENTS.md` is the agent's **cross-session memory** for that project — keeping it accurate ensures continuity
 >
-> **2. `.github/roadmap.md`:**
+> **2. The project's `.github/roadmap.md`:**
 > - Mark completed items as done
 > - Update current phase and milestone progress
 > - Add newly discovered work items or technical debt
 > - Adjust timelines and priorities based on completed work
 > - Reflect any scope changes or new requirements
 >
-> **3. `README.md`:**
+> **3. The project's `README.md`:**
 > - Update project description if the scope or purpose changed
 > - Update the technology stack if new tools or frameworks were added
 > - Update getting started / build / run instructions if they changed
 > - Update key features list if features were added or removed
-> - Keep the README consistent with `AGENTS.md` and `roadmap.md`
+> - Keep the README consistent with the local `AGENTS.md` and `roadmap.md`
 
 ### When to Update
 
-Update the Project Context Template (§31) after any of the following:
+Update the project's local `AGENTS.md` after any of the following:
 
 - Adding a new major feature or domain entity
 - Changing the project structure (new folders, reorganization)
@@ -1554,27 +1565,27 @@ Update the Project Context Template (§31) after any of the following:
 
 ### What to Update
 
-Update the corresponding sections in the Project Context Template (§31):
+Update the corresponding sections in the project's local `AGENTS.md`:
 
 - Add new entities to the Project Overview section
 - Update the Repository Structure tree
 - Add new architecture patterns if they differ from existing ones
 - Update build commands if they change
-- Update database schema documentation (following the rules in §24 of this base file)
+- Update database schema documentation (following the rules in §24)
 - Add new shared utilities to the DRY section (§9)
 - Update the Current Implementation Status section
-- Update `.github/roadmap.md` with current progress and any changes to planned work (see §29)
+- Update the project's `.github/roadmap.md` with current progress and any changes to planned work (see §29)
 - Update `README.md` to reflect any changes to features, tech stack, or build/run instructions
 
 ### How to Update
 
 1. Make the code changes first
-2. Update the relevant sections of `AGENTS.md`
+2. Update the relevant sections of the project's local `AGENTS.md`
 3. Update `README.md` if the changes affect features, tech stack, or setup instructions
-4. Ensure the Table of Contents still matches section headers
-5. Commit `AGENTS.md` and `README.md` alongside the code changes
-6. **CRITICAL**: The Project Context Template (§31) is the agent's cross-session memory — keeping it accurate ensures continuity
-7. Keep the Table of Contents in sync with section headers
+4. Update the project's `.github/roadmap.md` to reflect completed work and status changes
+5. Commit all updated files alongside the code changes
+6. **CRITICAL**: The project's local `AGENTS.md` is the agent's cross-session memory — keeping it accurate ensures continuity
+7. **NEVER modify the canonical `AGENTS.md`** in the AgentInstructions repository — it contains shared base rules
 
 ---
 
@@ -1643,7 +1654,7 @@ Each post-task summary must:
 - [ ] All planned features implemented
 - [ ] Screenshots/GIFs demonstrate functionality
 - [ ] Code follows project conventions
-- [ ] Documentation updated (AGENTS.md)
+- [ ] Documentation updated (local AGENTS.md)
 - [ ] Builds pass
 - [ ] Ready for review
 
@@ -1690,7 +1701,7 @@ If additional work is needed after a report is created, update the existing docu
 
 2. **Be thorough.** Complete the entire task, not just the minimum. If adding a page, add the menu item, the locale translations, the JS file, the loading states, the animations, and the responsive design.
 
-3. **Be proactive.** If a related file needs updating (locale files, menu, database schema, `AGENTS.md`), update it without being asked.
+3. **Be proactive.** If a related file needs updating (locale files, menu, database schema, the project's local `AGENTS.md`), update it without being asked.
 
 4. **Be quality-focused.** Run all three review passes. Fix every issue found. Do not deliver code with known bugs or visual defects.
 
@@ -1702,9 +1713,9 @@ If additional work is needed after a report is created, update the existing docu
 
 8. **Run the three-pass review** (functional, visual, security) for every modification before considering the task complete. This is non-negotiable.
 
-9. **Update `AGENTS.md`** (§31) after every major modification so the next agent task starts with accurate context.
+9. **Update the project's local `AGENTS.md`** after every major modification so the next agent task starts with accurate context. **Never modify the canonical `AGENTS.md`** in the AgentInstructions repository.
 
-10. **Maintain the project roadmap** (`.github/roadmap.md`) — update it after every task to reflect current progress, completed work, and remaining items (see §29).
+10. **Maintain the project's roadmap** (`.github/roadmap.md`) — update it after every task to reflect current progress, completed work, and remaining items (see §29).
 
 11. **Create post-task summary reports** with screenshots for every significant session.
 
@@ -1746,8 +1757,8 @@ After completing work, immediately:
 - Verify functionality works end-to-end
 - Improve documentation
 - Refactor as needed
-- Update `AGENTS.md` with new patterns and progress
-- Update `.github/roadmap.md` to reflect completed work and next steps
+- Update the project's local `AGENTS.md` with new patterns and progress
+- Update the project's `.github/roadmap.md` to reflect completed work and next steps
 
 ### Autonomous Media & Assets
 
@@ -1770,7 +1781,7 @@ The `roadmap.md` file provides a high-level view of the entire project — what 
 
 ### Creation
 
-If `.github/roadmap.md` does not exist, the agent **MUST** create it during Phase 1 (Repository Analysis) before starting any other work. Populate it by analyzing the codebase, README, `AGENTS.md` (especially the "Project Context & Architecture" section), and any other project documentation.
+If `.github/roadmap.md` does not exist, the agent **MUST** create it during Phase 1 (Repository Analysis) before starting any other work. Populate it by analyzing the codebase, README, the project's local `AGENTS.md` (especially the project context sections), and any other project documentation.
 
 ### Required Structure
 
@@ -1806,7 +1817,7 @@ The roadmap must follow this structure:
 
 ## Architecture & Technical Notes
 
-[Any important architectural decisions, technical constraints, or notes that affect the project direction. Reference relevant sections of AGENTS.md where appropriate.]
+[Any important architectural decisions, technical constraints, or notes that affect the project direction. Reference relevant sections of the project's local AGENTS.md or the canonical rules where appropriate.]
 
 ## Milestones
 
@@ -1844,11 +1855,176 @@ When updating the roadmap, ensure:
 
 ## 30. New Project Initialization
 
-> **⚠️ CRITICAL — READ THIS FIRST**: This section is for **new projects only**. If this is your first time working on a project based on this Starter Kit template, you **MUST** complete the initialization process below before starting any development work. **Delete this entire §30** once project initialization is complete and the Project Context Template (§31) is fully populated.
+> **⚠️ CRITICAL — READ THIS FIRST**: This section is for **new projects only**. If this is your first time working on a project based on this Starter Kit template, you **MUST** complete the initialization process below before starting any development work. **Delete this entire §30 from the project's local `AGENTS.md`** once project initialization is complete and the project context sections are fully populated.
 
 ## Purpose
 
-This Starter Kit is a template designed to be adapted for various types of projects. Before you begin development, you need to gather comprehensive information about the specific project you're building to properly configure the development environment and documentation.
+This Starter Kit provides a canonical set of rules and conventions for AI agents. Each project creates its own **local `AGENTS.md`** that:
+1. **References this canonical file by URL** for the base rules (Parts I–V, §1–§29)
+2. **Contains the project's own notes**, context, architecture, build commands, and status
+3. **Serves as the agent's cross-session memory** for that specific project
+
+The canonical rules are **never copied** into projects — they are always fetched by URL from this repository.
+
+## Step 0: Create the Project's Local `AGENTS.md`
+
+Before doing anything else, create an `AGENTS.md` file in the project's root directory using the template below. This is the file that agents will read first when working on the project.
+
+**Create `AGENTS.md` in the project root with this template:**
+
+````markdown
+# AGENTS.md — Project Agent Instructions
+
+> **🚨 CRITICAL — AGENTS MUST READ THIS FILE AND THE CANONICAL RULES.**
+> This file contains **project-specific context, notes, and status** for AI coding agents.
+> For the **base rules, conventions, and standards**, fetch and read the canonical rules file:
+>
+> **Canonical Rules URL:** `https://raw.githubusercontent.com/LoneEngineer99/AgentInstructions/main/AGENTS.md`
+>
+> - **During project initialization**: Fetch and read the canonical rules file IN FULL using multiple fetches. Store at least **30 memories** (see §30 in the canonical file). Then complete the initialization wizard below.
+> - **On regular tasks**: Fetch the Table of Contents from the canonical rules file, then read only the sections relevant to your task. Always read THIS local file first for project context.
+> - **After code changes**: Update THIS file with new patterns, progress, and status. Update `.github/roadmap.md` with completed work. Update `README.md` if features or setup changed.
+
+---
+
+## Canonical Rules Reference
+
+**You MUST fetch and follow the canonical rules before starting any task.**
+
+> **URL:** `https://raw.githubusercontent.com/LoneEngineer99/AgentInstructions/main/AGENTS.md`
+
+The canonical rules contain:
+- **Part I** — Agent execution protocols, TODO management, error debugging, completion criteria
+- **Part II** — Software engineering principles (SOLID, DRY, KISS, YAGNI, security)
+- **Part III** — Naming conventions for C#, C/C++, PHP, JS/TS, SQL, CSS/SCSS
+- **Part IV** — Project context guidelines, database change rules, site templates
+- **Part V** — Documentation rules, post-task reporting, agent work ethic, roadmap management
+
+**Rules:**
+1. **ALWAYS follow** all rules and standards in the canonical file.
+2. **NEVER copy** the canonical rules into this file — always fetch by URL.
+3. **If this file conflicts with the canonical rules**, this file takes precedence — project-specific overrides win.
+4. **Update THIS file** (not the canonical file) after every major code change.
+
+---
+
+## Project Overview
+
+<!-- AGENT: Replace this section with actual project details after initialization -->
+
+**[Project Name]** — [Brief description of what the project does].
+
+| Component | Path | Purpose | Tech Stack |
+|-----------|------|---------|------------|
+| **[Component 1]** | `path/` | [Purpose] | [Technologies] |
+| **[Component 2]** | `path/` | [Purpose] | [Technologies] |
+
+---
+
+## Repository Structure
+
+<!-- AGENT: Replace this tree with actual project structure -->
+
+```
+ProjectRoot/
+├── AGENTS.md                          # Agent instructions (this file — project notes & context)
+├── .github/
+│   ├── roadmap.md                     # Project roadmap and status
+│   └── update_reports/                # Post-task summary documentation
+│       └── img/                       # Screenshots and media for reports
+├── src/                               # Source code
+├── tests/                             # Test files
+├── docs/                              # Documentation
+└── README.md
+```
+
+---
+
+## Architecture Patterns
+
+<!-- AGENT: Document the actual architecture patterns used in this project -->
+
+[Document project-specific architecture here. Refer to the canonical rules (Parts I–V) for general patterns.]
+
+---
+
+## Build & Run Commands
+
+<!-- AGENT: Replace with actual build/run commands for this project -->
+
+```bash
+# Build
+[build command here]
+
+# Run
+[run command here]
+
+# Test
+[test command here]
+
+# Lint
+[lint command here]
+```
+
+---
+
+## Database Schema & Migrations
+
+<!-- AGENT: Document database details as they are created -->
+
+### Schema Location
+
+[Path to canonical schema file, if applicable]
+
+[See §24 in the canonical rules for database change rules and sync checklist.]
+
+---
+
+## Site Templates & Design References
+
+[See §25 in the canonical rules for template discovery rules, the shared template registry, and the mandatory CSS/JS dependency workflow.]
+
+---
+
+# Project Status & Notes
+
+## Current Implementation Status
+
+<!-- AGENT: Keep this section updated with current progress -->
+
+**Phase: [Current Phase]**
+
+#### Completed
+- [ List completed features/tasks ]
+
+#### In Progress
+- [ List current work items ]
+
+#### Planned
+- [ List upcoming work ]
+
+---
+
+## Project-Specific Overrides
+
+<!-- AGENT: Add any project-specific rules that override or extend the canonical rules here -->
+
+*No project-specific overrides defined yet.*
+
+---
+
+## Additional Notes
+
+<!-- AGENT: Add any project-specific notes, patterns, or learnings here -->
+
+
+---
+
+*Last updated: [date] — [description of last change]*
+*Created: [date] — Project initialization*
+````
+
+> **⚠️ IMPORTANT**: After creating this file, proceed with Step 1 below to populate it with actual project details.
 
 ## Initialization Protocol
 
@@ -2027,9 +2203,9 @@ Create a temporary working document with all answers. You can use:
 - A structured note in the conversation
 - A shared document with the stakeholder
 
-### Step 3: Populate the Project Context & Architecture Section
+### Step 3: Populate the Project's Local `AGENTS.md`
 
-Using the answers from Step 1, systematically fill in the sections below:
+Using the answers from Step 1, systematically fill in the sections of the project's local `AGENTS.md` (created in Step 0):
 
 #### 3.1: Update Project Overview
 
@@ -2048,8 +2224,9 @@ Using the answers from Step 1, systematically fill in the sections below:
 
 ```
 ProjectRoot/
-├── AGENTS.md                            # Agent instructions (this file)
+├── AGENTS.md                            # Project notes & context (local file)
 ├── .github/
+│   ├── roadmap.md                       # Project roadmap and status
 │   └── update_reports/                  # Post-task summary documentation
 ├── [backend-directory]/      # Based on Q9
 ├── [frontend-directory]/     # Based on Q9
@@ -2057,7 +2234,7 @@ ProjectRoot/
 └── README.md
 ```
 
-> **Note:** `AGENTS.md` lives at the project root and contains all agent instructions in a single file.
+> **Note:** The project's local `AGENTS.md` references the canonical rules by URL — it does NOT contain the full base rules.
 
 - Use answers from Q9 to define the actual folder structure
 - Be specific based on the chosen architecture
@@ -2167,7 +2344,7 @@ When the GitHub Copilot Agent is running this initialization, it **MUST** store 
 
 Memories should comprehensively cover the following categories. Aim for **at least 30 distinct memories** distributed across these areas:
 
-**From `AGENTS.md` §31 (Project Context Template) — at least 8 memories:**
+**From the project's local `AGENTS.md` (project context) — at least 8 memories:**
 1. Project name, description, and primary purpose
 2. Technology stack (backend, frontend, database, APIs)
 3. Authentication and authorization strategy
@@ -2177,7 +2354,7 @@ Memories should comprehensively cover the following categories. Aim for **at lea
 7. Current implementation status and phase
 8. Any project-specific overrides or rules
 
-**From `AGENTS.md` §1–§29 (Base Instructions) — at least 10 memories:**
+**From the canonical rules (`AGENTS.md` §1–§29, fetched by URL) — at least 10 memories:**
 1. Core identity and execution protocol (§1–§2)
 2. TODO management and context maintenance rules (§3)
 3. Error debugging protocols (§4)
@@ -2189,7 +2366,7 @@ Memories should comprehensively cover the following categories. Aim for **at lea
 9. Naming conventions for the project's primary language(s) (§16–§22)
 10. Post-task reporting and update requirements (§26–§27)
 
-**From `roadmap.md` — at least 5 memories:**
+**From the project's `roadmap.md` — at least 5 memories:**
 1. Overall project vision and goals
 2. Current phase and milestone status
 3. Completed features and components
@@ -2232,20 +2409,20 @@ Category: general
 Citations: .github/roadmap.md:<line range of current status>
 ```
 
-### Step 7: Remove This Section
+### Step 7: Remove the Initialization Section from the Local File
 
 Once you have:
+- ✅ Created the project's local `AGENTS.md` (Step 0)
 - ✅ Asked all discovery questions
 - ✅ Documented all answers
-- ✅ Updated all project-specific sections with actual information
+- ✅ Populated all project-specific sections in the local `AGENTS.md` with actual information
+- ✅ Created `.github/roadmap.md` with project status and planned work
 - ✅ Updated README.md
 - ✅ Created developer setup instructions
 - ✅ Stored at least 30 GitHub memories (if running as a GitHub Copilot Agent)
 - ✅ Verified all placeholders are replaced with actual information
 
-**DELETE this entire §30 section** from this file — everything between the `## 30. New Project Initialization` heading and `## 31. Project Context Template`.
-
-**Update the Table of Contents** to remove §30.
+**DELETE the "Canonical Rules Reference" section's initialization instructions** from the project's local `AGENTS.md` — agents no longer need the initialization prompts once the project is set up.
 
 **Commit the changes** with a message like: "Complete project initialization for [Project Name]"
 
@@ -2253,121 +2430,46 @@ Once you have:
 ---
 
 
-# Part VII — Project Context Template
+# Part VII — Local Project `AGENTS.md` Reference
 
 ## 31. Project Context Template
 
-> **⚠️ IMPORTANT**: Fill in this section with project-specific details as the project evolves. The sections below are templates — replace the placeholders with actual project information. For base conventions and standards, refer to Parts I–V of this document.
+> **⚠️ IMPORTANT**: This section describes what goes in **each project's local `AGENTS.md`** file. The full template is provided in §30 (Step 0). This section serves as a quick reference for the expected structure.
 
-## Project Overview
+### How It Works
 
-<!-- AGENT: Replace this section with actual project details -->
+Each project has its own `AGENTS.md` in the project root. This local file:
 
-**[Project Name]** — [Brief description of what the project does].
+1. **References the canonical rules by URL** — agents fetch the base rules (§1–§29) from `https://raw.githubusercontent.com/LoneEngineer99/AgentInstructions/main/AGENTS.md`
+2. **Contains the project's own notes** — project overview, architecture, build commands, database schema, status, and overrides
+3. **Is the agent's cross-session memory** — agents update this file after every major code change to ensure continuity
+4. **Is never the canonical rules** — the project's local file only has project-specific context; the rules are always fetched from the canonical URL
 
-| Component | Path | Purpose | Tech Stack |
-|-----------|------|---------|------------|
-| **[Component 1]** | `path/` | [Purpose] | [Technologies] |
-| **[Component 2]** | `path/` | [Purpose] | [Technologies] |
+### Expected Sections in the Project's Local `AGENTS.md`
 
----
+The project's local `AGENTS.md` should contain these sections (see §30 Step 0 for the full template):
 
-## Repository Structure
+| Section | Purpose |
+|---------|---------|
+| **Canonical Rules Reference** | URL to fetch the base rules from; reading strategy |
+| **Project Overview** | Project name, description, components, tech stack |
+| **Repository Structure** | Directory tree showing actual project layout |
+| **Architecture Patterns** | Patterns specific to the project |
+| **Build & Run Commands** | Actual commands for building, running, testing, linting |
+| **Database Schema & Migrations** | Schema location, migration details |
+| **Site Templates & Design References** | Template sources and usage guidelines |
+| **Current Implementation Status** | What's completed, in progress, and planned |
+| **Project-Specific Overrides** | Any rules that override the canonical rules |
+| **Additional Notes** | Learnings, patterns, and project-specific knowledge |
 
-<!-- AGENT: Replace this tree with actual project structure -->
+### The Project's Roadmap
 
-```
-ProjectRoot/
-├── AGENTS.md                          # Agent instructions (this file)
-├── .github/
-│   └── update_reports/                # Post-task summary documentation
-│       └── img/                       # Screenshots and media for reports
-├── src/                               # Source code
-├── tests/                             # Test files
-├── docs/                              # Documentation
-└── README.md
-```
-
-
----
-
-## Architecture Patterns
-
-<!-- AGENT: Document the actual architecture patterns used in this project -->
-
-[Document project-specific architecture here. See Parts I–V for general patterns.]
+Each project must also maintain a **`.github/roadmap.md`** file (see §29) where:
+- Completed work is tracked with status updates
+- Upcoming work and milestones are documented
+- The agent updates this file after every task
 
 ---
 
-## Build & Run Commands
-
-<!-- AGENT: Replace with actual build/run commands for this project -->
-
-```bash
-# Build
-[build command here]
-
-# Run
-[run command here]
-
-# Test
-[test command here]
-
-# Lint
-[lint command here]
-```
-
----
-
-## Database Schema & Migrations
-
-<!-- AGENT: Document database details as they are created -->
-
-### Schema Location
-
-[Path to canonical schema file, if applicable]
-
-[See §24 for database change rules and sync checklist.]
-
----
-
-## Site Templates & Design References
-
-[See §25 for template discovery rules, the shared template registry, and the mandatory CSS/JS dependency workflow.]
-
----
-
-# Project Status & Notes
-
-## Current Implementation Status
-
-<!-- AGENT: Keep this section updated with current progress -->
-
-**Phase: [Current Phase]**
-
-#### Completed
-- [ List completed features/tasks ]
-
-#### In Progress
-- [ List current work items ]
-
-#### Planned
-- [ List upcoming work ]
-
----
-
-## Project-Specific Overrides
-
-<!-- AGENT: Add any project-specific rules that override or extend Parts I–V here -->
-
-*No project-specific overrides defined yet.*
-
----
-
-## Additional Notes
-
-
----
-
-*Last updated: 2026-03-04 — Merged base-copilot-instructions.md and copilot-instructions.md into single AGENTS.md*
+*Last updated: 2026-03-04 — Updated to reference-based model: canonical rules + local project AGENTS.md*
 *Created: 2026-02-14 — Initial starter kit template*

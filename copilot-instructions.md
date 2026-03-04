@@ -4,30 +4,30 @@ applyTo: '**'
 
 # ⚠️ DEPRECATED — Read `AGENTS.md` Instead
 
-> **🚨 THIS FILE IS DEPRECATED.** All agent instructions have been consolidated into **`AGENTS.md`**.
+> **🚨 THIS FILE IS DEPRECATED.** Agent instructions use a reference-based model now.
 >
-> **Agents MUST read `AGENTS.md`** — it is the single source of truth for all instructions, conventions, and project context.
+> **1. Read the project's local `AGENTS.md`** — it contains project-specific notes, context, and status.
+> **2. Fetch the canonical rules** from: `https://raw.githubusercontent.com/LoneEngineer99/AgentInstructions/main/AGENTS.md`
 >
 > This file exists only for backwards compatibility with tools that automatically load `copilot-instructions.md`.
 
 ## Where to Find Instructions
 
-- **Local:** Read `AGENTS.md` in the repository root
-- **By URL:** `https://raw.githubusercontent.com/LoneEngineer99/AgentInstructions/main/AGENTS.md`
+- **Project context:** Read the local `AGENTS.md` in the project root
+- **Canonical rules (by URL):** `https://raw.githubusercontent.com/LoneEngineer99/AgentInstructions/main/AGENTS.md`
 
-## What Happened
+## How It Works
 
-- `copilot-instructions.md` (this file) and `base-copilot-instructions.md` have been **merged** into a single `AGENTS.md` file.
-- All rules, conventions, project templates, and initialization protocols are now in `AGENTS.md`.
-- `base-copilot-instructions.md` is retained as a historical reference but should no longer be fetched separately.
+- Each project has its **own local `AGENTS.md`** with project-specific notes, architecture, build commands, and status.
+- The **canonical rules** (execution protocols, engineering principles, naming conventions, security) are in this repo's `AGENTS.md` — always fetched by URL, never copied.
+- Each project has its own `.github/roadmap.md` where agents update status after every task.
 
 ## Instructions
 
-1. **Stop reading this file.** Go read `AGENTS.md` instead.
-2. **During project initialization:** Read `AGENTS.md` in full (multiple fetches) and store at least 30 memories.
-3. **On regular tasks:** Read the Table of Contents in `AGENTS.md`, then fetch relevant sections.
-4. **After code changes:** Update the Project Context Template (§31) in `AGENTS.md`, plus `roadmap.md` and `README.md`.
+1. **Stop reading this file.** Go read the project's local `AGENTS.md` for project context.
+2. **Fetch the canonical rules** from the URL above and follow them.
+3. **After code changes:** Update the project's local `AGENTS.md` with progress, update `.github/roadmap.md` with status, and update `README.md` if needed.
 
 ---
 
-*This file is kept for backwards compatibility only. All content now lives in `AGENTS.md`.*
+*This file is kept for backwards compatibility only. All instructions live in the project's local `AGENTS.md` + the canonical rules at the URL above.*

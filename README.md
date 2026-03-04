@@ -1,65 +1,82 @@
 # 🚀 Agent Instructions
 
-A **single-file instruction system** for giving AI coding agents (GitHub Copilot, Claude, etc.) consistent rules, conventions, and project context across all your projects.
+A **reference-based instruction system** for giving AI coding agents (GitHub Copilot, Claude, etc.) consistent rules, conventions, and project context across all your projects.
 
 ---
 
 ## 📁 Repository Structure
 
 ```
-│   ├── AGENTS.md                      # ★ THE single source of truth — all agent instructions in one file
+│   ├── AGENTS.md                      # ★ Canonical rules — always read by URL, never copied into projects
 │   ├── copilot-instructions.md        # Backwards-compat redirect → AGENTS.md
 │   ├── base-copilot-instructions.md   # Legacy file (content merged into AGENTS.md)
 │   ├── site-templates.md              # Reference guide for UI templates and components
-│   └── roadmap.md                     # Project roadmap and future enhancements
+│   └── roadmap.md                     # Roadmap for this repo (each project has its own)
 ```
 
 ---
 
-## 🤖 AI Agent Instructions
+## 🤖 How It Works
 
-This repository contains **`AGENTS.md`** — a single, comprehensive instruction file that gives AI coding agents (GitHub Copilot, Claude, etc.) consistent rules, conventions, and project context across all your projects.
+This repository contains **`AGENTS.md`** — the **canonical rules file** that all AI agents reference. Projects do **NOT** copy this file. Instead:
 
-### The File
+1. **This repo's `AGENTS.md`** = the canonical rules (fetched by URL, never copied)
+2. **Each project's local `AGENTS.md`** = the project's own notes, context, architecture, and status — with a reference to the canonical rules URL
+3. **Each project's `.github/roadmap.md`** = the project's own roadmap where agents update status
 
-| File | Purpose | Status |
-|------|---------|--------|
-| **`AGENTS.md`** | All agent instructions — execution protocols, engineering principles, naming conventions, security rules, project templates, and initialization wizard | **✅ Active — the single source of truth** |
-| `copilot-instructions.md` | Backwards-compatibility redirect to `AGENTS.md` | *Deprecated — redirects only* |
-| `base-copilot-instructions.md` | Legacy shared foundation (content now in `AGENTS.md`) | *Legacy — do not use* |
+### The Files
 
-### What `AGENTS.md` Contains
+| File | Purpose | How It's Used |
+|------|---------|---------------|
+| **`AGENTS.md`** (this repo) | Canonical rules — execution protocols, engineering principles, naming conventions, security, templates | **Fetched by URL** from this repo — never copied into projects |
+| **`AGENTS.md`** (in each project) | Project-specific notes — architecture, build commands, status, overrides | **Created locally** in each project using the template in §30 |
+| `copilot-instructions.md` | Backwards-compatibility redirect | *Deprecated — redirects to `AGENTS.md`* |
+| `base-copilot-instructions.md` | Legacy shared foundation | *Legacy — content now in `AGENTS.md`* |
 
-**`AGENTS.md`** (complete agent instructions):
+### What the Canonical `AGENTS.md` Contains
+
 - **Part I** — Agent execution protocols, TODO management, error debugging, completion criteria
 - **Part II** — Software engineering principles (SOLID, DRY, KISS, YAGNI, Separation of Concerns, security)
 - **Part III** — Naming conventions for C#, C/C++, PHP, JS/TS, SQL, CSS/SCSS
 - **Part IV** — Project context guidelines, database change rules, site templates & design references
 - **Part V** — Documentation rules, post-task reporting, agent work ethic, roadmap management
-- **Part VI** — New project initialization protocol (24 discovery questions)
-- **Part VII** — Project context template (fill in with project-specific details)
+- **Part VI** — New project initialization protocol (24 discovery questions + local `AGENTS.md` template)
+- **Part VII** — Reference for the local project `AGENTS.md` structure
+
+### What Each Project's Local `AGENTS.md` Contains
+
+- Reference to the canonical rules URL
+- Project overview, tech stack, and architecture
+- Build, run, and test commands
+- Database schema and migration details
+- Current implementation status and progress
+- Project-specific rule overrides
+- Notes and learnings from development
 
 **`site-templates.md`** (UI template reference):
 - Reference guide for reusing UI components and pages from template libraries
 - Critical rules for CSS/JS asset dependencies when copying components
 - Template registry with detailed documentation for each UI template
-- Agent workflows for properly extracting and reusing template components
 
-**`roadmap.md`** (project roadmap):
-- Project roadmap and planned enhancements
-- Future features and improvements to the instruction system
+**`roadmap.md`** (per-project):
+- Each project has its own `.github/roadmap.md`
+- Agents update this file after every task with status, completed work, and next steps
 
 ### 🚀 Setting Up Agent Instructions in a New Project
 
-To add AI agent instructions to a new project, follow these steps:
+To add AI agent instructions to a new project:
 
-1. **Copy `AGENTS.md`** from this repository into your new project root:
+1. **Create a local `AGENTS.md`** in your project root using the template from §30 of the canonical rules. You can bootstrap it with:
 
    ```bash
-   # From your new project root
-   curl -o AGENTS.md \
-     https://raw.githubusercontent.com/LoneEngineer99/AgentInstructions/main/AGENTS.md
+   # Fetch the canonical rules to read the template in §30
+   curl -s https://raw.githubusercontent.com/LoneEngineer99/AgentInstructions/main/AGENTS.md | head -n 100
+   # Then create your local AGENTS.md using the template from §30 (Step 0)
    ```
+
+   Or ask your AI agent to create it:
+
+   > *"Create a local `AGENTS.md` using the template from §30 of the canonical rules at `https://raw.githubusercontent.com/LoneEngineer99/AgentInstructions/main/AGENTS.md`."*
 
 2. **(Optional) Copy `copilot-instructions.md`** for backwards compatibility with tools that auto-load it:
 
@@ -69,22 +86,24 @@ To add AI agent instructions to a new project, follow these steps:
      https://raw.githubusercontent.com/LoneEngineer99/AgentInstructions/main/copilot-instructions.md
    ```
 
-3. **Complete the initialization wizard** — `AGENTS.md` contains a "NEW PROJECT INITIALIZATION" section (§30) with 24 discovery questions. Ask your AI agent to walk through these questions and populate the project-specific sections. Once complete, the initialization section is deleted.
+3. **Complete the initialization wizard** — the canonical `AGENTS.md` contains §30 with 24 discovery questions. Ask your AI agent to walk through these and populate the project's local `AGENTS.md` with project-specific details.
 
-4. **Commit the file** to your project repository:
+4. **Create `.github/roadmap.md`** — the agent will create this during initialization (see §29).
+
+5. **Commit the files** to your project repository:
 
    ```bash
-   git add AGENTS.md
-   git commit -m "Add AI agent instructions from Agent Instructions repo"
+   git add AGENTS.md .github/roadmap.md
+   git commit -m "Add AI agent instructions for project"
    ```
 
-> **Note for forks:** If you fork this repository, update the raw URLs in `AGENTS.md` to point to your own fork.
+> **Note for forks:** If you fork this repository, update the canonical rules URL in your local `AGENTS.md` files to point to your own fork.
 
-### Instructing Agents to Use This File
+### Instructing Agents to Use This System
 
-When starting a new conversation or task with an AI agent, you can instruct it to read the instructions:
+When starting a new conversation or task with an AI agent:
 
-> *"Read `AGENTS.md` in this project for all agent instructions, conventions, and project context. Follow the rules and standards defined there. If `AGENTS.md` is not present, fetch it from `https://raw.githubusercontent.com/LoneEngineer99/AgentInstructions/main/AGENTS.md`."*
+> *"Read the local `AGENTS.md` in this project for project-specific context. Then fetch the canonical rules from `https://raw.githubusercontent.com/LoneEngineer99/AgentInstructions/main/AGENTS.md` and follow the rules and standards defined there. After completing work, update the local `AGENTS.md` with progress and update `.github/roadmap.md` with status."*
 
 GitHub Copilot and Claude will automatically load `copilot-instructions.md` when it exists in your project's `.github/` directory — the redirect file will point them to `AGENTS.md`.
 
