@@ -2369,5 +2369,5 @@ ProjectRoot/
 
 ---
 
-*Last updated: 2025-01-01 — Merged base-copilot-instructions.md and copilot-instructions.md into single AGENTS.md*
+*Last updated: 2026-03-04 — Merged base-copilot-instructions.md and copilot-instructions.md into single AGENTS.md*
 *Created: 2026-02-14 — Initial starter kit template*
