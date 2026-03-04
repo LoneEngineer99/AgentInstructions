@@ -1412,6 +1412,25 @@ When making database changes in any project, ensure ALL of these are in sync:
 >
 > **URL:** `https://github.com/nextlevelbuilder/ui-ux-pro-max-skill`
 
+### UI Examples & Visual Design Index
+
+> The **`UI_Examples/`** folder in the [AgentInstructions repository](https://github.com/LoneEngineer99/AgentInstructions) contains curated reference images demonstrating high-quality, modern UI design across dashboards, forms, cards, navigation, data tables, charts, modals, landing pages, and more. These images establish the **target visual quality** for all agent-produced UI work.
+>
+> A companion index file — **`UI_Examples/ui-design-index.md`** — catalogs every image by component category and extracts actionable design principles covering color systems, typography, spacing, depth, borders, iconography, and motion patterns. It also provides ready-to-use **design tokens** (CSS custom properties) for colors, spacing, radius, shadows, and typography.
+>
+> **Raw URL:** `https://raw.githubusercontent.com/LoneEngineer99/AgentInstructions/main/UI_Examples/ui-design-index.md`
+
+**When designing or generating any UI element, agents MUST:**
+
+1. **Fetch and read** `UI_Examples/ui-design-index.md` from the AgentInstructions repository (or read it locally if available)
+2. **Identify the matching category** — find the section that matches the type of element being built (dashboard, card, form, table, etc.)
+3. **Review the listed reference images** — open the referenced image files from `UI_Examples/` to study the visual treatment
+4. **Apply the extracted design principles** — use the color system, typography scale, spacing tokens, border-radius values, shadow definitions, and interaction patterns documented in the index
+5. **Follow the dark mode rules** when building dark-themed interfaces (§4 of the index)
+6. **Use the design tokens** from §5 of the index as CSS custom property starting values
+
+> **⚠️ IMPORTANT**: The design index is not optional. Agents building UI components must consult this reference to ensure visual consistency and quality. When in doubt about a design decision, the patterns in the reference images take precedence.
+
 ### Shared Template Registry (Web Projects)
 
 > **For projects with a web front-end component:** the [AgentInstructions repository](https://github.com/LoneEngineer99/AgentInstructions) maintains a `site-templates.md` file containing the **up-to-date registry of all supported site templates** — including page catalogues, asset maps, third-party library inventories, and the mandatory CSS/JS dependency workflow.
