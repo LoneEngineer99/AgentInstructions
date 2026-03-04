@@ -1,110 +1,221 @@
-# 🚀 Agent Instructions
+<div align="center">
 
-A **reference-based instruction system** for giving AI coding agents (GitHub Copilot, Claude, etc.) consistent rules, conventions, and project context across all your projects.
+# 🤖 Agent Instructions
+
+### Give every AI coding agent the same high standards — automatically.
+
+A **reference-based instruction system** for giving AI coding agents (GitHub Copilot, Claude, Cursor, etc.) consistent rules, conventions, and project context across **all** your projects.
+
+[![GitHub](https://img.shields.io/badge/GitHub-Repository-181717?style=for-the-badge&logo=github)](https://github.com/LoneEngineer99/AgentInstructions)
+[![License](https://img.shields.io/badge/License-Open-brightgreen?style=for-the-badge)](#)
+[![Markdown](https://img.shields.io/badge/Format-Markdown-blue?style=for-the-badge&logo=markdown)](#)
+
+</div>
+
+---
+
+## ✨ Why Agent Instructions?
+
+Without shared rules, every AI agent session starts from scratch — inconsistent naming, missing security checks, forgotten documentation. **Agent Instructions** solves this by giving agents a single canonical rulebook they can fetch and follow on every task.
+
+<table>
+<tr>
+<td width="50%">
+
+### ❌ Without Agent Instructions
+- Inconsistent naming across files
+- Security best practices forgotten
+- No documentation standards
+- Every session starts from zero
+- Agent "forgets" conventions
+
+</td>
+<td width="50%">
+
+### ✅ With Agent Instructions
+- Enforced naming conventions
+- Built-in security checklists
+- Mandatory documentation standards
+- Cross-session memory via local `AGENTS.md`
+- Consistent quality every time
+
+</td>
+</tr>
+</table>
+
+---
+
+## 🏗️ How It Works
+
+> **One canonical rulebook. Many projects. Always in sync.**
+
+```mermaid
+flowchart LR
+    subgraph This_Repo["📦 This Repository"]
+        A["AGENTS.md\n(Canonical Rules)"]
+    end
+    subgraph Project_A["🗂️ Project A"]
+        B["Local AGENTS.md\n(Project Context)"]
+        C[".github/roadmap.md"]
+    end
+    subgraph Project_B["🗂️ Project B"]
+        D["Local AGENTS.md\n(Project Context)"]
+        E[".github/roadmap.md"]
+    end
+
+    A -- "fetched by URL" --> B
+    A -- "fetched by URL" --> D
+
+    style This_Repo fill:#1a1a2e,stroke:#e94560,stroke-width:2px,color:#eee
+    style Project_A fill:#16213e,stroke:#0f3460,stroke-width:2px,color:#eee
+    style Project_B fill:#16213e,stroke:#0f3460,stroke-width:2px,color:#eee
+    style A fill:#e94560,stroke:#e94560,color:#fff
+    style B fill:#0f3460,stroke:#0f3460,color:#eee
+    style C fill:#0f3460,stroke:#0f3460,color:#eee
+    style D fill:#0f3460,stroke:#0f3460,color:#eee
+    style E fill:#0f3460,stroke:#0f3460,color:#eee
+```
+
+| Layer | File | Location | Purpose |
+|:-----:|------|----------|---------|
+| 🌐 | **`AGENTS.md`** | This repo | Canonical rules — fetched by URL, never copied |
+| 📁 | **`AGENTS.md`** | Each project | Project-specific notes, architecture, status |
+| 🗺️ | **`roadmap.md`** | Each project's `.github/` | Living project roadmap updated by agents |
+
+---
+
+## 📖 What's Inside the Canonical Rules
+
+The canonical `AGENTS.md` is organized into **7 parts** covering everything an AI agent needs:
+
+<table>
+<tr><td>
+
+| Part | Title | What It Covers |
+|:----:|-------|----------------|
+| **I** | 🧠 Agent Execution & Autonomy | Execution protocols, TODO management, error debugging, completion criteria |
+| **II** | ⚙️ Software Engineering | SOLID, DRY, KISS, YAGNI, separation of concerns, security |
+| **III** | 🏷️ Naming Conventions | C#, C/C++, PHP, JS/TS, SQL, CSS/SCSS |
+| **IV** | 🗃️ Project Context | Database change rules, site templates, design references |
+| **V** | 📝 Documentation & Evolution | Post-task reporting, agent work ethic, roadmap management |
+| **VI** | 🚀 Initialization Protocol | 24 discovery questions + local `AGENTS.md` template |
+| **VII** | 📋 Template Reference | Structure for each project's local `AGENTS.md` |
+
+</td></tr>
+</table>
+
+<details>
+<summary><strong>📂 What Each Project's Local <code>AGENTS.md</code> Contains</strong></summary>
+
+<br>
+
+- 🔗 Reference to the canonical rules URL
+- 📋 Project overview, tech stack, and architecture
+- 🔨 Build, run, and test commands
+- 🗄️ Database schema and migration details
+- 📊 Current implementation status and progress
+- ⚡ Project-specific rule overrides
+- 📝 Notes and learnings from development
+
+</details>
 
 ---
 
 ## 📁 Repository Structure
 
 ```
-│   ├── AGENTS.md                      # ★ Canonical rules — always read by URL, never copied into projects
-│   ├── base-copilot-instructions.md    # Backwards-compat redirect → AGENTS.md
-│   ├── site-templates.md              # Reference guide for UI templates and components (remotely hosted, may receive updates)
-│   └── UI_Examples/                   # Curated UI reference images + design index
-│       ├── ui-design-index.md         # Design catalog: categories, principles, and tokens
-│       └── *.jpg                      # 42 reference screenshots of high-quality UI designs
+AgentInstructions/
+├── 📜 AGENTS.md                        ★ Canonical rules — always fetched by URL
+├── 🔀 base-copilot-instructions.md     Backwards-compat redirect → AGENTS.md
+├── 🎨 site-templates.md                UI template & component reference guide
+└── 🖼️ UI_Examples/
+    ├── ui-design-index.md              Design catalog with tokens & principles
+    └── *.jpg                           42 curated high-quality UI screenshots
 ```
 
----
+<details>
+<summary><strong>📎 More About Supporting Files</strong></summary>
 
-## 🤖 How It Works
+<br>
 
-This repository contains **`AGENTS.md`** — the **canonical rules file** that all AI agents reference. Projects do **NOT** copy this file. Instead:
-
-1. **This repo's `AGENTS.md`** = the canonical rules (fetched by URL, never copied)
-2. **Each project's local `AGENTS.md`** = the project's own notes, context, architecture, and status — with a reference to the canonical rules URL
-3. **Each project's `.github/roadmap.md`** = the project's own roadmap where agents update status
-
-### The Files
-
-| File | Purpose | How It's Used |
-|------|---------|---------------|
-| **`AGENTS.md`** (this repo) | Canonical rules — execution protocols, engineering principles, naming conventions, security, templates | **Fetched by URL** from this repo — never copied into projects |
-| **`AGENTS.md`** (in each project) | Project-specific notes — architecture, build commands, status, overrides | **Created locally** in each project using the template in §30 |
-| `base-copilot-instructions.md` | Backwards-compatibility redirect | *Deprecated — redirects to `AGENTS.md`* |
-
-### What the Canonical `AGENTS.md` Contains
-
-- **Part I** — Agent execution protocols, TODO management, error debugging, completion criteria
-- **Part II** — Software engineering principles (SOLID, DRY, KISS, YAGNI, Separation of Concerns, security)
-- **Part III** — Naming conventions for C#, C/C++, PHP, JS/TS, SQL, CSS/SCSS
-- **Part IV** — Project context guidelines, database change rules, site templates & design references
-- **Part V** — Documentation rules, post-task reporting, agent work ethic, roadmap management
-- **Part VI** — New project initialization protocol (24 discovery questions + local `AGENTS.md` template)
-- **Part VII** — Reference for the local project `AGENTS.md` structure
-
-### What Each Project's Local `AGENTS.md` Contains
-
-- Reference to the canonical rules URL
-- Project overview, tech stack, and architecture
-- Build, run, and test commands
-- Database schema and migration details
-- Current implementation status and progress
-- Project-specific rule overrides
-- Notes and learnings from development
-
-**`site-templates.md`** (UI template reference — remotely hosted, may receive updates):
+**`site-templates.md`** — UI template reference (remotely hosted, may receive updates):
 - Reference guide for reusing UI components and pages from template libraries
 - Critical rules for CSS/JS asset dependencies when copying components
 - Template registry with detailed documentation for each UI template
 - Always fetch the latest version by URL before use — do not rely on cached copies
 
-**`UI_Examples/`** (UI design reference images and design index):
-- Contains 42 curated reference screenshots demonstrating high-quality, modern UI design across dashboards, forms, cards, navigation, data tables, charts, modals, landing pages, and more
-- **`ui-design-index.md`** — a companion design catalog that organizes every image by component category (e.g., Dashboards & Analytics, Data Tables, Cards, Navigation, Charts, Modals, Landing Pages, Pricing, Profile components) and extracts actionable design principles covering color systems, typography, spacing, depth, borders, iconography, and motion patterns
-- Also provides ready-to-use **design tokens** (CSS custom properties) for colors, spacing, radius, shadows, and typography
-- Agents building UI components must consult this index to ensure visual consistency and quality (see §25 of the canonical rules)
+**`UI_Examples/`** — UI design reference images and design index:
+- 42 curated screenshots of modern UI design (dashboards, forms, cards, data tables, charts, modals, landing pages, and more)
+- **`ui-design-index.md`** catalogs every image by component category and extracts design principles for color, typography, spacing, depth, and motion
+- Includes ready-to-use **design tokens** (CSS custom properties) for colors, spacing, radius, shadows, and typography
+- Agents must consult this index when building UI components (see §25)
 
-**`roadmap.md`** (per-project):
-- Each project has its own `.github/roadmap.md`
-- Agents update this file after every task with status, completed work, and next steps
+**`roadmap.md`** — per-project living document:
+- Each project maintains its own `.github/roadmap.md`
+- Agents update it after every task with status, completed work, and next steps
 
-### 🚀 Setting Up Agent Instructions in a New Project
+</details>
 
-To add AI agent instructions to a new project:
+---
 
-1. **Create a local `AGENTS.md`** in your project root using the template from §30 of the canonical rules. The easiest way is to ask your AI agent:
+## 🚀 Quick Start
 
-   > *"Create a local `AGENTS.md` using the template from §30 (Step 0) of the canonical rules at `https://raw.githubusercontent.com/LoneEngineer99/AgentInstructions/main/AGENTS.md`. Fetch the full file and look for the template in §30."*
+Add AI agent instructions to **any project** in 3 steps:
 
-   Or manually: fetch the canonical rules file, find the template in §30 (Step 0), and copy it into a new `AGENTS.md` file in your project root.
+### Step 1 — Create a Local `AGENTS.md`
 
-2. **(Optional) Copy `base-copilot-instructions.md`** for backwards compatibility with tools that auto-load it:
+Ask your AI agent:
 
-   ```bash
-   mkdir -p .github
-   curl -o .github/base-copilot-instructions.md \
-     https://raw.githubusercontent.com/LoneEngineer99/AgentInstructions/main/base-copilot-instructions.md
-   ```
+> *"Create a local `AGENTS.md` using the template from §30 (Step 0) of the canonical rules at `https://raw.githubusercontent.com/LoneEngineer99/AgentInstructions/main/AGENTS.md`."*
 
-3. **Complete the initialization wizard** — the canonical `AGENTS.md` contains §30 with 24 discovery questions. Ask your AI agent to walk through these and populate the project's local `AGENTS.md` with project-specific details.
+Or manually: fetch the canonical rules, find the template in **§30 (Step 0)**, and copy it into an `AGENTS.md` file in your project root.
 
-4. **Create `.github/roadmap.md`** — the agent will create this during initialization (see §29).
+### Step 2 — Run the Initialization Wizard
 
-5. **Commit the files** to your project repository:
+The canonical `AGENTS.md` contains **§30 with 24 discovery questions**. Ask your AI agent to walk through them and populate the local `AGENTS.md` with your project's details.
 
-   ```bash
-   git add AGENTS.md .github/roadmap.md
-   git commit -m "Add AI agent instructions for project"
-   ```
+### Step 3 — Commit & Go
 
-> **Note for forks:** If you fork this repository, update the canonical rules URL in your local `AGENTS.md` files to point to your own fork.
+```bash
+git add AGENTS.md .github/roadmap.md
+git commit -m "Add AI agent instructions for project"
+```
 
-### Instructing Agents to Use This System
+<details>
+<summary><strong>📌 Optional: Add backwards-compatible redirect</strong></summary>
 
-When starting a new conversation or task with an AI agent:
+<br>
+
+For tools that auto-load `base-copilot-instructions.md`:
+
+```bash
+mkdir -p .github
+curl -o .github/base-copilot-instructions.md \
+  https://raw.githubusercontent.com/LoneEngineer99/AgentInstructions/main/base-copilot-instructions.md
+```
+
+</details>
+
+> [!NOTE]
+> **Forking?** Update the canonical rules URL in your local `AGENTS.md` files to point to your own fork.
+
+---
+
+## 💬 Instructing Agents to Use This System
+
+Paste this into any AI agent conversation to activate the full system:
 
 > *"Read the local `AGENTS.md` in this project for project-specific context. Then fetch the canonical rules from `https://raw.githubusercontent.com/LoneEngineer99/AgentInstructions/main/AGENTS.md` and follow the rules and standards defined there. After completing work, update the local `AGENTS.md` with progress and update `.github/roadmap.md` with status."*
 
 GitHub Copilot and Claude will automatically load `base-copilot-instructions.md` when it exists in your project's `.github/` directory — the redirect file will point them to `AGENTS.md`.
+
+---
+
+<div align="center">
+
+**Built to make AI agents work the way you want — every time.**
+
+⭐ Star this repo if you find it useful!
+
+</div>
 
