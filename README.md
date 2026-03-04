@@ -207,7 +207,7 @@ Paste this into any AI agent conversation to activate the full system:
 
 > *"Read the local `AGENTS.md` in this project for project-specific context. Then fetch the canonical rules from `https://raw.githubusercontent.com/LoneEngineer99/AgentInstructions/main/AGENTS.md` and follow the rules and standards defined there. After completing work, update the local `AGENTS.md` with progress and update `.github/roadmap.md` with status."*
 
-GitHub Copilot and Claude will automatically load `AGENTS.md` when it exists in your project's `.github/` directory — the redirect file will point them to the remote `AGENTS.md`.
+GitHub Copilot and Claude will automatically load `AGENTS.md` when it exists in your project's directory — the redirect file will point them to the remote `AGENTS.md`.
 
 ---
 
@@ -218,5 +218,6 @@ GitHub Copilot and Claude will automatically load `AGENTS.md` when it exists in 
 ⭐ Star this repo if you find it useful!
 
 </div>
+
 
 
