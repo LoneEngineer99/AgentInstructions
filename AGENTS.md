@@ -3,8 +3,6 @@
 > **🚨 CRITICAL — THIS IS THE CANONICAL RULES FILE.**
 > This file contains the **master rules, conventions, and standards** that all AI coding agents must follow.
 > A single fetch will truncate this content — use **multiple paginated/offset-based reads** to consume it fully.
-> - `copilot-instructions.md` is **deprecated** and redirects here (it remains only for backwards compatibility).
-> - `base-copilot-instructions.md` content is **fully included** below — do not fetch it separately.
 
 > **🏗️ How Projects Use This File:**
 > - **This file is NOT copied into projects.** It is always **read by URL** from this repository.
@@ -1471,7 +1469,7 @@ When making database changes in any project, ensure ALL of these are in sync:
 >
 > **Raw URL:** `https://raw.githubusercontent.com/LoneEngineer99/AgentInstructions/main/site-templates.md`
 >
-> Before creating or adapting any UI element for a web project, fetch and read this file. It supersedes any locally cached template information about which templates are available at the shared level. Project-specific template overrides and additions still live in the project's own `AGENTS.md`.
+> **⚠️ This file is remotely hosted and may receive updates over time.** Always fetch the latest version by URL before use — do not rely on cached or previously downloaded copies. Before creating or adapting any UI element for a web project, fetch and read this file. It supersedes any locally cached template information about which templates are available at the shared level. Project-specific template overrides and additions still live in the project's own `AGENTS.md`.
 
 ### Template Discovery & Usage
 

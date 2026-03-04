@@ -713,7 +713,7 @@ When a new template is added to `SiteTemplates/`, add an entry to the [Template 
 
 **Also update:**
 - The [Template Registry](#2-template-registry) table in §2 — add a new row.
-- The `copilot-instructions.md` **Site Templates & Design References** section — add the new template name, path, and one-line description.
+- The project's local `AGENTS.md` **Site Templates & Design References** section — add the new template name, path, and one-line description.
 
 ---
 

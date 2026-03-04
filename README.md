@@ -8,10 +8,8 @@ A **reference-based instruction system** for giving AI coding agents (GitHub Cop
 
 ```
 │   ├── AGENTS.md                      # ★ Canonical rules — always read by URL, never copied into projects
-│   ├── copilot-instructions.md        # Backwards-compat redirect → AGENTS.md
-│   ├── base-copilot-instructions.md   # Legacy file (content merged into AGENTS.md)
-│   ├── site-templates.md              # Reference guide for UI templates and components
-│   └── roadmap.md                     # Roadmap for this repo (each project has its own)
+│   ├── base-copilot-instructions.md    # Backwards-compat redirect → AGENTS.md
+│   └── site-templates.md              # Reference guide for UI templates and components (remotely hosted, may receive updates)
 ```
 
 ---
@@ -30,8 +28,7 @@ This repository contains **`AGENTS.md`** — the **canonical rules file** that a
 |------|---------|---------------|
 | **`AGENTS.md`** (this repo) | Canonical rules — execution protocols, engineering principles, naming conventions, security, templates | **Fetched by URL** from this repo — never copied into projects |
 | **`AGENTS.md`** (in each project) | Project-specific notes — architecture, build commands, status, overrides | **Created locally** in each project using the template in §30 |
-| `copilot-instructions.md` | Backwards-compatibility redirect | *Deprecated — redirects to `AGENTS.md`* |
-| `base-copilot-instructions.md` | Legacy shared foundation | *Legacy — content now in `AGENTS.md`* |
+| `base-copilot-instructions.md` | Backwards-compatibility redirect | *Deprecated — redirects to `AGENTS.md`* |
 
 ### What the Canonical `AGENTS.md` Contains
 
@@ -53,10 +50,11 @@ This repository contains **`AGENTS.md`** — the **canonical rules file** that a
 - Project-specific rule overrides
 - Notes and learnings from development
 
-**`site-templates.md`** (UI template reference):
+**`site-templates.md`** (UI template reference — remotely hosted, may receive updates):
 - Reference guide for reusing UI components and pages from template libraries
 - Critical rules for CSS/JS asset dependencies when copying components
 - Template registry with detailed documentation for each UI template
+- Always fetch the latest version by URL before use — do not rely on cached copies
 
 **`roadmap.md`** (per-project):
 - Each project has its own `.github/roadmap.md`
@@ -72,12 +70,12 @@ To add AI agent instructions to a new project:
 
    Or manually: fetch the canonical rules file, find the template in §30 (Step 0), and copy it into a new `AGENTS.md` file in your project root.
 
-2. **(Optional) Copy `copilot-instructions.md`** for backwards compatibility with tools that auto-load it:
+2. **(Optional) Copy `base-copilot-instructions.md`** for backwards compatibility with tools that auto-load it:
 
    ```bash
    mkdir -p .github
-   curl -o .github/copilot-instructions.md \
-     https://raw.githubusercontent.com/LoneEngineer99/AgentInstructions/main/copilot-instructions.md
+   curl -o .github/base-copilot-instructions.md \
+     https://raw.githubusercontent.com/LoneEngineer99/AgentInstructions/main/base-copilot-instructions.md
    ```
 
 3. **Complete the initialization wizard** — the canonical `AGENTS.md` contains §30 with 24 discovery questions. Ask your AI agent to walk through these and populate the project's local `AGENTS.md` with project-specific details.
@@ -99,5 +97,5 @@ When starting a new conversation or task with an AI agent:
 
 > *"Read the local `AGENTS.md` in this project for project-specific context. Then fetch the canonical rules from `https://raw.githubusercontent.com/LoneEngineer99/AgentInstructions/main/AGENTS.md` and follow the rules and standards defined there. After completing work, update the local `AGENTS.md` with progress and update `.github/roadmap.md` with status."*
 
-GitHub Copilot and Claude will automatically load `copilot-instructions.md` when it exists in your project's `.github/` directory — the redirect file will point them to `AGENTS.md`.
+GitHub Copilot and Claude will automatically load `base-copilot-instructions.md` when it exists in your project's `.github/` directory — the redirect file will point them to `AGENTS.md`.
 
