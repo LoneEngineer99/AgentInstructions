@@ -175,7 +175,7 @@ These principles are consistently applied across **all** reference images and sh
 
 | Principle | Implementation Details |
 |---|---|
-| **Font family** | Sans-serif system stack: `Inter`, `SF Pro`, `-apple-system`, `Segoe UI`, or equivalent clean geometric sans-serif |
+| **Font family** | Sans-serif system stack: `Inter`, `-apple-system`, `BlinkMacSystemFont`, `Segoe UI`, or equivalent clean geometric sans-serif |
 | **Clear size hierarchy** | Page title: 24-32px / 600-700 weight. Section heading: 18-20px / 600 weight. Card title: 16px / 600 weight. Body text: 14px / 400 weight. Caption/meta: 12px / 400 weight. Metric value: 28-36px / 700 weight |
 | **Weight contrast** | Bold (600-700) for headings, values, and emphasis. Regular (400) for body text and descriptions. Medium (500) for labels and sub-headings |
 | **Line height** | Headings: 1.2-1.3. Body text: 1.5-1.6. Compact elements (badges, buttons): 1.0-1.2 |
@@ -379,7 +379,7 @@ Use these tokens as starting values when implementing UI components matching the
 --bg-overlay:         rgba(0, 0, 0, 0.60);
 
 /* Light Mode Surfaces */
---bg-base-light:      #f4f5f7;
+--bg-base-light:      #f8f9fa;
 --bg-surface-light:   #ffffff;
 --bg-elevated-light:  #ffffff;
 
