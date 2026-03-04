@@ -9,7 +9,10 @@ A **reference-based instruction system** for giving AI coding agents (GitHub Cop
 ```
 │   ├── AGENTS.md                      # ★ Canonical rules — always read by URL, never copied into projects
 │   ├── base-copilot-instructions.md    # Backwards-compat redirect → AGENTS.md
-│   └── site-templates.md              # Reference guide for UI templates and components (remotely hosted, may receive updates)
+│   ├── site-templates.md              # Reference guide for UI templates and components (remotely hosted, may receive updates)
+│   └── UI_Examples/                   # Curated UI reference images + design index
+│       ├── ui-design-index.md         # Design catalog: categories, principles, and tokens
+│       └── *.jpg                      # 42 reference screenshots of high-quality UI designs
 ```
 
 ---
@@ -55,6 +58,12 @@ This repository contains **`AGENTS.md`** — the **canonical rules file** that a
 - Critical rules for CSS/JS asset dependencies when copying components
 - Template registry with detailed documentation for each UI template
 - Always fetch the latest version by URL before use — do not rely on cached copies
+
+**`UI_Examples/`** (UI design reference images and design index):
+- Contains 42 curated reference screenshots demonstrating high-quality, modern UI design across dashboards, forms, cards, navigation, data tables, charts, modals, landing pages, and more
+- **`ui-design-index.md`** — a companion design catalog that organizes every image by component category (e.g., Dashboards & Analytics, Data Tables, Cards, Navigation, Charts, Modals, Landing Pages, Pricing, Profile components) and extracts actionable design principles covering color systems, typography, spacing, depth, borders, iconography, and motion patterns
+- Also provides ready-to-use **design tokens** (CSS custom properties) for colors, spacing, radius, shadows, and typography
+- Agents building UI components must consult this index to ensure visual consistency and quality (see §25 of the canonical rules)
 
 **`roadmap.md`** (per-project):
 - Each project has its own `.github/roadmap.md`
