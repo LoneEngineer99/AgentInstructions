@@ -4,7 +4,6 @@
 > This file contains the **master rules, conventions, and standards** that all AI coding agents must follow.
 > A single fetch will truncate this content — use **multiple paginated/offset-based reads** to consume it fully.
 > - `copilot-instructions.md` is **deprecated** and redirects here (it remains only for backwards compatibility).
-> - `base-copilot-instructions.md` has been **removed** — its content is fully included in this file.
 
 > **🏗️ How Projects Use This File:**
 > - **This file is NOT copied into projects.** It is always **read by URL** from this repository.
