@@ -66,17 +66,11 @@ This repository contains **`AGENTS.md`** — the **canonical rules file** that a
 
 To add AI agent instructions to a new project:
 
-1. **Create a local `AGENTS.md`** in your project root using the template from §30 of the canonical rules. You can bootstrap it with:
+1. **Create a local `AGENTS.md`** in your project root using the template from §30 of the canonical rules. The easiest way is to ask your AI agent:
 
-   ```bash
-   # Fetch the canonical rules to read the template in §30
-   curl -s https://raw.githubusercontent.com/LoneEngineer99/AgentInstructions/main/AGENTS.md | head -n 100
-   # Then create your local AGENTS.md using the template from §30 (Step 0)
-   ```
+   > *"Create a local `AGENTS.md` using the template from §30 (Step 0) of the canonical rules at `https://raw.githubusercontent.com/LoneEngineer99/AgentInstructions/main/AGENTS.md`. Fetch the full file and look for the template in §30."*
 
-   Or ask your AI agent to create it:
-
-   > *"Create a local `AGENTS.md` using the template from §30 of the canonical rules at `https://raw.githubusercontent.com/LoneEngineer99/AgentInstructions/main/AGENTS.md`."*
+   Or manually: fetch the canonical rules file, find the template in §30 (Step 0), and copy it into a new `AGENTS.md` file in your project root.
 
 2. **(Optional) Copy `copilot-instructions.md`** for backwards compatibility with tools that auto-load it:
 

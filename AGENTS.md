@@ -2422,7 +2422,9 @@ Once you have:
 - ✅ Stored at least 30 GitHub memories (if running as a GitHub Copilot Agent)
 - ✅ Verified all placeholders are replaced with actual information
 
-**DELETE the "Canonical Rules Reference" section's initialization instructions** from the project's local `AGENTS.md` — agents no longer need the initialization prompts once the project is set up.
+**Remove the initialization-specific content** from the project's local `AGENTS.md`:
+- Keep the **"Canonical Rules Reference"** section (URL and reading strategy) — agents always need this
+- Remove the initialization prompts and notes about "first time setup" — they are no longer needed once the project is populated
 
 **Commit the changes** with a message like: "Complete project initialization for [Project Name]"
 
