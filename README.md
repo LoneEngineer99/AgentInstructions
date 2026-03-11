@@ -150,7 +150,6 @@ This repository provides **11 specialized GitHub Copilot custom agents** in `.gi
 ```
 AgentInstructions/
 ├── 📜 AGENTS.md                        ★ Canonical rules — always fetched by URL
-├── 🔀 base-copilot-instructions.md     Backwards-compat redirect → AGENTS.md
 ├── 🎨 site-templates.md                UI template & component reference guide
 ├── 🖼️ UI_Examples/
 │   ├── ui-design-index.md              Design catalog with tokens & principles
@@ -217,21 +216,6 @@ The canonical `AGENTS.md` contains **§30 with 24 discovery questions**. Ask you
 git add AGENTS.md .github/roadmap.md
 git commit -m "Add AI agent instructions for project"
 ```
-
-<details>
-<summary><strong>📌 Optional: Add backwards-compatible redirect</strong></summary>
-
-<br>
-
-For tools that auto-load `base-copilot-instructions.md`:
-
-```bash
-mkdir -p .github
-curl -o .github/base-copilot-instructions.md \
-  https://raw.githubusercontent.com/LoneEngineer99/AgentInstructions/main/base-copilot-instructions.md
-```
-
-</details>
 
 > [!NOTE]
 > **Forking?** Update the canonical rules URL in your local `AGENTS.md` files to point to your own fork.
