@@ -150,7 +150,6 @@ This repository provides **11 specialized GitHub Copilot custom agents** in `.gi
 ```
 AgentInstructions/
 ├── 📜 AGENTS.md                        ★ Canonical rules — always fetched by URL
-├── 🎨 site-templates.md                UI template & component reference guide
 ├── 🖼️ UI_Examples/
 │   ├── ui-design-index.md              Design catalog with tokens & principles
 │   └── *.jpg                           42 curated high-quality UI screenshots
@@ -158,7 +157,7 @@ AgentInstructions/
     ├── README.md                       Agent index & selection guide
     ├── code-formatter.md               Naming, comments, XML doc blocks
     ├── agent-reporter.md               Post-task reports (6+ screenshots)
-    ├── ui-designer.md                  Web UI design with Playwright MCP
+    ├── ui-designer.md                  Web UI design with Playwright MCP + full template registry
     ├── binary-analyst.md               x64 RE with Radare2 + Ghidra MCP
     ├── test-engineer.md                Focused unit tests
     ├── project-initializer.md          New project setup wizard
@@ -174,11 +173,11 @@ AgentInstructions/
 
 <br>
 
-**`site-templates.md`** — UI template reference (remotely hosted, may receive updates):
-- Reference guide for reusing UI components and pages from template libraries
+**`.github/agents/ui-designer.md`** — UI design agent (includes full site template registry):
+- Web UI design workflow with Playwright MCP for visual verification
+- Complete template registry with page catalogues, asset maps, and library inventories
 - Critical rules for CSS/JS asset dependencies when copying components
-- Template registry with detailed documentation for each UI template
-- Always fetch the latest version by URL before use — do not rely on cached copies
+- Design system, BEM CSS naming, form validation, i18n, and dark mode rules
 
 **`UI_Examples/`** — UI design reference images and design index:
 - 42 curated screenshots of modern UI design (dashboards, forms, cards, data tables, charts, modals, landing pages, and more)

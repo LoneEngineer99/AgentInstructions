@@ -715,7 +715,7 @@ View / Template     → Presentation and rendering
 - Keep validation logic in dedicated external `.js` files per form/page — never inline
 - Provide clear, user-friendly error messages for each validation rule
 - Combine client-side validation with server-side validation — client-side validation alone is **never** sufficient for security
-- Reference the Vuexy template's `form-validation.html` page for implementation patterns (see `site-templates.md` §5)
+- Reference the Vuexy template's `form-validation.html` page for implementation patterns (see the `ui-designer` agent for the complete template guide)
 
 ### Internationalization (i18n) for HTML
 
@@ -1193,11 +1193,7 @@ When making database changes in any project, ensure ALL of these are in sync:
 
 ### Shared Template Registry (Web Projects)
 
-> **For projects with a web front-end component:** the [AgentInstructions repository](https://github.com/LoneEngineer99/AgentInstructions) maintains a `site-templates.md` file containing the **up-to-date registry of all supported site templates** — including page catalogues, asset maps, third-party library inventories, and the mandatory CSS/JS dependency workflow.
->
-> **Raw URL:** `https://raw.githubusercontent.com/LoneEngineer99/AgentInstructions/main/site-templates.md`
->
-> **⚠️ This file is remotely hosted and may receive updates over time.** Always fetch the latest version by URL before use — do not rely on cached or previously downloaded copies. Before creating or adapting any UI element for a web project, fetch and read this file. It supersedes any locally cached template information about which templates are available at the shared level. Project-specific template overrides and additions still live in the project's own `AGENTS.md`.
+> **For projects with a web front-end component:** the complete registry of all supported site templates — including page catalogues, asset maps, third-party library inventories, and the mandatory CSS/JS dependency workflow — is maintained inside the **`ui-designer`** custom agent.
 
 > For the complete template discovery workflow (how to ask the user about templates, how to store template info, how to copy elements with all required CSS/JS dependencies), invoke the **`ui-designer`** custom agent or read `.github/agents/ui-designer.md`.
 
