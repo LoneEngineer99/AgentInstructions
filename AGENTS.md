@@ -10,10 +10,15 @@
 > - **Canonical Rules URL:** `https://raw.githubusercontent.com/LoneEngineer99/AgentInstructions/main/AGENTS.md`
 > - See §30 for instructions on creating a project's local `AGENTS.md` with the correct template.
 
+> **🤖 Custom Agents Available:**
+> This repository also provides **10 specialized custom agents** for the GitHub Copilot coding agent. These agents cover specific domains — code formatting, UI design, testing, security auditing, database design, API design, binary analysis, reporting, documentation, and project initialization.
+> - **Agent Index URL:** `https://raw.githubusercontent.com/LoneEngineer99/AgentInstructions/main/.github/agents/README.md`
+> - **IMPORTANT:** Whenever a task in your project falls into one of these specialized domains, you MUST fetch the agent index and invoke the appropriate custom agent instead of handling it generically. See the Agent Selection Guide in the index.
+
 > **📖 Reading Strategy:**
-> - **During project initialization**: Read this ENTIRE file using multiple fetches. Store at least **30 memories** (see §30, Step 6). This is mandatory — partial reads miss critical rules.
+> - **During project initialization**: Read this ENTIRE file using multiple fetches. Store at least **30 memories** (see §30, Step 6). This is mandatory — partial reads miss critical rules. Also fetch the Agent Index and store the agent names and purposes.
 > - **On regular tasks**: Read the Table of Contents below to orient yourself, then fetch only the sections relevant to your current task. Do NOT re-read the entire document on every iteration.
-> - **Key principle**: First read → full file + store memories. Subsequent reads → TOC then targeted sections.
+> - **Key principle**: First read → full file + store memories. Subsequent reads → TOC then targeted sections. Always check if a custom agent applies to your task.
 
 > **Purpose:** This document provides the complete foundational rules, conventions, standards, and project-specific templates for AI coding agents. **Continue working until the problem is completely solved.** Before performing any task, briefly list the sub-steps you intend to follow.
 
@@ -66,6 +71,9 @@
 ### Part VII — Local Project `AGENTS.md` Reference
 31. [Project Context Template](#31-project-context-template)
 
+### Part VIII — Custom Agents
+32. [Custom Agents Overview & Selection Guide](#32-custom-agents-overview--selection-guide)
+
 ---
 
 ## Key Behavioral Rules (Quick Reference)
@@ -75,8 +83,9 @@
 - **Work autonomously** — research, debug, and fix issues without waiting for confirmation
 - **Replace anti-patterns**: "Would you like me to proceed?" → just proceed immediately
 - **Track progress** via TODO lists — review after each phase, never lose track
+- **Use custom agents** for specialized tasks — see §32 and the Agent Index URL above for the full list
 - **Update your project's local `AGENTS.md`** (project notes & context) after every major code change (see §26)
-- **Create post-task reports** in `.github/update_reports/` with minimum 5 screenshots (see §27)
+- **Create post-task reports** in `.github/update_reports/` with minimum 6 screenshots using the `agent-reporter` custom agent (see §27)
 - **Update your project's roadmap** (`.github/roadmap.md`) after every task (see §29)
 - **Three-pass review** (functional, visual, security) is mandatory before task completion (see §7)
 - **No containerization** (Docker, Kubernetes) unless explicitly requested
@@ -177,7 +186,8 @@
 ```markdown
 - [ ] CRITICAL: Read the project's local `AGENTS.md` for project-specific context and notes
 - [ ] CRITICAL: Fetch the canonical rules from this repo's `AGENTS.md` (by URL or locally); read the Table of Contents, then fetch sections relevant to your task. (Full read is required only during project initialization — see §30)
-- [ ] Read any additional docs: README.md, .agents/*.md
+- [ ] CRITICAL: Check §32 (Custom Agents) — if this task matches a specialized domain, fetch the agent index and invoke the appropriate custom agent
+- [ ] Read any additional docs: README.md, .github/agents/*.md
 - [ ] Check if `.github/roadmap.md` exists — if not, create it (see §29)
 - [ ] Identify project type, frameworks, and language constraints
 - [ ] Analyze existing tools: dependencies, scripts, build tools
@@ -209,8 +219,8 @@
 ### Phase 4: Post-Task Reporting (MANDATORY)
 
 ```markdown
-- [ ] Create post-task summary report in `.github/update_reports/` (see §27)
-- [ ] Include minimum 5 screenshots of completed work
+- [ ] Invoke the `agent-reporter` custom agent to create the post-task summary report (see §27 and §32)
+- [ ] Ensure minimum 6 screenshots are captured and embedded in the report
 - [ ] Update the project's local `AGENTS.md` with new patterns and progress
 - [ ] Update the project's `.github/roadmap.md` to reflect completed work and status (see §29)
 ```
@@ -1600,7 +1610,7 @@ Each post-task summary must:
    - Example: `session-2026-02-14-implement-user-authentication.md`
 
 2. **Include visual documentation:**
-   - **Minimum 5 screenshots** of completed work
+   - **Minimum 6 screenshots** of completed work (use the `agent-reporter` custom agent — see §32)
    - GIFs/videos encouraged for demonstrating interactions, animations, and multi-step workflows
    - Screenshots embedded inline using relative paths
    - Media files stored in `.github/update_reports/img/session-YYYY-MM-DD-task-name/`
@@ -1897,12 +1907,36 @@ The canonical rules contain:
 - **Part III** — Naming conventions for C#, C/C++, PHP, JS/TS, SQL, CSS/SCSS
 - **Part IV** — Project context guidelines, database change rules, site templates
 - **Part V** — Documentation rules, post-task reporting, agent work ethic, roadmap management
+- **Part VIII** — Custom agents overview and selection guide (§32)
 
 **Rules:**
 1. **ALWAYS follow** all rules and standards in the canonical file.
 2. **NEVER copy** the canonical rules into this file — always fetch by URL.
 3. **If this file conflicts with the canonical rules**, this file takes precedence — project-specific overrides win.
 4. **Update THIS file** (not the canonical file) after every major code change.
+
+---
+
+## Available Custom Agents
+
+The canonical repository provides **10 specialized custom agents**. Fetch the agent index to discover all available agents:
+
+> **Agent Index URL:** `https://raw.githubusercontent.com/LoneEngineer99/AgentInstructions/main/.github/agents/README.md`
+
+When a task falls into one of the following categories, invoke the corresponding custom agent:
+
+| Task Type | Agent |
+|-----------|-------|
+| Code formatting, naming conventions, comments | `code-formatter` |
+| Post-task reports with screenshots | `agent-reporter` |
+| Web UI / front-end components | `ui-designer` |
+| Binary reverse engineering / attack surface | `binary-analyst` |
+| Writing unit tests | `test-engineer` |
+| New project setup | `project-initializer` |
+| Database schema, migrations, Dapper repos | `database-architect` |
+| Security vulnerability review | `security-auditor` |
+| REST API design and documentation | `api-designer` |
+| README, AGENTS.md, roadmap updates | `documentation-writer` |
 
 ---
 
@@ -2452,6 +2486,7 @@ The project's local `AGENTS.md` should contain these sections (see §30 Step 0 f
 | Section | Purpose |
 |---------|---------|
 | **Canonical Rules Reference** | URL to fetch the base rules from; reading strategy |
+| **Available Custom Agents** | Reference to the agent index URL and agent selection guide |
 | **Project Overview** | Project name, description, components, tech stack |
 | **Repository Structure** | Directory tree showing actual project layout |
 | **Architecture Patterns** | Patterns specific to the project |
@@ -2471,5 +2506,73 @@ Each project must also maintain a **`.github/roadmap.md`** file (see §29) where
 
 ---
 
+# Part VIII — Custom Agents
+
+## 32. Custom Agents Overview & Selection Guide
+
+> **🤖 This repository provides 10 specialized custom agents for GitHub Copilot coding agent.**
+> Fetch the full agent index (with descriptions, file paths, and setup details) at:
+> **Agent Index URL:** `https://raw.githubusercontent.com/LoneEngineer99/AgentInstructions/main/.github/agents/README.md`
+
+These agents are designed to be used by **any project** that references this canonical repository. When a task falls into one of the specialized domains below, invoke the corresponding custom agent instead of handling it generically.
+
+### Available Custom Agents
+
+| Agent Name | Domain | When to Use |
+|-----------|--------|-------------|
+| `code-formatter` | Code quality | Naming violations, missing inline comments, missing XML doc blocks |
+| `agent-reporter` | Reporting | Creating post-task reports with screenshots after completing significant work |
+| `ui-designer` | Front-end UI | Building dashboards, forms, cards, tables, modals, navigation |
+| `binary-analyst` | Security research | Reverse engineering binaries, finding attack surfaces, creating signatures |
+| `test-engineer` | Testing | Writing unit tests for input validation and business logic |
+| `project-initializer` | Project setup | Setting up a brand new project from scratch |
+| `database-architect` | Data layer | Schema design, migrations, Dapper repository implementations |
+| `security-auditor` | Security review | Auditing code for XSS, SQL injection, auth issues, exposed internals |
+| `api-designer` | REST APIs | Designing endpoints, DTOs, versioning, OpenAPI documentation |
+| `documentation-writer` | Documentation | Updating README, AGENTS.md, roadmap, ADRs |
+
+### How Remote Projects Use These Agents
+
+Projects that reference this canonical repository should add the following to their local `AGENTS.md`:
+
+```markdown
+## Available Custom Agents
+
+This project uses the specialized custom agents from the canonical repository.
+Fetch the agent index to discover all available agents:
+
+**Agent Index URL:** `https://raw.githubusercontent.com/LoneEngineer99/AgentInstructions/main/.github/agents/README.md`
+
+When a task falls into one of the following categories, invoke the corresponding agent:
+- **Code formatting / naming** → `code-formatter`
+- **Post-task reports** → `agent-reporter`
+- **UI / front-end work** → `ui-designer`
+- **Binary analysis / security research** → `binary-analyst`
+- **Writing tests** → `test-engineer`
+- **New project setup** → `project-initializer`
+- **Database schema / migrations** → `database-architect`
+- **Security audit** → `security-auditor`
+- **REST API design** → `api-designer`
+- **Documentation updates** → `documentation-writer`
+```
+
+### Agent Invocation in Projects
+
+When working in a project that references this canonical repository:
+
+1. **Check the task type** — does it match one of the 10 agent domains above?
+2. **If yes**, fetch the agent index URL and read the relevant agent's `.md` file for full instructions
+3. **Invoke the agent** — either via the Copilot UI agent selector or the Copilot CLI
+4. **After the agent completes**, always use `agent-reporter` to document the work with screenshots
+
+### Mandatory Post-Task Reporting
+
+The `agent-reporter` custom agent is the designated tool for all post-task summary reports. It produces structured reports in `.github/update_reports/` with **minimum 6 screenshots** (updated from the 5-screenshot minimum in §27 — 6 is now the standard enforced by the agent).
+
+All other references to "minimum 5 screenshots" in this document are superseded by the `agent-reporter` agent's **6-screenshot minimum**.
+
+---
+
+*Last updated: 2026-03-11 — Added §32 Custom Agents and 10 specialized agent profiles in .github/agents/*
 *Last updated: 2026-03-04 — Updated to reference-based model: canonical rules + local project AGENTS.md*
 *Created: 2026-02-14 — Initial starter kit template*

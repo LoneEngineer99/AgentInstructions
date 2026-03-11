@@ -86,7 +86,7 @@ flowchart LR
 
 ## 📖 What's Inside the Canonical Rules
 
-The canonical `AGENTS.md` is organized into **7 parts** covering everything an AI agent needs:
+The canonical `AGENTS.md` is organized into **8 parts** covering everything an AI agent needs:
 
 <table>
 <tr><td>
@@ -100,6 +100,7 @@ The canonical `AGENTS.md` is organized into **7 parts** covering everything an A
 | **V** | 📝 Documentation & Evolution | Post-task reporting, agent work ethic, roadmap management |
 | **VI** | 🚀 Initialization Protocol | 24 discovery questions + local `AGENTS.md` template |
 | **VII** | 📋 Template Reference | Structure for each project's local `AGENTS.md` |
+| **VIII** | 🤖 Custom Agents | 10 specialized agents and selection guide |
 
 </td></tr>
 </table>
@@ -110,6 +111,7 @@ The canonical `AGENTS.md` is organized into **7 parts** covering everything an A
 <br>
 
 - 🔗 Reference to the canonical rules URL
+- 🤖 Reference to the custom agents index URL
 - 📋 Project overview, tech stack, and architecture
 - 🔨 Build, run, and test commands
 - 🗄️ Database schema and migration details
@@ -121,6 +123,27 @@ The canonical `AGENTS.md` is organized into **7 parts** covering everything an A
 
 ---
 
+## 🤖 Custom Agents
+
+This repository provides **10 specialized GitHub Copilot custom agents** in `.github/agents/`:
+
+| Agent | Purpose |
+|-------|---------|
+| `code-formatter` | Naming conventions, inline comments, XML doc blocks |
+| `agent-reporter` | Post-task reports with minimum 6 screenshots |
+| `ui-designer` | Web UI components with design system compliance |
+| `binary-analyst` | x64 reverse engineering and attack surface mapping |
+| `test-engineer` | Focused unit tests for input validation and business logic |
+| `project-initializer` | New project setup with AGENTS.md scaffolding |
+| `database-architect` | Schema design, migrations, Dapper repositories |
+| `security-auditor` | Code security review with prioritized findings |
+| `api-designer` | REST API design, DTOs, versioning, OpenAPI docs |
+| `documentation-writer` | README, AGENTS.md, roadmap, and ADR maintenance |
+
+👉 **[View the full agent index](.github/agents/README.md)** for descriptions, selection guide, and remote usage instructions.
+
+---
+
 ## 📁 Repository Structure
 
 ```
@@ -128,9 +151,21 @@ AgentInstructions/
 ├── 📜 AGENTS.md                        ★ Canonical rules — always fetched by URL
 ├── 🔀 base-copilot-instructions.md     Backwards-compat redirect → AGENTS.md
 ├── 🎨 site-templates.md                UI template & component reference guide
-└── 🖼️ UI_Examples/
-    ├── ui-design-index.md              Design catalog with tokens & principles
-    └── *.jpg                           42 curated high-quality UI screenshots
+├── 🖼️ UI_Examples/
+│   ├── ui-design-index.md              Design catalog with tokens & principles
+│   └── *.jpg                           42 curated high-quality UI screenshots
+└── 🤖 .github/agents/
+    ├── README.md                       Agent index & selection guide
+    ├── code-formatter.md               Naming, comments, XML doc blocks
+    ├── agent-reporter.md               Post-task reports (6+ screenshots)
+    ├── ui-designer.md                  Web UI design with Playwright MCP
+    ├── binary-analyst.md               x64 RE with Radare2 + Ghidra MCP
+    ├── test-engineer.md                Focused unit tests
+    ├── project-initializer.md          New project setup wizard
+    ├── database-architect.md           Schema, migrations, Dapper
+    ├── security-auditor.md             Security vulnerability review
+    ├── api-designer.md                 REST API design
+    └── documentation-writer.md         README/AGENTS.md/roadmap
 ```
 
 <details>
