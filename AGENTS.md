@@ -10,10 +10,15 @@
 > - **Canonical Rules URL:** `https://raw.githubusercontent.com/LoneEngineer99/AgentInstructions/main/AGENTS.md`
 > - See §30 for instructions on creating a project's local `AGENTS.md` with the correct template.
 
+> **🤖 Custom Agents Available:**
+> This repository also provides **11 specialized custom agents** for the GitHub Copilot coding agent. These agents cover specific domains — code formatting, UI design, testing, security auditing, database design, API design, binary analysis, reporting, documentation, project initialization, and continuous long-running development.
+> - **Agent Index URL:** `https://raw.githubusercontent.com/LoneEngineer99/AgentInstructions/main/.github/agents/README.md`
+> - **IMPORTANT:** Whenever a task in your project falls into one of these specialized domains, you MUST fetch the agent index and invoke the appropriate custom agent instead of handling it generically. See the Agent Selection Guide in the index.
+
 > **📖 Reading Strategy:**
-> - **During project initialization**: Read this ENTIRE file using multiple fetches. Store at least **30 memories** (see §30, Step 6). This is mandatory — partial reads miss critical rules.
+> - **During project initialization**: Read this ENTIRE file using multiple fetches. Store at least **30 memories** (see the `project-initializer` agent — `.github/agents/project-initializer.md`). This is mandatory — partial reads miss critical rules. Also fetch the Agent Index and store the agent names and purposes.
 > - **On regular tasks**: Read the Table of Contents below to orient yourself, then fetch only the sections relevant to your current task. Do NOT re-read the entire document on every iteration.
-> - **Key principle**: First read → full file + store memories. Subsequent reads → TOC then targeted sections.
+> - **Key principle**: First read → full file + store memories. Subsequent reads → TOC then targeted sections. Always check if a custom agent applies to your task.
 
 > **Purpose:** This document provides the complete foundational rules, conventions, standards, and project-specific templates for AI coding agents. **Continue working until the problem is completely solved.** Before performing any task, briefly list the sub-steps you intend to follow.
 
@@ -66,6 +71,9 @@
 ### Part VII — Local Project `AGENTS.md` Reference
 31. [Project Context Template](#31-project-context-template)
 
+### Part VIII — Custom Agents
+32. [Custom Agents Overview & Selection Guide](#32-custom-agents-overview--selection-guide)
+
 ---
 
 ## Key Behavioral Rules (Quick Reference)
@@ -75,8 +83,9 @@
 - **Work autonomously** — research, debug, and fix issues without waiting for confirmation
 - **Replace anti-patterns**: "Would you like me to proceed?" → just proceed immediately
 - **Track progress** via TODO lists — review after each phase, never lose track
+- **Use custom agents** for specialized tasks — see §32 and the Agent Index URL above for the full list
 - **Update your project's local `AGENTS.md`** (project notes & context) after every major code change (see §26)
-- **Create post-task reports** in `.github/update_reports/` with minimum 5 screenshots (see §27)
+- **Create post-task reports** in `.github/update_reports/` with minimum 6 screenshots using the `agent-reporter` custom agent (see §27)
 - **Update your project's roadmap** (`.github/roadmap.md`) after every task (see §29)
 - **Three-pass review** (functional, visual, security) is mandatory before task completion (see §7)
 - **No containerization** (Docker, Kubernetes) unless explicitly requested
@@ -177,7 +186,8 @@
 ```markdown
 - [ ] CRITICAL: Read the project's local `AGENTS.md` for project-specific context and notes
 - [ ] CRITICAL: Fetch the canonical rules from this repo's `AGENTS.md` (by URL or locally); read the Table of Contents, then fetch sections relevant to your task. (Full read is required only during project initialization — see §30)
-- [ ] Read any additional docs: README.md, .agents/*.md
+- [ ] CRITICAL: Check §32 (Custom Agents) — if this task matches a specialized domain, fetch the agent index and invoke the appropriate custom agent
+- [ ] Read any additional docs: README.md, .github/agents/*.md
 - [ ] Check if `.github/roadmap.md` exists — if not, create it (see §29)
 - [ ] Identify project type, frameworks, and language constraints
 - [ ] Analyze existing tools: dependencies, scripts, build tools
@@ -209,8 +219,8 @@
 ### Phase 4: Post-Task Reporting (MANDATORY)
 
 ```markdown
-- [ ] Create post-task summary report in `.github/update_reports/` (see §27)
-- [ ] Include minimum 5 screenshots of completed work
+- [ ] Invoke the `agent-reporter` custom agent to create the post-task summary report (see §27 and §32)
+- [ ] Ensure minimum 6 screenshots are captured and embedded in the report
 - [ ] Update the project's local `AGENTS.md` with new patterns and progress
 - [ ] Update the project's `.github/roadmap.md` to reflect completed work and status (see §29)
 ```
@@ -868,169 +878,19 @@ public class ExceptionHandlingMiddleware
 
 🚨 **CRITICAL**: The following formatting and documentation rules apply to **ALL generated code**, regardless of language. These are **non-negotiable** and must be followed in every function, method, and procedure written by the agent.
 
+> For the complete implementation guide with multi-language examples, invoke the **`code-formatter`** custom agent or read `.github/agents/code-formatter.md`.
+
 ### Function Parameters — Same Line (MANDATORY)
 
-🚨 **ALL function/method parameters MUST be on the SAME LINE as the function declaration.** Do NOT wrap or split parameters across multiple lines. This is a **hard rule** — no exceptions.
-
-```csharp
-//✅ CORRECT — all parameters on the same line
-public async Task<IActionResult> CreateLicense(string licenseKey, string userId, DateTime expirationDate, bool isActive)
-
-//❌ WRONG — parameters split across multiple lines (NEVER do this)
-public async Task<IActionResult> CreateLicense(
-    string licenseKey,
-    string userId,
-    DateTime expirationDate,
-    bool isActive)
-```
-
-```javascript
-//✅ CORRECT — all parameters on the same line
-function calculateTotal(price, taxRate, discount, quantity, currencyCode) {
-
-//❌ WRONG — parameters wrapped to multiple lines (NEVER do this)
-function calculateTotal(
-    price,
-    taxRate,
-    discount,
-    quantity,
-    currencyCode
-) {
-```
-
-```c
-//✅ CORRECT — all parameters on the same line
-ValidationResult* validate_license(const char* license_key, const char* hardware_id, int max_retries) {
-
-//❌ WRONG — parameters on separate lines (NEVER do this)
-ValidationResult* validate_license(
-    const char* license_key,
-    const char* hardware_id,
-    int max_retries) {
-```
-
-```php
-//✅ CORRECT — all parameters on the same line
-public function processOrder(string $orderId, float $amount, string $currency, bool $isExpress): OrderResult {
-
-//❌ WRONG — parameters on separate lines (NEVER do this)
-public function processOrder(
-    string $orderId,
-    float $amount,
-    string $currency,
-    bool $isExpress
-): OrderResult {
-```
-
-**Why?** Keeping parameters on a single line improves scannability, simplifies diffs, and ensures consistent formatting across the codebase. If a function has so many parameters that the line is excessively long, that is a design signal to refactor (e.g., use a parameter object or request DTO) — not a reason to wrap lines. If a project linter enforces line-length wrapping, configure it to allow longer lines for function signatures or disable that specific rule for declarations.
+All function/method parameters **must** be on the **same line** as the function declaration — never wrapped to multiple lines. If a signature is excessively long, that is a design signal to introduce a request DTO, not a reason to wrap.
 
 ### XML Function Block Comments (MANDATORY)
 
-🚨 **ALL functions and methods MUST have XML documentation block comments.** Every function generated by the agent must include a `/// <summary>` block describing its purpose, `/// <param>` tags for each parameter, and a `/// <returns>` tag if it returns a value. This applies to **all languages** — use the XML `///` comment style universally.
-
-```csharp
-/// <summary>
-/// Creates a new license record and associates it with the specified user.
-/// </summary>
-/// <param name="licenseKey">The unique license key string.</param>
-/// <param name="userId">The UID of the user to associate the license with.</param>
-/// <param name="expirationDate">The date when the license expires.</param>
-/// <param name="isActive">Whether the license should be immediately active.</param>
-/// <returns>The created license wrapped in an IActionResult.</returns>
-public async Task<IActionResult> CreateLicense(string licenseKey, string userId, DateTime expirationDate, bool isActive)
-```
-
-```javascript
-/// <summary>
-/// Calculates the total cost including tax and discount for a given quantity.
-/// </summary>
-/// <param name="price">Unit price of the item.</param>
-/// <param name="taxRate">Tax rate as a decimal (e.g., 0.08 for 8%).</param>
-/// <param name="discount">Discount amount to subtract from the total.</param>
-/// <param name="quantity">Number of items purchased.</param>
-/// <param name="currencyCode">ISO 4217 currency code (e.g., "USD").</param>
-/// <returns>The calculated total as a formatted number.</returns>
-function calculateTotal(price, taxRate, discount, quantity, currencyCode) {
-```
-
-```c
-/// <summary>
-/// Validates a license key against the platform server.
-/// </summary>
-/// <param name="license_key">License key string (format: XXXXX-XXXXX-XXXXX).</param>
-/// <param name="hardware_id">SHA-256 hash of hardware identifiers.</param>
-/// <param name="max_retries">Maximum number of retry attempts on failure.</param>
-/// <returns>ValidationResult pointer (caller must free), or NULL on failure.</returns>
-ValidationResult* validate_license(const char* license_key, const char* hardware_id, int max_retries) {
-```
-
-```php
-/// <summary>
-/// Processes an order with the given amount and currency.
-/// </summary>
-/// <param name="orderId">The unique order identifier.</param>
-/// <param name="amount">The order total amount.</param>
-/// <param name="currency">ISO 4217 currency code.</param>
-/// <param name="isExpress">Whether to use express shipping.</param>
-/// <returns>The processed OrderResult.</returns>
-public function processOrder(string $orderId, float $amount, string $currency, bool $isExpress): OrderResult {
-```
-
-**Why?** XML block comments provide structured, parseable documentation that is understood by IDEs, documentation generators, and other developers. They ensure every function's purpose, inputs, and outputs are immediately clear without reading the implementation.
+All public functions and methods **must** have an XML documentation block with `/// <summary>`, `/// <param name="...">`, and `/// <returns>` tags. Summaries must describe the contract (what goes in, what comes out, what side effects occur) — **not** implementation details. Keep summaries abstract enough to remain true as the implementation changes.
 
 ### Inline Comments for Logical Steps (MANDATORY)
 
-🚨 **ALL function bodies MUST include inline comments** that describe each logical set of instructions. Every distinct step, operation, or block of related logic within a function must have a comment explaining what it does and why. Do NOT write uncommented blocks of code. Inline comments must have **no space** after `//` — write `//Comment` not `// Comment`. **Note:** This no-space rule applies only to inline `//` comments. XML doc comments using `///` are a separate style and **must** include a space after `///` (e.g., `/// <summary>`).
-
-```csharp
-public async Task<IActionResult> CreateLicense(string licenseKey, string userId, DateTime expirationDate, bool isActive)
-{
-    //Validate input parameters before processing
-    if (string.IsNullOrEmpty(licenseKey)) throw new ArgumentException("License key is required");
-    if (string.IsNullOrEmpty(userId)) throw new ArgumentException("User ID is required");
-
-    //Look up the user to ensure they exist
-    var user = await _userRepository.GetByUidAsync(userId);
-    if (user == null) return NotFound("User not found");
-
-    //Build the license entity with the provided details
-    var license = new License
-    {
-        Key = licenseKey,
-        UserId = user.Id,
-        ExpirationDate = expirationDate,
-        IsActive = isActive,
-        CreatedAt = DateTime.UtcNow
-    };
-
-    //Persist the license to the database
-    await _licenseRepository.CreateAsync(license);
-
-    //Return the created license as a success response
-    return CreatedAtAction(nameof(GetLicense), new { uid = license.Uid }, license.ToDto());
-}
-```
-
-```javascript
-function calculateTotal(price, taxRate, discount, quantity, currencyCode) {
-    //Calculate the subtotal from unit price and quantity
-    const subtotal = price * quantity;
-
-    //Apply the tax rate to the subtotal
-    const taxAmount = subtotal * taxRate;
-
-    //Subtract the discount from the taxed total
-    const total = subtotal + taxAmount - discount;
-
-    //Ensure the total is not negative
-    const finalTotal = Math.max(0, total);
-
-    //Format the result with the appropriate currency
-    return new Intl.NumberFormat('en-US', { style: 'currency', currency: currencyCode }).format(finalTotal);
-}
-```
-
-**Why?** Inline comments make code self-documenting at the implementation level. They allow any developer (or AI agent) to immediately understand the purpose of each code block without tracing through the logic. This is especially critical for complex functions, multi-step workflows, and business logic.
+All function bodies **must** have inline comments describing each logical block. Inline comments use `//` with **no space** after the slashes: `//Comment` not `// Comment`. This does **not** apply to XML `///` doc comments, which **must** include a space after `///`.
 
 ### Code Formatting & Documentation Checklist
 
@@ -1039,15 +899,17 @@ For every function or method generated, verify:
 - [ ] All parameters are on the **same line** as the function declaration — no wrapping
 - [ ] XML block comment (`/// <summary>`, `/// <param>`, `/// <returns>`) is present above the function
 - [ ] Every logical step inside the function body has an inline comment explaining it
-- [ ] Inline comments use `//` with **no space** after the slashes (e.g., `//Comment` not `// Comment`). This does **not** apply to `///` XML doc comments, which use a space after `///`.
+- [ ] Inline comments use `//` with **no space** (e.g., `//Comment` not `// Comment`)
 - [ ] `#region` / `#endregion` blocks have no blank lines between the directive and the content
-- [ ] Comments are clear, concise, and describe **what** and **why** — not just restating the code
+- [ ] Comments describe **what** and **why** — not just restating the code
 
 ---
 
 ## 15. Unit Testing
 
 Write unit tests for business logic, services, and repository implementations to verify correctness and prevent regressions. Keep tests simple, focused, and fast — the goal is to catch real issues without overwhelming the development workflow.
+
+> For detailed testing patterns, input validation strategies, mocking rules, and language-specific examples, invoke the **`test-engineer`** custom agent or read `.github/agents/test-engineer.md`.
 
 ### Testing Framework
 
@@ -1066,91 +928,20 @@ Write unit tests for business logic, services, and repository implementations to
 - **Test only what you own** — don't test framework code, third-party libraries, or trivial getters/setters
 - **Fast execution** — tests should complete quickly (under 1 second per test is ideal)
 - **No flakiness** — tests must be deterministic and produce the same result every time
+- **No delays** — never use `Thread.Sleep`, `Task.Delay`, `setTimeout`, or similar blocking calls
 
 ### What to Test
 
-✅ **Do test:**
+✅ **Do test:** business logic, validation rules, service methods, error conditions, security-sensitive operations
 
-- Business logic and validation rules
-- Service methods with complex workflows
-- Repository methods with custom queries or data transformations
-- Edge cases and error conditions
-- Security-sensitive operations (authentication, authorization, data sanitization)
-
-❌ **Don't test:**
-
-- Simple properties or auto-properties (e.g., `{ get; set; }`)
-- Framework-provided functionality (e.g., ASP.NET Core routing, Entity Framework CRUD)
-- Third-party library internals
-- Private methods (test through public interfaces instead)
-- Configuration or environment-specific code that can't run in isolation
-
-### Avoiding Timeouts and Hangs
-
-🚨 **CRITICAL**: Tests must **never** timeout, hang, or introduce delays that could stall the test suite.
-
-**Rules:**
-
-- **No `Thread.Sleep`, `Task.Delay`, `setTimeout`, or similar blocking delays** — these slow down test execution and can cause timeouts
-- **Mock external dependencies** (databases, APIs, file systems) instead of hitting real resources
-- **Use in-memory alternatives** when possible (e.g., in-memory database for EF Core, in-memory cache for Redis)
-- **Set explicit timeouts** for async operations and fail fast if they're not met
-- **Avoid infinite loops or unbounded recursion** in test code
-- **Don't rely on timing or race conditions** — use deterministic synchronization patterns
-
-```csharp
-//❌ BAD — introduces a delay that slows down tests
-[Fact]
-public async Task ProcessOrder_Should_Complete()
-{
-    await Task.Delay(5000); //Don't do this!
-    var result = await _service.ProcessOrderAsync(orderId);
-    Assert.True(result.IsSuccess);
-}
-
-//✅ GOOD — no delays, uses mocked dependencies
-[Fact]
-public async Task ProcessOrder_Should_Complete()
-{
-    _mockPaymentService.Setup(x => x.ChargeAsync(It.IsAny<decimal>())).ReturnsAsync(true);
-    var result = await _service.ProcessOrderAsync(orderId);
-    Assert.True(result.IsSuccess);
-}
-```
+❌ **Don't test:** simple getters/setters, framework-provided CRUD, third-party library internals, private methods
 
 ### Test Scope and Depth
 
-Tests should **not** be overly in-depth or exhaustive — maintaining tests shouldn't consume a massive portion of the development cycle.
-
-**Guidelines:**
-
 - **Focus on critical paths** — test the "happy path" and major error scenarios
-- **Limit test coverage goals** — aim for 60-80% coverage of business logic, not 100% coverage of everything
-- **Don't over-mock** — excessive mocking makes tests brittle and hard to maintain
-- **Keep test suites small** — if a test file exceeds 500 lines, consider splitting it by feature or responsibility
-- **Refactor tests when needed** — if tests become hard to read or maintain, simplify them or consolidate duplicates
-
-### Test Structure
-
-Use the **Arrange-Act-Assert (AAA)** pattern for clarity:
-
-```csharp
-[Fact]
-public async Task CreateLicense_Should_ReturnLicense_When_ValidInput()
-{
-    //Arrange — set up test data and dependencies
-    var userId = "user-123";
-    var licenseKey = "ABC-DEF-GHI";
-    _mockUserRepo.Setup(x => x.GetByUidAsync(userId)).ReturnsAsync(new User { Id = 1, Uid = userId });
-
-    //Act — execute the method under test
-    var result = await _service.CreateLicenseAsync(licenseKey, userId);
-
-    //Assert — verify the outcome
-    Assert.NotNull(result);
-    Assert.Equal(licenseKey, result.Key);
-}
-```
+- **Limit coverage goals** — aim for 60–80% coverage of business logic, not 100% of everything
+- **Keep test suites small** — if a test file exceeds 500 lines, split it by feature or responsibility
+- **Use Arrange-Act-Assert (AAA)** pattern with inline comments for clarity
 
 ### Testing Checklist
 
@@ -1191,44 +982,9 @@ When writing tests, verify:
 | Services | `{Entity}Service` | `UserService`, `EmailService` |
 | Repositories | `{Entity}Repository` | `UserRepository`, `TokenRepository` |
 
-**Code Organization:** Use `#region` blocks for logical grouping. There must be **no blank lines** between `#region` and the first item inside the region, and **no blank lines** between the last item and `#endregion`:
+**Code Organization:** Use `#region` blocks for logical grouping (Dependencies, Constructor, Public Methods, Private Helpers). There must be **no blank lines** between `#region` and the first item inside the region, and **no blank lines** between the last item and `#endregion`. See `code-formatter.md` for examples.
 
-```csharp
-//✅ CORRECT — no blank lines between #region/#endregion and content
-#region Dependencies
-private readonly UserService _userService;
-#endregion
-
-#region Constructor
-public MyController(UserService userService) { ... }
-#endregion
-
-#region Public Methods
-//...
-#endregion
-
-#region Private Helpers
-//...
-#endregion
-
-//❌ WRONG — blank lines between #region/#endregion and content (NEVER do this)
-#region Dependencies
-
-private readonly UserService _userService;
-
-#endregion
-```
-
-**XML Documentation:** Required on all public methods, classes, and properties:
-
-```csharp
-/// <summary>
-/// Get all endpoints owned by the current user.
-/// </summary>
-/// <param name="pagination">Pagination parameters.</param>
-/// <returns>Paginated collection of endpoints.</returns>
-public async Task<IActionResult> GetMyEndpoints([FromQuery] PaginationParams pagination)
-```
+**XML Documentation:** Required on all public methods, classes, and properties. See §14 for rules.
 
 ---
 
@@ -1258,17 +1014,7 @@ public async Task<IActionResult> GetMyEndpoints([FromQuery] PaginationParams pag
 | Templates | `PascalCase` | `template<typename TValue>` |
 | File extensions | `.cpp` / `.hpp` or `.h` | `memory.cpp`, `memory.hpp` |
 
-**Documentation (C/C++):**
-
-```c
-/// <summary>
-/// Validates a license key against the platform server.
-/// </summary>
-/// <param name="license_key">License key string (format: XXXXX-XXXXX-XXXXX)</param>
-/// <param name="hardware_id">SHA-256 hash of hardware identifiers</param>
-/// <returns>ValidationResult pointer (caller must free), or NULL on failure</returns>
-ValidationResult* validate_license(const char* license_key, const char* hardware_id);
-```
+**Documentation (C/C++):** Use XML `///` doc comment style (same as C# — see §14). See `code-formatter.md` for examples.
 
 ---
 
@@ -1346,25 +1092,7 @@ Every primary entity should have TWO identifiers:
 | SCSS variables | `$kebab-case` | `$color-primary`, `$font-size-base` |
 | SCSS mixins | `kebab-case` | `@mixin flex-center`, `@mixin responsive-grid` |
 
-**Design System Variables:** Always use CSS custom properties instead of hardcoded values:
-
-```css
-/* ✅ Good — uses design system tokens */
-.card {
-    background: var(--bg-card);
-    border-radius: var(--radius-lg);
-    box-shadow: var(--shadow-md);
-    transition: var(--transition-normal);
-}
-
-/* ❌ Bad — hardcoded values */
-.card {
-    background: #1a1a2e;
-    border-radius: 12px;
-    box-shadow: 0 4px 12px rgba(0,0,0,0.1);
-    transition: all 0.3s ease;
-}
-```
+**Design System Variables:** Always use CSS custom properties (e.g., `var(--bg-card)`, `var(--radius-lg)`) instead of hardcoded values. See `ui-designer.md` for examples and a full token reference.
 
 ---
 
@@ -1471,47 +1199,7 @@ When making database changes in any project, ensure ALL of these are in sync:
 >
 > **⚠️ This file is remotely hosted and may receive updates over time.** Always fetch the latest version by URL before use — do not rely on cached or previously downloaded copies. Before creating or adapting any UI element for a web project, fetch and read this file. It supersedes any locally cached template information about which templates are available at the shared level. Project-specific template overrides and additions still live in the project's own `AGENTS.md`.
 
-### Template Discovery & Usage
-
-Before creating UI elements, **always check** if templates have been documented in the project's `AGENTS.md`. If the project has a web front-end, also fetch the shared `site-templates.md` from the AgentInstructions repository (see above) for the complete list of available templates. If no templates are documented anywhere, **ask the user** if there are any HTML templates or design references that should be used for the project. Do not assume any specific template directories exist.
-
-**Ask the user:**
-1. Are there any HTML/CSS templates that should be used as a reference for UI elements (cards, tables, modals, forms, charts, navbars, etc.)?
-2. Where are these templates located (directory path, URL, or external resource)?
-3. What is the purpose of each template (e.g., public-facing pages, dashboard/admin panel, email templates)?
-
-### Storing Template Information
-
-Once the user provides template details, you **must** store this information in two places:
-
-1. **`AGENTS.md`** — Update the "Site Templates & Design References" section with:
-   - Template name(s) and path(s)
-   - Purpose of each template
-   - Any relevant notes about usage
-2. **GitHub Memories** — Use the `store_memory` tool to save each template source as a fact, including the template name, directory path, and purpose (e.g., "HTML template 'Front Pages' at SiteTemplates/front-pages/ is used for public-facing landing page elements")
-
-### How to Use Templates
-
-Once templates are identified and documented:
-
-1. **Identify the element you need** — determine the type of UI element (table, card, form, chart, etc.)
-2. **Find the matching template page** — browse the filenames in the documented template directories to locate a page that contains an example of that element
-3. **Read the template HTML** — inspect the element's structure, CSS classes, and any `data-*` attributes
-4. **Copy required JS/CSS dependencies** — if the element relies on specific JavaScript plugins or CSS files from the template's `assets/` directory, **copy those files into the project** and reference them properly
-5. **Adapt the element** — customize the copied HTML/CSS/JS to match the project's data, branding, and conventions
-6. **Verify dependencies** — ensure all required vendor libraries (e.g., chart libraries, datepicker plugins, DataTables) are included in the project after copying
-
-### Dependency Checklist for Template Elements
-
-When copying an element from a template page, check for and include:
-
-- [ ] **CSS files** — vendor CSS referenced in the template's `<head>` that the element needs
-- [ ] **JS files** — vendor JS referenced at the bottom of the template page that the element needs
-- [ ] **Initialization scripts** — any page-specific JS that initializes the element (e.g., `$('.select2').select2()`)
-- [ ] **Icon fonts / SVGs** — any icon libraries the element uses
-- [ ] **Image assets** — placeholder images or illustrations used by the element
-
-> **⚠️ IMPORTANT**: Do not just copy the HTML markup — elements will often appear broken or unstyled if their required CSS/JS dependencies are missing. Always inspect the full template page to identify all dependencies.
+> For the complete template discovery workflow (how to ask the user about templates, how to store template info, how to copy elements with all required CSS/JS dependencies), invoke the **`ui-designer`** custom agent or read `.github/agents/ui-designer.md`.
 
 ---
 
@@ -1591,101 +1279,15 @@ Update the corresponding sections in the project's local `AGENTS.md`:
 
 🚨 **NON-NEGOTIABLE: Every agent session that completes significant work MUST create a post-task summary document in the `.github/update_reports/` directory. A task is NOT considered complete without this report. This is a mandatory deliverable — not optional.**
 
-### Summary Document Requirements
+> For the complete report template, screenshot requirements, media organization rules, and iteration update format, invoke the **`agent-reporter`** custom agent or read `.github/agents/agent-reporter.md`.
 
-Each post-task summary must:
+### Key Requirements
 
-1. **Be created in `.github/update_reports/`** with filename format:
-   - `session-YYYY-MM-DD-descriptive-task-name.md`
-   - Example: `session-2026-02-14-implement-user-authentication.md`
-
-2. **Include visual documentation:**
-   - **Minimum 5 screenshots** of completed work
-   - GIFs/videos encouraged for demonstrating interactions, animations, and multi-step workflows
-   - Screenshots embedded inline using relative paths
-   - Media files stored in `.github/update_reports/img/session-YYYY-MM-DD-task-name/`
-
-3. **Follow this structure:**
-
-```markdown
-# Post Task Summary: [Task Name]
-
-**Date:** YYYY-MM-DD
-**Agent Session:** [Brief description]
-
----
-
-## Summary
-
-[High-level overview of what was accomplished]
-
-## Completed Work
-
-### [Feature/Component 1]
-[Description]
-
-![Screenshot description](./img/session-YYYY-MM-DD-task/screenshot-1.png)
-
-### [Feature/Component 2]
-[Description]
-
-![Screenshot description](./img/session-YYYY-MM-DD-task/screenshot-2.png)
-
-## Key Changes
-
-- [Bullet list of significant changes]
-- [File paths and what was modified]
-- [New features or capabilities]
-
-## Visual Documentation
-
-### [Section 1]
-![Description](./img/session-YYYY-MM-DD-task/screenshot-3.png)
-
-### [Section 2]
-![Description](./img/session-YYYY-MM-DD-task/screenshot-4.png)
-
-[Continue with all screenshots — minimum 5 total]
-
-## Review Readiness
-
-- [ ] All planned features implemented
-- [ ] Screenshots/GIFs demonstrate functionality
-- [ ] Code follows project conventions
-- [ ] Documentation updated (local AGENTS.md)
-- [ ] Builds pass
-- [ ] Ready for review
-
-## Notes
-
-[Any additional context, decisions made, or follow-up items]
-```
-
-### Media Organization
-
-- Create subdirectory for each session: `.github/update_reports/img/session-YYYY-MM-DD-task-name/`
-- Name screenshots descriptively: `feature-name-view.png`, `dashboard-overview.png`
-- Use PNG for screenshots (lossless quality)
-- Use GIF for short animations (< 10 seconds)
-- Optimize images for web (reasonable file sizes)
-
-### Iteration Updates
-
-If additional work is needed after a report is created, update the existing document — do not create a new one:
-
-```markdown
----
-
-## Iteration [N] — [Date]
-
-### Feedback Addressed
-- [List of review feedback items]
-
-### Additional Changes
-[Description of new work]
-
-![Additional screenshot](./img/session-YYYY-MM-DD-task/iteration-N-screenshot.png)
-```
+1. **File location and naming:** `.github/update_reports/session-YYYY-MM-DD-descriptive-task-name.md`
+2. **Minimum 6 screenshots** — captured with Playwright, terminal output, diff views, or file trees. This is not optional.
+3. **Agent Completion Checklist** must be included and evaluated — see `agent-reporter.md` for the full checklist template.
+4. **Media files** stored in `.github/update_reports/img/session-YYYY-MM-DD-task-name/` alongside the report.
+5. If additional work is needed after a report is created, **update the existing document** — do not create a new one.
 
 ---
 
@@ -1757,6 +1359,16 @@ After completing work, immediately:
 - Refactor as needed
 - Update the project's local `AGENTS.md` with new patterns and progress
 - Update the project's `.github/roadmap.md` to reflect completed work and next steps
+
+### Long-Running Tasks
+
+For tasks that require sustained, multi-phase development across a large surface area — implementing a full feature, completing a sprint, or bringing a project from scaffold to MVP — invoke the **`continuous-developer`** custom agent (`.github/agents/continuous-developer.md`).
+
+The `continuous-developer` agent specializes in:
+- Structuring work into phases and executing them fully without stopping
+- Maximizing the volume of completed, working, committed code per session
+- Leaving a clean handoff state if the session ends before work is complete
+- Never pausing to ask permission for logical next steps
 
 ### Autonomous Media & Assets
 
@@ -1897,12 +1509,37 @@ The canonical rules contain:
 - **Part III** — Naming conventions for C#, C/C++, PHP, JS/TS, SQL, CSS/SCSS
 - **Part IV** — Project context guidelines, database change rules, site templates
 - **Part V** — Documentation rules, post-task reporting, agent work ethic, roadmap management
+- **Part VIII** — Custom agents overview and selection guide (§32)
 
 **Rules:**
 1. **ALWAYS follow** all rules and standards in the canonical file.
 2. **NEVER copy** the canonical rules into this file — always fetch by URL.
 3. **If this file conflicts with the canonical rules**, this file takes precedence — project-specific overrides win.
 4. **Update THIS file** (not the canonical file) after every major code change.
+
+---
+
+## Available Custom Agents
+
+The canonical repository provides **11 specialized custom agents**. Fetch the agent index to discover all available agents:
+
+> **Agent Index URL:** `https://raw.githubusercontent.com/LoneEngineer99/AgentInstructions/main/.github/agents/README.md`
+
+When a task falls into one of the following categories, invoke the corresponding custom agent:
+
+| Task Type | Agent |
+|-----------|-------|
+| Code formatting, naming conventions, comments | `code-formatter` |
+| Post-task reports with screenshots | `agent-reporter` |
+| Web UI / front-end components | `ui-designer` |
+| Binary reverse engineering / attack surface | `binary-analyst` |
+| Writing unit tests | `test-engineer` |
+| New project setup | `project-initializer` |
+| Database schema, migrations, Dapper repos | `database-architect` |
+| Security vulnerability review | `security-auditor` |
+| REST API design and documentation | `api-designer` |
+| README, AGENTS.md, roadmap updates | `documentation-writer` |
+| Long-running / continuous development tasks | `continuous-developer` |
 
 ---
 
@@ -2194,237 +1831,16 @@ Before making ANY code changes, conduct a thorough discovery session with the pr
     - Domain terminology and glossary
     - Special workflows or business rules
 
-### Step 2: Document the Answers
+### Steps 2–7: Complete the Initialization
 
-Create a temporary working document with all answers. You can use:
-- A temporary markdown file in `/tmp/project-init-answers.md`
-- A structured note in the conversation
-- A shared document with the stakeholder
-
-### Step 3: Populate the Project's Local `AGENTS.md`
-
-Using the answers from Step 1, systematically fill in the sections of the project's local `AGENTS.md` (created in Step 0):
-
-#### 3.1: Update Project Overview
-
-```markdown
-**[Project Name]** — [Brief description from Q2]
-
-| Component | Path | Purpose | Tech Stack |
-|-----------|------|---------|------------|
-| **[Component from Q5]** | `path/` | [Purpose] | [Technologies] |
-```
-
-- Use answers from Q1, Q2, Q3, Q5 to fill this section
-- Create a table row for each major component/module
-
-#### 3.2: Update Repository Structure
-
-```
-ProjectRoot/
-├── AGENTS.md                            # Project notes & context (local file)
-├── .github/
-│   ├── roadmap.md                       # Project roadmap and status
-│   └── update_reports/                  # Post-task summary documentation
-├── [backend-directory]/      # Based on Q9
-├── [frontend-directory]/     # Based on Q9
-├── [tests-directory]/        # Based on Q9, Q12
-└── README.md
-```
-
-> **Note:** The project's local `AGENTS.md` references the canonical rules by URL — it does NOT contain the full base rules.
-
-- Use answers from Q9 to define the actual folder structure
-- Be specific based on the chosen architecture
-
-#### 3.3: Update Architecture Patterns
-
-Document the actual architecture based on Q5, Q6, Q14:
-- Layer separation strategy
-- Dependency injection approach
-- Model architecture (database → domain → DTO)
-- API design patterns
-
-#### 3.4: Update Build & Run Commands
-
-Fill in with actual commands from Q11:
-
-```bash
-# Install dependencies
-[actual command]
-
-# Build
-[actual command]
-
-# Run (development)
-[actual command]
-
-# Run (production)
-[actual command]
-
-# Test
-[actual command]
-
-# Lint
-[actual command]
-```
-
-#### 3.5: Update Database Schema & Migrations
-
-Document based on Q14, Q15:
-- Schema location
-- Migration tool and commands
-- Seeding strategy
-- Backup approach
-
-#### 3.6: Update Site Templates & Design References
-
-Based on the user's answers to Q19 (HTML templates):
-- Document any HTML/CSS template sources (name, path, and purpose)
-- Link to design systems or style guides
-- Note branding assets location
-- **Store each template source as a GitHub memory** using the `store_memory` tool, including the template name, path, and purpose in each memory entry
-
-#### 3.7: Update Current Implementation Status
-
-Fill in the implementation phases based on Q4, Q21:
-
-```markdown
-**Phase: Initial Setup**
-
-#### Completed
-- Project initialization
-- [Other setup tasks]
-
-#### In Progress
-- [Current sprint/phase work from Q21]
-
-#### Planned
-- [Future features from Q4]
-```
-
-### Step 4: Update Project README
-
-Read the project's `.github/roadmap.md` to understand the planned features, milestones, and project vision. Then, based on the roadmap and the initialization answers, create or update `/README.md` with:
-- Project name and description (Q1, Q2)
-- Key features (Q3) — aligned with the roadmap's planned capabilities
-- Technology stack (Q5)
-- Getting started guide (Q11)
-- Contribution guidelines
-- License information
-- Contact information (Q22)
-
-### Step 5: Create Project Setup Checklist
-
-Create a comprehensive setup checklist for new developers:
-
-```markdown
-## Developer Setup
-
-- [ ] Clone repository
-- [ ] Install prerequisites: [list from Q5, Q11]
-- [ ] Install dependencies: [command from Q11]
-- [ ] Configure environment variables: [list based on Q5, Q16]
-- [ ] Initialize database: [steps from Q14]
-- [ ] Run migrations: [command from Q14]
-- [ ] Seed test data: [command from Q14]
-- [ ] Run tests to verify setup: [command from Q11]
-- [ ] Start development server: [command from Q11]
-```
-
-### Step 6: GitHub Copilot Agent — Memory Initialization
-
-> **⚠️ CRITICAL — AGENT ONLY**: This step applies **exclusively** when the project is being initialized by the GitHub Copilot Agent (or any AI agent with access to the `store_memory` tool). Human developers may skip this step.
-
-When the GitHub Copilot Agent is running this initialization, it **MUST** store at least **30 GitHub memories** using the `store_memory` tool so that it (and future agent sessions) can quickly reference key project context without re-reading entire files. These memories serve as a fast-access knowledge base that persists across agent sessions.
-
-#### What to Store as Memories
-
-Memories should comprehensively cover the following categories. Aim for **at least 30 distinct memories** distributed across these areas:
-
-**From the project's local `AGENTS.md` (project context) — at least 8 memories:**
-1. Project name, description, and primary purpose
-2. Technology stack (backend, frontend, database, APIs)
-3. Authentication and authorization strategy
-4. Repository structure and key directory paths
-5. Build, run, and test commands
-6. Database schema location and migration strategy
-7. Current implementation status and phase
-8. Any project-specific overrides or rules
-
-**From the canonical rules (`AGENTS.md` §1–§29, fetched by URL) — at least 10 memories:**
-1. Core identity and execution protocol (§1–§2)
-2. TODO management and context maintenance rules (§3)
-3. Error debugging protocols (§4)
-4. Key software engineering principles enforced (§8–§11)
-5. Separation of concerns and i18n rules (§12)
-6. Security and defensive programming rules (§13)
-7. Code formatting and documentation standards (§14)
-8. Unit testing requirements and patterns (§15)
-9. Naming conventions for the project's primary language(s) (§16–§22)
-10. Post-task reporting and update requirements (§26–§27)
-
-**From the project's `roadmap.md` — at least 5 memories:**
-1. Overall project vision and goals
-2. Current phase and milestone status
-3. Completed features and components
-4. Upcoming planned work items
-5. Known blockers or dependencies
-
-**From `README.md` and general project context — at least 7 memories:**
-1. Project overview and key features
-2. Getting started / setup instructions
-3. Contribution guidelines or team conventions
-4. External integrations and third-party services
-5. Design system, branding, or template references
-6. Deployment and environment configuration
-7. Any domain-specific terminology or business rules
-
-#### Memory Storage Guidelines
-
-- Each memory should be a **clear, concise, actionable fact** (under 200 characters — this is a `store_memory` tool constraint)
-- Include accurate **citations** (file path and line numbers) for each memory
-- Use descriptive **subjects** (e.g., "tech stack", "build commands", "auth strategy")
-- Provide a **reason** explaining why the memory is useful for future tasks
-- Categorize appropriately: use `general` for cross-cutting facts, `file_specific` for file-bound details, `bootstrap_and_build` for build/run info, and `user_preferences` for stated preferences
-
-#### Example Memories
-
-```
-Subject: "tech stack"
-Fact: "Backend uses ASP.NET Core 8 with Dapper for MySQL; frontend uses Razor Pages with Bootstrap 5."
-Category: general
-Citations: AGENTS.md:<line range of Project Overview section>
-
-Subject: "build commands"  
-Fact: "Build with 'dotnet build', run with 'dotnet run --project src/Web', test with 'dotnet test'."
-Category: bootstrap_and_build
-Citations: AGENTS.md:<line range of Build & Run Commands section>
-
-Subject: "roadmap status"
-Fact: "Phase 1 (Core Setup) complete; Phase 2 (User Management) in progress; Phase 3 (Dashboard) planned."
-Category: general
-Citations: .github/roadmap.md:<line range of current status>
-```
-
-### Step 7: Remove the Initialization Section from the Local File
-
-Once you have:
-- ✅ Created the project's local `AGENTS.md` (Step 0)
-- ✅ Asked all discovery questions
-- ✅ Documented all answers
-- ✅ Populated all project-specific sections in the local `AGENTS.md` with actual information
-- ✅ Created `.github/roadmap.md` with project status and planned work
-- ✅ Updated README.md
-- ✅ Created developer setup instructions
-- ✅ Stored at least 30 GitHub memories (if running as a GitHub Copilot Agent)
-- ✅ Verified all placeholders are replaced with actual information
-
-**Remove the initialization-specific content** from the project's local `AGENTS.md`:
-- Keep the **"Canonical Rules Reference"** section (URL and reading strategy) — agents always need this
-- Remove the initialization prompts and notes about "first time setup" — they are no longer needed once the project is populated
-
-**Commit the changes** with a message like: "Complete project initialization for [Project Name]"
+> After collecting the discovery answers, invoke the **`project-initializer`** custom agent (`.github/agents/project-initializer.md`) to complete all remaining initialization steps. It will:
+> - Document the answers from Step 1
+> - Populate all sections of the project's local `AGENTS.md` (Steps 3.1–3.7)
+> - Create `.github/roadmap.md` with project status and milestones
+> - Create or update `README.md` with project details and setup guide
+> - Create the developer setup checklist
+> - Store 30+ GitHub memories for future agent sessions
+> - Remove the initialization section from the local `AGENTS.md` once complete
 
 
 ---
@@ -2452,6 +1868,7 @@ The project's local `AGENTS.md` should contain these sections (see §30 Step 0 f
 | Section | Purpose |
 |---------|---------|
 | **Canonical Rules Reference** | URL to fetch the base rules from; reading strategy |
+| **Available Custom Agents** | Reference to the agent index URL and agent selection guide |
 | **Project Overview** | Project name, description, components, tech stack |
 | **Repository Structure** | Directory tree showing actual project layout |
 | **Architecture Patterns** | Patterns specific to the project |
@@ -2471,5 +1888,75 @@ Each project must also maintain a **`.github/roadmap.md`** file (see §29) where
 
 ---
 
+# Part VIII — Custom Agents
+
+## 32. Custom Agents Overview & Selection Guide
+
+> **🤖 This repository provides 11 specialized custom agents for GitHub Copilot coding agent.**
+> Fetch the full agent index (with descriptions, file paths, and setup details) at:
+> **Agent Index URL:** `https://raw.githubusercontent.com/LoneEngineer99/AgentInstructions/main/.github/agents/README.md`
+
+These agents are designed to be used by **any project** that references this canonical repository. When a task falls into one of the specialized domains below, invoke the corresponding custom agent instead of handling it generically.
+
+### Available Custom Agents
+
+| Agent Name | Domain | When to Use |
+|-----------|--------|-------------|
+| `code-formatter` | Code quality | Naming violations, missing inline comments, missing XML doc blocks |
+| `agent-reporter` | Reporting | Creating post-task reports with screenshots after completing significant work |
+| `ui-designer` | Front-end UI | Building dashboards, forms, cards, tables, modals, navigation |
+| `binary-analyst` | Security research | Reverse engineering binaries, finding attack surfaces, creating signatures |
+| `test-engineer` | Testing | Writing unit tests for input validation and business logic |
+| `project-initializer` | Project setup | Setting up a brand new project from scratch |
+| `database-architect` | Data layer | Schema design, migrations, Dapper repository implementations |
+| `security-auditor` | Security review | Auditing code for XSS, SQL injection, auth issues, exposed internals |
+| `api-designer` | REST APIs | Designing endpoints, DTOs, versioning, OpenAPI documentation |
+| `documentation-writer` | Documentation | Updating README, AGENTS.md, roadmap, ADRs |
+| `continuous-developer` | Long-running tasks | Maximizing session progress — implements as much as possible without stopping |
+
+### How Remote Projects Use These Agents
+
+Projects that reference this canonical repository should add the following to their local `AGENTS.md`:
+
+```markdown
+## Available Custom Agents
+
+This project uses the specialized custom agents from the canonical repository.
+Fetch the agent index to discover all available agents:
+
+**Agent Index URL:** `https://raw.githubusercontent.com/LoneEngineer99/AgentInstructions/main/.github/agents/README.md`
+
+When a task falls into one of the following categories, invoke the corresponding agent:
+- **Code formatting / naming** → `code-formatter`
+- **Post-task reports** → `agent-reporter`
+- **UI / front-end work** → `ui-designer`
+- **Binary analysis / security research** → `binary-analyst`
+- **Writing tests** → `test-engineer`
+- **New project setup** → `project-initializer`
+- **Database schema / migrations** → `database-architect`
+- **Security audit** → `security-auditor`
+- **REST API design** → `api-designer`
+- **Documentation updates** → `documentation-writer`
+- **Long-running / continuous development** → `continuous-developer`
+```
+
+### Agent Invocation in Projects
+
+When working in a project that references this canonical repository:
+
+1. **Check the task type** — does it match one of the 11 agent domains above?
+2. **If yes**, fetch the agent index URL and read the relevant agent's `.md` file for full instructions
+3. **Invoke the agent** — either via the Copilot UI agent selector or the Copilot CLI
+4. **After the agent completes**, always use `agent-reporter` to document the work with screenshots
+
+### Mandatory Post-Task Reporting
+
+The `agent-reporter` custom agent is the designated tool for all post-task summary reports. It produces structured reports in `.github/update_reports/` with **minimum 6 screenshots** — this is the enforced standard throughout this document.
+
+---
+
+*Last updated: 2026-03-11 — Added `continuous-developer` agent (§28, §32); updated agent count to 11*
+*Last updated: 2026-03-11 — Refactored: removed duplicate content delegated to custom agents; §14, §15, §16, §17, §21, §25, §27, §30 trimmed to rule summaries + agent references*
+*Last updated: 2026-03-11 — Added §32 Custom Agents and 10 specialized agent profiles in .github/agents/*
 *Last updated: 2026-03-04 — Updated to reference-based model: canonical rules + local project AGENTS.md*
 *Created: 2026-02-14 — Initial starter kit template*
