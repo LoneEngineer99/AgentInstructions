@@ -23,6 +23,7 @@ This directory contains **custom agent profiles** for GitHub Copilot coding agen
 | **security-auditor** | [security-auditor.md](./security-auditor.md) | Audits code for security vulnerabilities and produces remediation reports |
 | **api-designer** | [api-designer.md](./api-designer.md) | Designs REST APIs with DTOs, versioning, and OpenAPI documentation |
 | **documentation-writer** | [documentation-writer.md](./documentation-writer.md) | Maintains README, AGENTS.md, roadmap, and ADRs |
+| **continuous-developer** | [continuous-developer.md](./continuous-developer.md) | Maximizes session progress on long-running tasks — works continuously without stopping until the project is as close to complete as possible |
 
 ---
 
@@ -51,6 +52,7 @@ When a task falls into one of the following categories, invoke the corresponding
 - **Security audit** → `security-auditor`
 - **REST API design** → `api-designer`
 - **Documentation updates** → `documentation-writer`
+- **Long-running / continuous development tasks** → `continuous-developer`
 ```
 
 ### Option 2: Copy agent files into your repository
@@ -86,6 +88,7 @@ Use this guide to decide which agent to invoke for common tasks:
 | "Review this PR for security issues" | `security-auditor` |
 | "Design the API endpoints for orders" | `api-designer` |
 | "Update the README and roadmap after my changes" | `documentation-writer` |
+| "Implement as much of this feature/sprint as possible in one session" | `continuous-developer` |
 
 ---
 

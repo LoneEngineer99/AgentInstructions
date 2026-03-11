@@ -11,7 +11,7 @@
 > - See §30 for instructions on creating a project's local `AGENTS.md` with the correct template.
 
 > **🤖 Custom Agents Available:**
-> This repository also provides **10 specialized custom agents** for the GitHub Copilot coding agent. These agents cover specific domains — code formatting, UI design, testing, security auditing, database design, API design, binary analysis, reporting, documentation, and project initialization.
+> This repository also provides **11 specialized custom agents** for the GitHub Copilot coding agent. These agents cover specific domains — code formatting, UI design, testing, security auditing, database design, API design, binary analysis, reporting, documentation, project initialization, and continuous long-running development.
 > - **Agent Index URL:** `https://raw.githubusercontent.com/LoneEngineer99/AgentInstructions/main/.github/agents/README.md`
 > - **IMPORTANT:** Whenever a task in your project falls into one of these specialized domains, you MUST fetch the agent index and invoke the appropriate custom agent instead of handling it generically. See the Agent Selection Guide in the index.
 
@@ -1360,6 +1360,16 @@ After completing work, immediately:
 - Update the project's local `AGENTS.md` with new patterns and progress
 - Update the project's `.github/roadmap.md` to reflect completed work and next steps
 
+### Long-Running Tasks
+
+For tasks that require sustained, multi-phase development across a large surface area — implementing a full feature, completing a sprint, or bringing a project from scaffold to MVP — invoke the **`continuous-developer`** custom agent (`.github/agents/continuous-developer.md`).
+
+The `continuous-developer` agent specializes in:
+- Structuring work into phases and executing them fully without stopping
+- Maximizing the volume of completed, working, committed code per session
+- Leaving a clean handoff state if the session ends before work is complete
+- Never pausing to ask permission for logical next steps
+
 ### Autonomous Media & Assets
 
 Agents are **allowed and encouraged** to generate and incorporate media:
@@ -1511,7 +1521,7 @@ The canonical rules contain:
 
 ## Available Custom Agents
 
-The canonical repository provides **10 specialized custom agents**. Fetch the agent index to discover all available agents:
+The canonical repository provides **11 specialized custom agents**. Fetch the agent index to discover all available agents:
 
 > **Agent Index URL:** `https://raw.githubusercontent.com/LoneEngineer99/AgentInstructions/main/.github/agents/README.md`
 
@@ -1529,6 +1539,7 @@ When a task falls into one of the following categories, invoke the corresponding
 | Security vulnerability review | `security-auditor` |
 | REST API design and documentation | `api-designer` |
 | README, AGENTS.md, roadmap updates | `documentation-writer` |
+| Long-running / continuous development tasks | `continuous-developer` |
 
 ---
 
@@ -1881,7 +1892,7 @@ Each project must also maintain a **`.github/roadmap.md`** file (see §29) where
 
 ## 32. Custom Agents Overview & Selection Guide
 
-> **🤖 This repository provides 10 specialized custom agents for GitHub Copilot coding agent.**
+> **🤖 This repository provides 11 specialized custom agents for GitHub Copilot coding agent.**
 > Fetch the full agent index (with descriptions, file paths, and setup details) at:
 > **Agent Index URL:** `https://raw.githubusercontent.com/LoneEngineer99/AgentInstructions/main/.github/agents/README.md`
 
@@ -1901,6 +1912,7 @@ These agents are designed to be used by **any project** that references this can
 | `security-auditor` | Security review | Auditing code for XSS, SQL injection, auth issues, exposed internals |
 | `api-designer` | REST APIs | Designing endpoints, DTOs, versioning, OpenAPI documentation |
 | `documentation-writer` | Documentation | Updating README, AGENTS.md, roadmap, ADRs |
+| `continuous-developer` | Long-running tasks | Maximizing session progress — implements as much as possible without stopping |
 
 ### How Remote Projects Use These Agents
 
@@ -1925,13 +1937,14 @@ When a task falls into one of the following categories, invoke the corresponding
 - **Security audit** → `security-auditor`
 - **REST API design** → `api-designer`
 - **Documentation updates** → `documentation-writer`
+- **Long-running / continuous development** → `continuous-developer`
 ```
 
 ### Agent Invocation in Projects
 
 When working in a project that references this canonical repository:
 
-1. **Check the task type** — does it match one of the 10 agent domains above?
+1. **Check the task type** — does it match one of the 11 agent domains above?
 2. **If yes**, fetch the agent index URL and read the relevant agent's `.md` file for full instructions
 3. **Invoke the agent** — either via the Copilot UI agent selector or the Copilot CLI
 4. **After the agent completes**, always use `agent-reporter` to document the work with screenshots
@@ -1942,6 +1955,7 @@ The `agent-reporter` custom agent is the designated tool for all post-task summa
 
 ---
 
+*Last updated: 2026-03-11 — Added `continuous-developer` agent (§28, §32); updated agent count to 11*
 *Last updated: 2026-03-11 — Refactored: removed duplicate content delegated to custom agents; §14, §15, §16, §17, §21, §25, §27, §30 trimmed to rule summaries + agent references*
 *Last updated: 2026-03-11 — Added §32 Custom Agents and 10 specialized agent profiles in .github/agents/*
 *Last updated: 2026-03-04 — Updated to reference-based model: canonical rules + local project AGENTS.md*
