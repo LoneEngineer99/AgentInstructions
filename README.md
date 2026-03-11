@@ -100,7 +100,7 @@ The canonical `AGENTS.md` is organized into **8 parts** covering everything an A
 | **V** | 📝 Documentation & Evolution | Post-task reporting, agent work ethic, roadmap management |
 | **VI** | 🚀 Initialization Protocol | 24 discovery questions + local `AGENTS.md` template |
 | **VII** | 📋 Template Reference | Structure for each project's local `AGENTS.md` |
-| **VIII** | 🤖 Custom Agents | 10 specialized agents and selection guide |
+| **VIII** | 🤖 Custom Agents | 11 specialized agents and selection guide |
 
 </td></tr>
 </table>
@@ -125,7 +125,7 @@ The canonical `AGENTS.md` is organized into **8 parts** covering everything an A
 
 ## 🤖 Custom Agents
 
-This repository provides **10 specialized GitHub Copilot custom agents** in `.github/agents/`:
+This repository provides **11 specialized GitHub Copilot custom agents** in `.github/agents/`:
 
 | Agent | Purpose |
 |-------|---------|
@@ -139,6 +139,7 @@ This repository provides **10 specialized GitHub Copilot custom agents** in `.gi
 | `security-auditor` | Code security review with prioritized findings |
 | `api-designer` | REST API design, DTOs, versioning, OpenAPI docs |
 | `documentation-writer` | README, AGENTS.md, roadmap, and ADR maintenance |
+| `continuous-developer` | Long-running tasks — works continuously to maximize session progress and bring the project as close to completion as possible without stopping |
 
 👉 **[View the full agent index](.github/agents/README.md)** for descriptions, selection guide, and remote usage instructions.
 
@@ -165,7 +166,8 @@ AgentInstructions/
     ├── database-architect.md           Schema, migrations, Dapper
     ├── security-auditor.md             Security vulnerability review
     ├── api-designer.md                 REST API design
-    └── documentation-writer.md         README/AGENTS.md/roadmap
+    ├── documentation-writer.md         README/AGENTS.md/roadmap
+    └── continuous-developer.md         Long-running tasks — maximize session progress
 ```
 
 <details>
