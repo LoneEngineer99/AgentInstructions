@@ -47,14 +47,13 @@ Without shared rules, every AI agent session starts from scratch — inconsisten
 
 ## 🏗️ How It Works
 
-> **One canonical rulebook. Synced locally. Always validated.**
+> **One canonical rulebook. Downloaded locally. Always available.**
 
 ```mermaid
 flowchart LR
     subgraph This_Repo["📦 AgentInstructions Repo"]
         A["AGENTS.md\n(Canonical Rules)"]
         B[".github/agents/\n(11 Agent Profiles)"]
-        C["setup-agents.sh\n(Sync Script)"]
     end
     subgraph Project_A["🗂️ Project A"]
         D["AGENTS.md\n(canonical copy — read-only)"]
@@ -69,17 +68,16 @@ flowchart LR
         K[".github/roadmap.md"]
     end
 
-    C -- "downloads" --> D
-    C -- "downloads" --> E
-    C -- "downloads" --> H
-    C -- "downloads" --> I
+    A -- "downloaded into" --> D
+    B -- "downloaded into" --> E
+    A -- "downloaded into" --> H
+    B -- "downloaded into" --> I
 
     style This_Repo fill:#1a1a2e,stroke:#e94560,stroke-width:2px,color:#eee
     style Project_A fill:#16213e,stroke:#0f3460,stroke-width:2px,color:#eee
     style Project_B fill:#16213e,stroke:#0f3460,stroke-width:2px,color:#eee
     style A fill:#e94560,stroke:#e94560,color:#fff
     style B fill:#e94560,stroke:#e94560,color:#fff
-    style C fill:#e94560,stroke:#e94560,color:#fff
     style D fill:#0f3460,stroke:#0f3460,color:#eee
     style E fill:#0f3460,stroke:#0f3460,color:#eee
     style F fill:#0f3460,stroke:#0f3460,color:#eee
@@ -90,13 +88,12 @@ flowchart LR
     style K fill:#0f3460,stroke:#0f3460,color:#eee
 ```
 
-> **Two files, one project:** `AGENTS.md` is the read-only canonical rules (synced from this repo). `AGENTS-project.md` (or any name you prefer) is your editable project context file created from the §30 template. Agents read both.
+> **Two files, one project:** `AGENTS.md` is the read-only canonical rules (downloaded from this repo). `AGENTS-project.md` (or any name you prefer) is your editable project context file created from the §30 template. Agents read both.
 
 | Layer | File | Location | Purpose |
 |:-----:|------|----------|---------|
-| 🌐 | **`setup-agents.sh`** | This repo | One-time sync script — downloads all canonical files |
-| 📜 | **`AGENTS.md`** | Each project (synced) | Canonical rules — synced locally, **never edited** |
-| 🤖 | **`.github/agents/`** | Each project (synced) | 11 agent profiles — synced locally, **never edited** |
+| 📜 | **`AGENTS.md`** | Each project (downloaded) | Canonical rules — stored locally, **never edited** |
+| 🤖 | **`.github/agents/`** | Each project (downloaded) | 11 agent profiles — stored locally, **never edited** |
 | 📁 | **`AGENTS-project.md`** | Each project | Project-specific notes, architecture, status |
 | 🗺️ | **`roadmap.md`** | Each project's `.github/` | Living project roadmap updated by agents |
 
@@ -167,14 +164,12 @@ This repository provides **11 specialized GitHub Copilot custom agents** in `.gi
 
 ```
 AgentInstructions/
-├── 📜 AGENTS.md                        ★ Canonical rules — synced locally into projects
-├── 🔧 setup-agents.sh                  ★ One-line sync script for remote projects
+├── 📜 AGENTS.md                        ★ Canonical rules — download and store locally in projects
 ├── 🖼️ UI_Examples/
 │   ├── ui-design-index.md              Design catalog with tokens & principles
 │   └── *.jpg                           42 curated high-quality UI screenshots
 └── 🤖 .github/agents/
     ├── README.md                       Agent index & selection guide
-    ├── CHECKSUMS.sha256                SHA256 hashes for integrity validation
     ├── code-formatter.md               Naming, comments, XML doc blocks
     ├── agent-reporter.md               Post-task reports (6+ screenshots)
     ├── ui-designer.md                  Web UI design with Playwright MCP + full template registry
@@ -217,52 +212,51 @@ AgentInstructions/
 
 Add AI agent instructions to **any project** in 3 steps:
 
-### Step 1 — Run the Setup Script
+### Step 1 — Download the Canonical Files
 
-From your project root, run:
+Download `AGENTS.md` and all `.github/agents/*.md` files from this repository and save them at the same relative paths in your project. The raw download URL pattern is:
 
-```bash
-bash <(curl -fsSL https://raw.githubusercontent.com/LoneEngineer99/AgentInstructions/main/setup-agents.sh)
+```
+https://raw.githubusercontent.com/LoneEngineer99/AgentInstructions/main/<path>
 ```
 
-This downloads `AGENTS.md` (canonical rules) and all `.github/agents/*.md` files into your project so AI coding agents can read them **without needing internet access at runtime**.
+For example, to download with `curl`:
+```bash
+curl -fsSL https://raw.githubusercontent.com/LoneEngineer99/AgentInstructions/main/AGENTS.md -o AGENTS.md
+mkdir -p .github/agents
+curl -fsSL https://raw.githubusercontent.com/LoneEngineer99/AgentInstructions/main/.github/agents/README.md -o .github/agents/README.md
+# ... repeat for each agent .md file listed in .github/agents/README.md
+```
+
+You can also ask your AI agent to do this for you:
+> *"Download AGENTS.md and all .github/agents/*.md files from https://github.com/LoneEngineer99/AgentInstructions and save them locally."*
 
 ### Step 2 — Create Your Project Context File
 
-The synced `AGENTS.md` is the read-only canonical rules file. Create a **separate** project context file named `AGENTS-project.md` (or any name you prefer) using the template from **§30 (Step 0)** of the canonical rules:
+Create a project context file named `AGENTS-project.md` using the template from **§30 (Step 0)** of the canonical `AGENTS.md`. This is the editable file where your project's notes, architecture, and status live.
 
-> *"Use the §30 template in `AGENTS.md` to create an `AGENTS-project.md` project context file."*
-
-Or manually: open `AGENTS.md`, find **§30 (Step 0)**, and copy the template into `AGENTS-project.md`. Agents will read both the canonical rules and the project context file.
-
-### Step 3 — Commit & Validate
+### Step 3 — Commit & Go
 
 ```bash
 git add AGENTS.md .github/agents/ AGENTS-project.md .github/roadmap.md
 git commit -m "chore: add AI agent instructions"
 ```
 
-On every future agent session, validate files are intact:
-
-```bash
-bash setup-agents.sh --validate
-```
+> [!NOTE]
+> **Keeping files up to date:** Re-download the files whenever you want to pull the latest canonical rules and agent profiles from this repository. Commit the updated files afterward.
 
 > [!NOTE]
-> **Keeping files up to date:** Re-run `setup-agents.sh` (without flags) whenever you want to pull the latest canonical rules and agent profiles from this repository. Commit the updated files afterward.
-
-> [!NOTE]
-> **Forking?** Update the `REPO_RAW` variable at the top of `setup-agents.sh` to point to your own fork.
+> **Forking?** Update the download URLs to point to your own fork.
 
 ---
 
 ## 💬 Instructing Agents to Use This System
 
-After running `setup-agents.sh`, paste this into any AI agent conversation to activate the full system:
+After downloading and committing the files, paste this into any AI agent conversation to activate the full system:
 
 > *"Read `AGENTS.md` in this project for canonical rules and conventions. Read the project context file for project-specific notes. All custom agent files are in `.github/agents/`. After completing work, update the project context file with progress and update `.github/roadmap.md` with status."*
 
-GitHub Copilot and Claude automatically load `AGENTS.md` when it exists in your project's directory. Because the file is synced locally, agents can read the full canonical rules without any network access.
+GitHub Copilot and Claude automatically load `AGENTS.md` when it exists in your project's directory. Because the files are stored locally, agents can read the full canonical rules without any network access.
 
 ---
 

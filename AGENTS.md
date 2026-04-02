@@ -5,16 +5,14 @@
 > A single fetch will truncate this content — use **multiple paginated/offset-based reads** to consume it fully.
 
 > **🏗️ How Projects Use This File:**
-> - **This file IS synced locally into each project.** Run `setup-agents.sh` (see below) to download this file and all custom agent files into your project's `.github/agents/` directory so that AI agents can read them **without needing internet access at runtime**.
+> - **This file is downloaded and stored locally in each project.** When setting up a new project, ask your AI agent (or use `curl`) to download this file and all custom agent files from this repository into your project's `.github/agents/` directory so that Copilot can read them **without needing internet access at runtime**.
 > - **Each project has its own local `AGENTS.md`** (project context file, separate from this canonical rules file) that contains the project's notes, architecture, build commands, and status.
-> - **Setup script:** `bash <(curl -fsSL https://raw.githubusercontent.com/LoneEngineer99/AgentInstructions/main/setup-agents.sh)`
-> - **Validation:** Each agent session should run `bash setup-agents.sh --validate` to confirm local copies match the canonical versions. Modified files indicate tampering or stale copies — re-run `setup-agents.sh` to re-sync.
-> - See §30 for full setup instructions and the project `AGENTS.md` template.
+> - **Setup:** See §30 for instructions on downloading these files and creating the project `AGENTS.md` template.
 
 > **🤖 Custom Agents Available:**
 > This repository also provides **11 specialized custom agents** for the GitHub Copilot coding agent. These agents cover specific domains — code formatting, UI design, testing, security auditing, database design, API design, binary analysis, reporting, documentation, project initialization, and continuous long-running development.
-> - **After running `setup-agents.sh`**, all agent files are available at `.github/agents/` in your project — no URL fetching required at runtime.
-> - **Agent Index:** `.github/agents/README.md` (local file after sync)
+> - **Download and save all agent files** from `.github/agents/` in this repository into your project's local `.github/agents/` directory so agents can read them without network access.
+> - **Agent Index:** `.github/agents/README.md` (local file after download)
 > - **IMPORTANT:** Whenever a task in your project falls into one of these specialized domains, read the relevant agent file from your local `.github/agents/` directory and invoke the appropriate custom agent. See the Agent Selection Guide in `.github/agents/README.md`.
 
 > **📖 Reading Strategy:**
@@ -1468,11 +1466,10 @@ When updating the roadmap, ensure:
 ## Purpose
 
 This Starter Kit provides a canonical set of rules and conventions for AI agents. Each project:
-1. **Syncs canonical files locally** by running `setup-agents.sh` — this downloads `AGENTS.md` and all `.github/agents/*.md` files into the project so AI agents can read them without network access.
-2. **Creates its own project `AGENTS.md`** (separate from the canonical rules file) containing project notes, architecture, build commands, and status.
-3. **Validates local copies on each session** using `setup-agents.sh --validate` to confirm files haven't been modified or gone stale.
+1. **Downloads canonical files locally** — copy `AGENTS.md` and all `.github/agents/*.md` files from this repository into the project so AI agents can read them without network access.
+2. **Creates its own project context file** (separate from the canonical rules file) containing project notes, architecture, build commands, and status.
 
-The canonical rules are synced into projects, **not fetched at runtime**. This ensures AI agents always have access to the full rules without needing internet access during a session.
+The canonical rules are stored locally in projects, **not fetched at runtime**. This ensures AI agents always have access to the full rules without needing internet access during a session.
 
 ## Step 0: Create the Project's Local `AGENTS.md`
 
@@ -1485,14 +1482,13 @@ Before doing anything else, create an `AGENTS.md` file in the project's root dir
 
 > **🚨 CRITICAL — AGENTS MUST READ THIS FILE AND THE CANONICAL RULES.**
 > This file contains **project-specific context, notes, and status** for AI coding agents.
-> The **base rules, conventions, and standards** are in the synced canonical file:
+> The **base rules, conventions, and standards** are in the locally stored canonical file:
 >
-> **Canonical rules file:** `AGENTS.md` (root of this repository — synced locally via `setup-agents.sh`)
-> **Custom agent files:** `.github/agents/` (synced locally via `setup-agents.sh`)
+> **Canonical rules file:** `AGENTS.md` (root of this repository — downloaded from the AgentInstructions repo)
+> **Custom agent files:** `.github/agents/` (downloaded from the AgentInstructions repo)
 >
 > - **During project initialization**: Read `AGENTS.md` (the canonical rules) IN FULL using multiple paginated reads. Store at least **30 memories** (see §30 in the canonical file). Then complete the initialization wizard below.
 > - **On regular tasks**: Read the Table of Contents from `AGENTS.md`, then read only the sections relevant to your task. Always read THIS project file first for project context.
-> - **Validate on every session**: Run `bash setup-agents.sh --validate` to confirm local files match expected checksums before starting work.
 > - **After code changes**: Update THIS file with new patterns, progress, and status. Update `.github/roadmap.md` with completed work. Update `README.md` if features or setup changed.
 
 ---
@@ -1511,7 +1507,7 @@ The canonical rules contain:
 
 **Rules:**
 1. **ALWAYS follow** all rules and standards in the canonical file.
-2. **Keep canonical files unmodified** — `AGENTS.md` and `.github/agents/*.md` are synced from the upstream repo. Do NOT edit them; put project-specific overrides in this file instead.
+2. **Keep canonical files unmodified** — `AGENTS.md` and `.github/agents/*.md` are downloaded from the upstream repo. Do NOT edit them; put project-specific overrides in this file instead.
 3. **If this file conflicts with the canonical rules**, this file takes precedence — project-specific overrides win.
 4. **Update THIS file** (not the canonical file) after every major code change.
 
@@ -1852,7 +1848,7 @@ Before making ANY code changes, conduct a thorough discovery session with the pr
 
 Each project has two related but distinct files:
 
-1. **Canonical `AGENTS.md`** — the rules file synced from this repository via `setup-agents.sh`. Agents read this for all conventions, principles, and standards. **Never edit this file in a project** — re-sync it with `setup-agents.sh` to pull updates.
+1. **Canonical `AGENTS.md`** — the rules file downloaded from this repository. Agents read this for all conventions, principles, and standards. **Never edit this file in a project** — re-download it from this repository to get updates.
 2. **Project context file** — a separate file (commonly named `AGENTS-project.md` or kept as the project notes alongside the canonical rules) that contains the project's own notes, architecture, build commands, database schema, status, and overrides. This is created from the §30 template and IS meant to be edited.
 
 Both files live in the project root (or the project context file can be placed anywhere the agent will read it). Agents read the canonical rules first, then the project context file. Where they conflict, the project context file takes precedence.
@@ -1867,7 +1863,7 @@ The project context file should contain these sections (see §30 Step 0 for the 
 
 | Section | Purpose |
 |---------|---------|
-| **Canonical Rules Reference** | Path to `AGENTS.md` (canonical copy); reading strategy; validation command |
+| **Canonical Rules Reference** | Path to `AGENTS.md` (canonical copy); reading strategy |
 | **Available Custom Agents** | Reference to the agent index URL and agent selection guide |
 | **Project Overview** | Project name, description, components, tech stack |
 | **Repository Structure** | Directory tree showing actual project layout |
@@ -1893,7 +1889,7 @@ Each project must also maintain a **`.github/roadmap.md`** file (see §29) where
 ## 32. Custom Agents Overview & Selection Guide
 
 > **🤖 This repository provides 11 specialized custom agents for GitHub Copilot coding agent.**
-> After running `setup-agents.sh`, all agent files are available locally at `.github/agents/`.
+> After downloading the files locally, all agent files are available at `.github/agents/` in your project.
 > Read `.github/agents/README.md` (local file) for the full index with descriptions, file paths, and setup details.
 
 These agents are designed to be used by **any project** that references this canonical repository. When a task falls into one of the specialized domains below, invoke the corresponding custom agent instead of handling it generically.
@@ -1916,7 +1912,7 @@ These agents are designed to be used by **any project** that references this can
 
 ### How Remote Projects Use These Agents
 
-Projects that have run `setup-agents.sh` will have all agent files at `.github/agents/`. Add the following to your project's local `AGENTS.md` so agents know where to find them:
+Projects that have downloaded these files locally will have all agent files at `.github/agents/`. Add the following to your project's local `AGENTS.md` so agents know where to find them:
 
 ```markdown
 ## Available Custom Agents
@@ -1954,7 +1950,7 @@ The `agent-reporter` custom agent is the designated tool for all post-task summa
 
 ---
 
-*Last updated: 2026-04-02 — Switched from URL-fetch model to local-sync model; added `setup-agents.sh` and `CHECKSUMS.sha256`; updated §30, §31, §32 and all URL references throughout*
+*Last updated: 2026-04-02 — Switched from URL-fetch model to local-copy model; updated §30, §31, §32 and all references throughout*
 *Last updated: 2026-03-11 — Added `continuous-developer` agent (§28, §32); updated agent count to 11*
 *Last updated: 2026-03-11 — Refactored: removed duplicate content delegated to custom agents; §14, §15, §16, §17, §21, §25, §27, §30 trimmed to rule summaries + agent references*
 *Last updated: 2026-03-11 — Added §32 Custom Agents and 10 specialized agent profiles in .github/agents/*
