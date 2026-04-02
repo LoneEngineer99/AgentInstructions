@@ -1,0 +1,29 @@
+# SHA256 Checksums — AgentInstructions Canonical Files
+#
+# These checksums are used by remote projects to validate that their locally
+# synced copies of agent files have not been modified since they were fetched.
+#
+# Usage:
+#   cd your-project-root
+#   sha256sum --check .github/agents/CHECKSUMS.sha256
+#
+# To update checksums after changes to this repo, run:
+#   cd /path/to/AgentInstructions
+#   bash setup-agents.sh --update-checksums
+#
+# Remote projects that sync these files should copy this file alongside the
+# agent files into their own .github/agents/ directory.
+
+602002cf961408c9b31727630c5fb64eba39b80dfbc8f998d05cd3d7bf24c20e  AGENTS.md
+138b80d39d3059331389b4e4ecf43ac1d67769a79b85ffeb1b6b0b806a0596ba  .github/agents/README.md
+7140ac51bf37cf72453e2b1fe0c7c10b18f77a668a530231bed0dd635c3e5a82  .github/agents/agent-reporter.md
+845cadc19f066fbde5dfba6ab60c47ac93a8d388ecede0d8362166ac3a4c521f  .github/agents/api-designer.md
+ebb94fd43297e2f87e7c5c260321af537ac72d63257dd93d40db60865d42c90e  .github/agents/binary-analyst.md
+2c0d3377d32f39272a7dd6f04e63e28f64cc0a89422d54e04295d9b65893e888  .github/agents/code-formatter.md
+b60aa3c8e8a62aeb570a43a6e6a6d69a8827d2d0ae7d4791fee9f085f5314472  .github/agents/continuous-developer.md
+56bb2f63bc0f631976c6987508a456415bd5519de4b73e8ef7ce1462bd283489  .github/agents/database-architect.md
+7414c40ed652f5745570807181687b41efb9ae3ee2f0409816723e2c70f71675  .github/agents/documentation-writer.md
+f51c71638d4545bd771f56e9e8df35590d84c53502bee89c7a531b190bbf1156  .github/agents/project-initializer.md
+ca4979852ec13231b8277870e8ed45d9bda9a7adeae00f478406597afff5f4ec  .github/agents/security-auditor.md
+7cf9d31448603d8c5df8bb97e621432882138e04de9dfb5702e4b4f4990ec99b  .github/agents/test-engineer.md
+0d457b92a44a9348bb2d8a64738bd149c698b59265987e3d23f1648799f5158c  .github/agents/ui-designer.md

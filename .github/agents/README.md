@@ -2,9 +2,15 @@
 
 This directory contains **custom agent profiles** for GitHub Copilot coding agent. Each agent is a specialized expert that can be invoked for specific tasks.
 
-> **Remote projects:** Fetch this index file to discover all available agents:
+> **Remote projects:** Run `setup-agents.sh` from the [AgentInstructions repository](https://github.com/LoneEngineer99/AgentInstructions) to download all agent files into your project's `.github/agents/` directory. This ensures AI agents can read the files **without requiring internet access at runtime**.
+>
+> ```bash
+> bash <(curl -fsSL https://raw.githubusercontent.com/LoneEngineer99/AgentInstructions/main/setup-agents.sh)
 > ```
-> https://raw.githubusercontent.com/LoneEngineer99/AgentInstructions/main/.github/agents/README.md
+>
+> After syncing, validate the files are intact before each agent session:
+> ```bash
+> bash setup-agents.sh --validate
 > ```
 
 ---
@@ -29,35 +35,39 @@ This directory contains **custom agent profiles** for GitHub Copilot coding agen
 
 ## How to Use These Agents in Your Project
 
-### Option 1: Reference by URL in your local AGENTS.md
+### Option 1 (Recommended): Sync agent files locally with `setup-agents.sh`
 
-Add this block to your project's local `AGENTS.md` so agents know to look for specialized help:
+Run the setup script to download all canonical files into your project:
 
-```markdown
-## Available Custom Agents
-
-This project uses the specialized custom agents from the canonical repository.
-Fetch the agent index to discover all available agents:
-
-**Agent Index URL:** `https://raw.githubusercontent.com/LoneEngineer99/AgentInstructions/main/.github/agents/README.md`
-
-When a task falls into one of the following categories, invoke the corresponding agent:
-- **Code formatting / naming** → `code-formatter`
-- **Post-task reports** → `agent-reporter`
-- **UI / front-end work** → `ui-designer`
-- **Binary analysis / security research** → `binary-analyst`
-- **Writing tests** → `test-engineer`
-- **New project setup** → `project-initializer`
-- **Database schema / migrations** → `database-architect`
-- **Security audit** → `security-auditor`
-- **REST API design** → `api-designer`
-- **Documentation updates** → `documentation-writer`
-- **Long-running / continuous development tasks** → `continuous-developer`
+```bash
+# One-line bootstrap (run from your project root)
+bash <(curl -fsSL https://raw.githubusercontent.com/LoneEngineer99/AgentInstructions/main/setup-agents.sh)
 ```
 
-### Option 2: Copy agent files into your repository
+This downloads:
+- `AGENTS.md` — canonical rules file
+- `.github/agents/README.md` — this index
+- `.github/agents/CHECKSUMS.sha256` — integrity checksums
+- `.github/agents/*.md` — all 11 agent profiles
 
-If your repository needs these agents available locally (for offline use or customization), copy the relevant `.md` files from this directory into your own `.github/agents/` directory. You can then customize the instructions for your project's specific needs.
+Then commit the files to your repository:
+
+```bash
+git add AGENTS.md .github/agents/
+git commit -m "chore: sync AgentInstructions canonical agent files"
+```
+
+**Validate on every agent session** — add this to your project's `AGENTS.md` and run it before starting work:
+
+```bash
+bash setup-agents.sh --validate
+```
+
+If validation fails (files modified or missing), re-run `setup-agents.sh` to restore the canonical copies.
+
+### Option 2: Copy individual agent files manually
+
+If you only need specific agents, copy the relevant `.md` files from `.github/agents/` into your own `.github/agents/` directory. Copy `CHECKSUMS.sha256` too so you can validate later.
 
 ### Option 3: Invoke from the Copilot CLI
 
@@ -69,6 +79,21 @@ gh copilot agent run code-formatter -- "Review and reformat UserService.cs"
 gh copilot agent run test-engineer -- "Write tests for the CreateLicense method"
 gh copilot agent run security-auditor -- "Audit the authentication controller"
 ```
+
+---
+
+## Integrity Validation
+
+Each canonical file has a SHA256 checksum recorded in `CHECKSUMS.sha256`. On every agent session:
+
+1. Run `bash setup-agents.sh --validate`
+2. If all files pass — proceed normally
+3. If any file fails — re-run `bash setup-agents.sh` to re-sync, then commit the updated files
+
+This protects against:
+- Files accidentally edited in the remote project
+- Stale files that differ from the latest upstream version
+- Incomplete syncs
 
 ---
 
