@@ -2,13 +2,17 @@
 
 This directory contains **custom agent profiles** for GitHub Copilot coding agent. Each agent is a specialized expert that can be invoked for specific tasks.
 
-> **Remote projects:** Download all files from this directory and `AGENTS.md` from the [AgentInstructions repository](https://github.com/LoneEngineer99/AgentInstructions) and save them into the same paths in your own project. This ensures AI agents can read the files **without requiring internet access at runtime**.
+> **Remote projects:** Download all files from this directory into your project's `.github/agents/` directory so AI agents can read them **without requiring internet access at runtime**. The canonical `AGENTS.md` rules file should be **fetched by URL** on every agent session (not stored locally) — see below.
 >
-> Download URLs follow this pattern:
+> Agent file download URLs follow this pattern:
 > ```
-> https://raw.githubusercontent.com/LoneEngineer99/AgentInstructions/main/AGENTS.md
 > https://raw.githubusercontent.com/LoneEngineer99/AgentInstructions/main/.github/agents/README.md
 > https://raw.githubusercontent.com/LoneEngineer99/AgentInstructions/main/.github/agents/<agent-name>.md
+> ```
+>
+> Canonical rules URL (fetch each session, do not store locally):
+> ```
+> https://raw.githubusercontent.com/LoneEngineer99/AgentInstructions/main/AGENTS.md
 > ```
 
 ---
@@ -35,11 +39,15 @@ This directory contains **custom agent profiles** for GitHub Copilot coding agen
 
 ### Option 1 (Recommended): Download agent files locally
 
-Download `AGENTS.md` and all `.github/agents/*.md` files from the AgentInstructions repository and save them at the same relative paths in your project. Commit them so AI agents can read them without needing network access.
+Download all `.github/agents/*.md` files from the AgentInstructions repository and save them into your project's `.github/agents/` directory. Commit them so AI agents can read them without needing network access.
 
-Files to download:
-- `AGENTS.md` — canonical rules file
-- `.github/agents/README.md` — this index
+The canonical `AGENTS.md` rules file is **not** downloaded — agents fetch it by URL on each session to always get the latest version:
+```
+https://raw.githubusercontent.com/LoneEngineer99/AgentInstructions/main/AGENTS.md
+```
+
+Agent files to download and store locally:
+- `.github/agents/README.md`
 - `.github/agents/agent-reporter.md`
 - `.github/agents/api-designer.md`
 - `.github/agents/binary-analyst.md`
@@ -52,18 +60,13 @@ Files to download:
 - `.github/agents/test-engineer.md`
 - `.github/agents/ui-designer.md`
 
-All raw file URLs follow this pattern:
-```
-https://raw.githubusercontent.com/LoneEngineer99/AgentInstructions/main/<path>
-```
-
 Then commit the files to your repository:
 ```bash
-git add AGENTS.md .github/agents/
-git commit -m "chore: add AgentInstructions canonical agent files"
+git add .github/agents/
+git commit -m "chore: add AgentInstructions custom agent files"
 ```
 
-**To update files** when this repository changes: re-download and re-commit the updated files.
+**To update files** when this repository changes: re-download and re-commit the updated agent files.
 
 ### Option 2: Copy individual agent files manually
 
