@@ -47,39 +47,54 @@ Without shared rules, every AI agent session starts from scratch — inconsisten
 
 ## 🏗️ How It Works
 
-> **One canonical rulebook. Many projects. Always in sync.**
+> **One canonical rulebook fetched fresh every session. Custom agents stored locally.**
 
 ```mermaid
 flowchart LR
-    subgraph This_Repo["📦 This Repository"]
+    subgraph This_Repo["📦 AgentInstructions Repo"]
         A["AGENTS.md\n(Canonical Rules)"]
+        B[".github/agents/\n(11 Agent Profiles)"]
     end
     subgraph Project_A["🗂️ Project A"]
-        B["Local AGENTS.md\n(Project Context)"]
-        C[".github/roadmap.md"]
+        D["AGENTS.md\n(fetched by URL — always fresh)"]
+        E[".github/agents/\n(local copies — read-only)"]
+        F["AGENTS-project.md\n(project context — editable)"]
+        G[".github/roadmap.md"]
     end
     subgraph Project_B["🗂️ Project B"]
-        D["Local AGENTS.md\n(Project Context)"]
-        E[".github/roadmap.md"]
+        H["AGENTS.md\n(fetched by URL — always fresh)"]
+        I[".github/agents/\n(local copies — read-only)"]
+        J["AGENTS-project.md\n(project context — editable)"]
+        K[".github/roadmap.md"]
     end
 
-    A -- "fetched by URL" --> B
-    A -- "fetched by URL" --> D
+    A -. "fetched each session" .-> D
+    B -- "downloaded into" --> E
+    A -. "fetched each session" .-> H
+    B -- "downloaded into" --> I
 
     style This_Repo fill:#1a1a2e,stroke:#e94560,stroke-width:2px,color:#eee
     style Project_A fill:#16213e,stroke:#0f3460,stroke-width:2px,color:#eee
     style Project_B fill:#16213e,stroke:#0f3460,stroke-width:2px,color:#eee
     style A fill:#e94560,stroke:#e94560,color:#fff
-    style B fill:#0f3460,stroke:#0f3460,color:#eee
-    style C fill:#0f3460,stroke:#0f3460,color:#eee
+    style B fill:#e94560,stroke:#e94560,color:#fff
     style D fill:#0f3460,stroke:#0f3460,color:#eee
     style E fill:#0f3460,stroke:#0f3460,color:#eee
+    style F fill:#0f3460,stroke:#0f3460,color:#eee
+    style G fill:#0f3460,stroke:#0f3460,color:#eee
+    style H fill:#0f3460,stroke:#0f3460,color:#eee
+    style I fill:#0f3460,stroke:#0f3460,color:#eee
+    style J fill:#0f3460,stroke:#0f3460,color:#eee
+    style K fill:#0f3460,stroke:#0f3460,color:#eee
 ```
+
+> **Two files, one project:** `AGENTS.md` is the canonical rules — fetched by URL each session so agents always have the latest version. `AGENTS-project.md` (or any name you prefer) is your editable project context file created from the §30 template. Agents read both.
 
 | Layer | File | Location | Purpose |
 |:-----:|------|----------|---------|
-| 🌐 | **`AGENTS.md`** | This repo | Canonical rules — fetched by URL, never copied |
-| 📁 | **`AGENTS.md`** | Each project | Project-specific notes, architecture, status |
+| 📜 | **`AGENTS.md`** | Fetched by URL each session | Canonical rules — always fresh, **never stored locally** |
+| 🤖 | **`.github/agents/`** | Each project (downloaded) | 11 agent profiles — stored locally, **never edited** |
+| 📁 | **`AGENTS-project.md`** | Each project | Project-specific notes, architecture, status |
 | 🗺️ | **`roadmap.md`** | Each project's `.github/` | Living project roadmap updated by agents |
 
 ---
@@ -149,7 +164,7 @@ This repository provides **11 specialized GitHub Copilot custom agents** in `.gi
 
 ```
 AgentInstructions/
-├── 📜 AGENTS.md                        ★ Canonical rules — always fetched by URL
+├── 📜 AGENTS.md                        ★ Canonical rules — fetched by URL each agent session
 ├── 🖼️ UI_Examples/
 │   ├── ui-design-index.md              Design catalog with tokens & principles
 │   └── *.jpg                           42 curated high-quality UI screenshots
@@ -197,37 +212,49 @@ AgentInstructions/
 
 Add AI agent instructions to **any project** in 3 steps:
 
-### Step 1 — Create a Local `AGENTS.md`
+### Step 1 — Download the Custom Agent Files
 
-Ask your AI agent:
+Download all `.github/agents/*.md` files from this repository and save them at the same relative paths in your project. Commit them so AI agents can read them without needing network access.
 
-> *"Create a local `AGENTS.md` using the template from §30 (Step 0) of the canonical rules at `https://raw.githubusercontent.com/LoneEngineer99/AgentInstructions/main/AGENTS.md`."*
+```bash
+mkdir -p .github/agents
+# Download each agent file, e.g.:
+curl -fsSL https://raw.githubusercontent.com/LoneEngineer99/AgentInstructions/main/.github/agents/README.md -o .github/agents/README.md
+# ... repeat for each agent .md file listed in .github/agents/README.md
+```
 
-Or manually: fetch the canonical rules, find the template in **§30 (Step 0)**, and copy it into an `AGENTS.md` file in your project root.
+You can also ask your AI agent to do this for you:
+> *"Download all .github/agents/*.md files from https://github.com/LoneEngineer99/AgentInstructions and save them locally in .github/agents/."*
 
-### Step 2 — Run the Initialization Wizard
+> [!NOTE]
+> **`AGENTS.md` is not downloaded.** Agents fetch it from `https://raw.githubusercontent.com/LoneEngineer99/AgentInstructions/main/AGENTS.md` on every session so they always read the latest canonical rules.
 
-The canonical `AGENTS.md` contains **§30 with 24 discovery questions**. Ask your AI agent to walk through them and populate the local `AGENTS.md` with your project's details.
+### Step 2 — Create Your Project Context File
+
+Create a project context file named `AGENTS-project.md` using the template from **§30 (Step 0)** of the canonical `AGENTS.md`. This is the editable file where your project's notes, architecture, and status live.
 
 ### Step 3 — Commit & Go
 
 ```bash
-git add AGENTS.md .github/roadmap.md
-git commit -m "Add AI agent instructions for project"
+git add .github/agents/ AGENTS-project.md .github/roadmap.md
+git commit -m "chore: add AI agent instructions"
 ```
 
 > [!NOTE]
-> **Forking?** Update the canonical rules URL in your local `AGENTS.md` files to point to your own fork.
+> **Keeping files up to date:** Re-download the agent files whenever you want to pull the latest agent profiles from this repository. The canonical `AGENTS.md` is always fetched fresh — no action needed.
+
+> [!NOTE]
+> **Forking?** Update the fetch URL used by agents to point to your own fork's raw `AGENTS.md`.
 
 ---
 
 ## 💬 Instructing Agents to Use This System
 
-Paste this into any AI agent conversation to activate the full system:
+After downloading and committing the agent files, paste this into any AI agent conversation to activate the full system:
 
-> *"Read the local `AGENTS.md` in this project for project-specific context. Then fetch the canonical rules from `https://raw.githubusercontent.com/LoneEngineer99/AgentInstructions/main/AGENTS.md` and follow the rules and standards defined there. After completing work, update the local `AGENTS.md` with progress and update `.github/roadmap.md` with status."*
+> *"Fetch and read the canonical rules from `https://raw.githubusercontent.com/LoneEngineer99/AgentInstructions/main/AGENTS.md`. Read the project context file (`AGENTS-project.md`) for project-specific notes. All custom agent files are stored locally in `.github/agents/`. After completing work, update the project context file with progress and update `.github/roadmap.md` with status."*
 
-GitHub Copilot and Claude will automatically load `AGENTS.md` when it exists in your project's directory — the redirect file will point them to the remote `AGENTS.md`.
+GitHub Copilot and Claude can fetch `AGENTS.md` by URL at the start of each session, ensuring they always work with the latest canonical rules. Custom agent files in `.github/agents/` are read directly from the local project without network access.
 
 ---
 
