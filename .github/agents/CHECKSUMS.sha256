@@ -3,18 +3,16 @@
 # These checksums are used by remote projects to validate that their locally
 # synced copies of agent files have not been modified since they were fetched.
 #
-# Usage:
-#   cd your-project-root
-#   sha256sum --check .github/agents/CHECKSUMS.sha256
+# Usage (via setup-agents.sh):
+#   bash setup-agents.sh --validate
 #
-# To update checksums after changes to this repo, run:
-#   cd /path/to/AgentInstructions
-#   bash setup-agents.sh --update-checksums
+# To re-sync all files when validation fails:
+#   bash setup-agents.sh
 #
 # Remote projects that sync these files should copy this file alongside the
 # agent files into their own .github/agents/ directory.
 
-602002cf961408c9b31727630c5fb64eba39b80dfbc8f998d05cd3d7bf24c20e  AGENTS.md
+abfb85bbda190aad9fd8ec4d2efc66485288d047dbd477859edc48e6cb58de01  AGENTS.md
 138b80d39d3059331389b4e4ecf43ac1d67769a79b85ffeb1b6b0b806a0596ba  .github/agents/README.md
 7140ac51bf37cf72453e2b1fe0c7c10b18f77a668a530231bed0dd635c3e5a82  .github/agents/agent-reporter.md
 845cadc19f066fbde5dfba6ab60c47ac93a8d388ecede0d8362166ac3a4c521f  .github/agents/api-designer.md

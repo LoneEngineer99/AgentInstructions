@@ -1850,20 +1850,24 @@ Before making ANY code changes, conduct a thorough discovery session with the pr
 
 ### How It Works
 
-Each project has its own `AGENTS.md` in the project root. This local file:
+Each project has two related but distinct files:
 
-1. **Is separate from the canonical rules file** — the canonical `AGENTS.md` (synced from this repo) lives in the project root under the same name; the project's context file is a _different_ AGENTS.md created from the §30 template and committed alongside it. In practice, projects usually name the project file `AGENTS.md` and overwrite the canonical one with it after reading the canonical rules — see §30 Step 0 for the template.
-2. **Contains the project's own notes** — project overview, architecture, build commands, database schema, status, and overrides
-3. **Is the agent's cross-session memory** — agents update this file after every major code change to ensure continuity
-4. **Does NOT replace the canonical rules** — the canonical `AGENTS.md` and `.github/agents/*.md` are always read from local copies synced via `setup-agents.sh`. Validate them with `setup-agents.sh --validate`.
+1. **Canonical `AGENTS.md`** — the rules file synced from this repository via `setup-agents.sh`. Agents read this for all conventions, principles, and standards. **Never edit this file in a project** — re-sync it with `setup-agents.sh` to pull updates.
+2. **Project context file** — a separate file (commonly named `AGENTS-project.md` or kept as the project notes alongside the canonical rules) that contains the project's own notes, architecture, build commands, database schema, status, and overrides. This is created from the §30 template and IS meant to be edited.
+
+Both files live in the project root (or the project context file can be placed anywhere the agent will read it). Agents read the canonical rules first, then the project context file. Where they conflict, the project context file takes precedence.
+
+The project context file:
+- **Contains the project's own notes** — project overview, architecture, build commands, database schema, status, and overrides
+- **Is the agent's cross-session memory** — agents update this file after every major code change to ensure continuity
 
 ### Expected Sections in the Project's Local `AGENTS.md`
 
-The project's local `AGENTS.md` should contain these sections (see §30 Step 0 for the full template):
+The project context file should contain these sections (see §30 Step 0 for the full template):
 
 | Section | Purpose |
 |---------|---------|
-| **Canonical Rules Reference** | Local path to canonical `AGENTS.md`; reading strategy; validation command |
+| **Canonical Rules Reference** | Path to `AGENTS.md` (canonical copy); reading strategy; validation command |
 | **Available Custom Agents** | Reference to the agent index URL and agent selection guide |
 | **Project Overview** | Project name, description, components, tech stack |
 | **Repository Structure** | Directory tree showing actual project layout |

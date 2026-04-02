@@ -57,15 +57,15 @@ flowchart LR
         C["setup-agents.sh\n(Sync Script)"]
     end
     subgraph Project_A["🗂️ Project A"]
-        D["AGENTS.md\n(canonical copy)"]
-        E[".github/agents/\n(local copies)"]
-        F["AGENTS.md\n(project context)"]
+        D["AGENTS.md\n(canonical copy — read-only)"]
+        E[".github/agents/\n(local copies — read-only)"]
+        F["AGENTS-project.md\n(project context — editable)"]
         G[".github/roadmap.md"]
     end
     subgraph Project_B["🗂️ Project B"]
-        H["AGENTS.md\n(canonical copy)"]
-        I[".github/agents/\n(local copies)"]
-        J["AGENTS.md\n(project context)"]
+        H["AGENTS.md\n(canonical copy — read-only)"]
+        I[".github/agents/\n(local copies — read-only)"]
+        J["AGENTS-project.md\n(project context — editable)"]
         K[".github/roadmap.md"]
     end
 
@@ -90,12 +90,14 @@ flowchart LR
     style K fill:#0f3460,stroke:#0f3460,color:#eee
 ```
 
+> **Two files, one project:** `AGENTS.md` is the read-only canonical rules (synced from this repo). `AGENTS-project.md` (or any name you prefer) is your editable project context file created from the §30 template. Agents read both.
+
 | Layer | File | Location | Purpose |
 |:-----:|------|----------|---------|
 | 🌐 | **`setup-agents.sh`** | This repo | One-time sync script — downloads all canonical files |
-| 📜 | **`AGENTS.md`** | Each project (synced) | Canonical rules — synced locally, never edited |
-| 🤖 | **`.github/agents/`** | Each project (synced) | 11 agent profiles — synced locally, never edited |
-| 📁 | **`AGENTS.md`** (project) | Each project | Project-specific notes, architecture, status |
+| 📜 | **`AGENTS.md`** | Each project (synced) | Canonical rules — synced locally, **never edited** |
+| 🤖 | **`.github/agents/`** | Each project (synced) | 11 agent profiles — synced locally, **never edited** |
+| 📁 | **`AGENTS-project.md`** | Each project | Project-specific notes, architecture, status |
 | 🗺️ | **`roadmap.md`** | Each project's `.github/` | Living project roadmap updated by agents |
 
 ---
@@ -225,18 +227,18 @@ bash <(curl -fsSL https://raw.githubusercontent.com/LoneEngineer99/AgentInstruct
 
 This downloads `AGENTS.md` (canonical rules) and all `.github/agents/*.md` files into your project so AI coding agents can read them **without needing internet access at runtime**.
 
-### Step 2 — Create Your Project's `AGENTS.md`
+### Step 2 — Create Your Project Context File
 
-The synced `AGENTS.md` is the canonical rules file. Create a **separate** project context file using the template from **§30 (Step 0)** of the canonical rules:
+The synced `AGENTS.md` is the read-only canonical rules file. Create a **separate** project context file named `AGENTS-project.md` (or any name you prefer) using the template from **§30 (Step 0)** of the canonical rules:
 
-> *"Use the §30 template in `AGENTS.md` to create a project context file."*
+> *"Use the §30 template in `AGENTS.md` to create an `AGENTS-project.md` project context file."*
 
-Or manually: open `AGENTS.md`, find **§30 (Step 0)**, and copy the template into your own project notes file. Agents will read both.
+Or manually: open `AGENTS.md`, find **§30 (Step 0)**, and copy the template into `AGENTS-project.md`. Agents will read both the canonical rules and the project context file.
 
 ### Step 3 — Commit & Validate
 
 ```bash
-git add AGENTS.md .github/agents/ .github/roadmap.md
+git add AGENTS.md .github/agents/ AGENTS-project.md .github/roadmap.md
 git commit -m "chore: add AI agent instructions"
 ```
 

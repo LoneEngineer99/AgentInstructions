@@ -49,6 +49,15 @@ require_command() {
   fi
 }
 
+#Detect the sha256 utility (Linux uses sha256sum; macOS uses shasum -a 256)
+sha256_of_file() {
+  if command -v sha256sum &>/dev/null; then
+    sha256sum "$1" | awk '{print $1}'
+  else
+    shasum -a 256 "$1" | awk '{print $1}'
+  fi
+}
+
 # ── validate mode ─────────────────────────────────────────────────────────────
 
 do_validate() {
@@ -75,7 +84,7 @@ do_validate() {
       continue
     fi
 
-    actual_hash=$(sha256sum "$file_path" | awk '{print $1}')
+    actual_hash=$(sha256_of_file "$file_path")
     if [[ "$actual_hash" == "$expected_hash" ]]; then
       success "OK: $file_path"
     else
@@ -135,7 +144,11 @@ do_sync() {
 # ── entry point ───────────────────────────────────────────────────────────────
 
 require_command curl
-require_command sha256sum
+
+if ! command -v sha256sum &>/dev/null && ! command -v shasum &>/dev/null; then
+  err "Neither sha256sum nor shasum found. Install GNU coreutils (Linux) or use macOS built-in shasum."
+  exit 1
+fi
 
 case "${1:-}" in
   --validate)
