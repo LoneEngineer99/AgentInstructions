@@ -5,19 +5,20 @@
 > A single fetch will truncate this content — use **multiple paginated/offset-based reads** to consume it fully.
 
 > **🏗️ How Projects Use This File:**
-> - **This file is NOT copied into projects.** It is always **read by URL** from this repository.
-> - **Each project has its own local `AGENTS.md`** that references this file for the base rules and contains the project's own notes, context, architecture, build commands, and status.
-> - **Canonical Rules URL:** `https://raw.githubusercontent.com/LoneEngineer99/AgentInstructions/main/AGENTS.md`
-> - See §30 for instructions on creating a project's local `AGENTS.md` with the correct template.
+> - **This file should be fetched by URL on every agent session** — do not store a local copy. Fetching directly from the source ensures agents always read the latest rules. The canonical URL is:
+>   `https://raw.githubusercontent.com/LoneEngineer99/AgentInstructions/main/AGENTS.md`
+> - **Each project has its own local `AGENTS.md`** (project context file, separate from this canonical rules file) that contains the project's notes, architecture, build commands, and status.
+> - **Setup:** See §30 for instructions on fetching this file and downloading the custom agent files.
 
 > **🤖 Custom Agents Available:**
 > This repository also provides **11 specialized custom agents** for the GitHub Copilot coding agent. These agents cover specific domains — code formatting, UI design, testing, security auditing, database design, API design, binary analysis, reporting, documentation, project initialization, and continuous long-running development.
-> - **Agent Index URL:** `https://raw.githubusercontent.com/LoneEngineer99/AgentInstructions/main/.github/agents/README.md`
-> - **IMPORTANT:** Whenever a task in your project falls into one of these specialized domains, you MUST fetch the agent index and invoke the appropriate custom agent instead of handling it generically. See the Agent Selection Guide in the index.
+> - **Download and save all agent files** from `.github/agents/` in this repository into your project's local `.github/agents/` directory so agents can read them without network access.
+> - **Agent Index:** `.github/agents/README.md` (local file after download)
+> - **IMPORTANT:** Whenever a task in your project falls into one of these specialized domains, read the relevant agent file from your local `.github/agents/` directory and invoke the appropriate custom agent. See the Agent Selection Guide in `.github/agents/README.md`.
 
 > **📖 Reading Strategy:**
-> - **During project initialization**: Read this ENTIRE file using multiple fetches. Store at least **30 memories** (see the `project-initializer` agent — `.github/agents/project-initializer.md`). This is mandatory — partial reads miss critical rules. Also fetch the Agent Index and store the agent names and purposes.
-> - **On regular tasks**: Read the Table of Contents below to orient yourself, then fetch only the sections relevant to your current task. Do NOT re-read the entire document on every iteration.
+> - **During project initialization**: Read this ENTIRE file using multiple paginated reads. Store at least **30 memories** (see the `project-initializer` agent — `.github/agents/project-initializer.md`). This is mandatory — partial reads miss critical rules. Also read `.github/agents/README.md` and store the agent names and purposes.
+> - **On regular tasks**: Read the Table of Contents below to orient yourself, then read only the sections relevant to your current task. Do NOT re-read the entire document on every iteration.
 > - **Key principle**: First read → full file + store memories. Subsequent reads → TOC then targeted sections. Always check if a custom agent applies to your task.
 
 > **Purpose:** This document provides the complete foundational rules, conventions, standards, and project-specific templates for AI coding agents. **Continue working until the problem is completely solved.** Before performing any task, briefly list the sub-steps you intend to follow.
@@ -83,7 +84,7 @@
 - **Work autonomously** — research, debug, and fix issues without waiting for confirmation
 - **Replace anti-patterns**: "Would you like me to proceed?" → just proceed immediately
 - **Track progress** via TODO lists — review after each phase, never lose track
-- **Use custom agents** for specialized tasks — see §32 and the Agent Index URL above for the full list
+- **Use custom agents** for specialized tasks — see §32 and `.github/agents/README.md` (local file after sync) for the full list
 - **Update your project's local `AGENTS.md`** (project notes & context) after every major code change (see §26)
 - **Create post-task reports** in `.github/update_reports/` with minimum 6 screenshots using the `agent-reporter` custom agent (see §27)
 - **Update your project's roadmap** (`.github/roadmap.md`) after every task (see §29)
@@ -185,8 +186,8 @@
 
 ```markdown
 - [ ] CRITICAL: Read the project's local `AGENTS.md` for project-specific context and notes
-- [ ] CRITICAL: Fetch the canonical rules from this repo's `AGENTS.md` (by URL or locally); read the Table of Contents, then fetch sections relevant to your task. (Full read is required only during project initialization — see §30)
-- [ ] CRITICAL: Check §32 (Custom Agents) — if this task matches a specialized domain, fetch the agent index and invoke the appropriate custom agent
+- [ ] CRITICAL: Read `AGENTS.md` (this canonical rules file, synced locally); read the Table of Contents, then read sections relevant to your task. (Full read is required only during project initialization — see §30)
+- [ ] CRITICAL: Check §32 (Custom Agents) — if this task matches a specialized domain, read `.github/agents/README.md` (local) and invoke the appropriate custom agent
 - [ ] Read any additional docs: README.md, .github/agents/*.md
 - [ ] Check if `.github/roadmap.md` exists — if not, create it (see §29)
 - [ ] Identify project type, frameworks, and language constraints
@@ -1465,12 +1466,12 @@ When updating the roadmap, ensure:
 
 ## Purpose
 
-This Starter Kit provides a canonical set of rules and conventions for AI agents. Each project creates its own **local `AGENTS.md`** that:
-1. **References this canonical file by URL** for the base rules (Parts I–V, §1–§29)
-2. **Contains the project's own notes**, context, architecture, build commands, and status
-3. **Serves as the agent's cross-session memory** for that specific project
+This Starter Kit provides a canonical set of rules and conventions for AI agents. Each project:
+1. **Fetches `AGENTS.md` by URL on every agent session** — read it directly from `https://raw.githubusercontent.com/LoneEngineer99/AgentInstructions/main/AGENTS.md` so agents always have the latest rules without storing a local copy.
+2. **Downloads custom agent files locally** — copy all `.github/agents/*.md` files from this repository into the project's `.github/agents/` directory so they can be read without network access during a session.
+3. **Creates its own project context file** (separate from the canonical rules file) containing project notes, architecture, build commands, and status.
 
-The canonical rules are **never copied** into projects — they are always fetched by URL from this repository.
+The canonical `AGENTS.md` is always fetched fresh; the custom agent files are stored locally.
 
 ## Step 0: Create the Project's Local `AGENTS.md`
 
@@ -1483,21 +1484,21 @@ Before doing anything else, create an `AGENTS.md` file in the project's root dir
 
 > **🚨 CRITICAL — AGENTS MUST READ THIS FILE AND THE CANONICAL RULES.**
 > This file contains **project-specific context, notes, and status** for AI coding agents.
-> For the **base rules, conventions, and standards**, fetch and read the canonical rules file:
+> The **base rules, conventions, and standards** must be fetched from the canonical URL:
 >
-> **Canonical Rules URL:** `https://raw.githubusercontent.com/LoneEngineer99/AgentInstructions/main/AGENTS.md`
+> **Canonical rules (fetch each session):** `https://raw.githubusercontent.com/LoneEngineer99/AgentInstructions/main/AGENTS.md`
+> **Custom agent files (stored locally):** `.github/agents/` (downloaded from the AgentInstructions repo)
 >
-> - **During project initialization**: Fetch and read the canonical rules file IN FULL using multiple fetches. Store at least **30 memories** (see §30 in the canonical file). Then complete the initialization wizard below.
-> - **On regular tasks**: Fetch the Table of Contents from the canonical rules file, then read only the sections relevant to your task. Always read THIS local file first for project context.
+> - **During project initialization**: Fetch and read `AGENTS.md` IN FULL using multiple paginated reads. Store at least **30 memories** (see §30 in the canonical file). Then complete the initialization wizard below.
+> - **On regular tasks**: Fetch `AGENTS.md`, read the Table of Contents, then read only the sections relevant to your task. Always read THIS project file first for project context.
 > - **After code changes**: Update THIS file with new patterns, progress, and status. Update `.github/roadmap.md` with completed work. Update `README.md` if features or setup changed.
 
 ---
 
 ## Canonical Rules Reference
 
-**You MUST fetch and follow the canonical rules before starting any task.**
-
-> **URL:** `https://raw.githubusercontent.com/LoneEngineer99/AgentInstructions/main/AGENTS.md`
+**You MUST read and follow the canonical rules before starting any task. Fetch the canonical rules from:**
+`https://raw.githubusercontent.com/LoneEngineer99/AgentInstructions/main/AGENTS.md`
 
 The canonical rules contain:
 - **Part I** — Agent execution protocols, TODO management, error debugging, completion criteria
@@ -1509,7 +1510,7 @@ The canonical rules contain:
 
 **Rules:**
 1. **ALWAYS follow** all rules and standards in the canonical file.
-2. **NEVER copy** the canonical rules into this file — always fetch by URL.
+2. **Keep canonical agent files unmodified** — `.github/agents/*.md` are downloaded from the upstream repo. Do NOT edit them; put project-specific overrides in this file instead. The canonical `AGENTS.md` is fetched by URL and never stored locally.
 3. **If this file conflicts with the canonical rules**, this file takes precedence — project-specific overrides win.
 4. **Update THIS file** (not the canonical file) after every major code change.
 
@@ -1517,9 +1518,7 @@ The canonical rules contain:
 
 ## Available Custom Agents
 
-The canonical repository provides **11 specialized custom agents**. Fetch the agent index to discover all available agents:
-
-> **Agent Index URL:** `https://raw.githubusercontent.com/LoneEngineer99/AgentInstructions/main/.github/agents/README.md`
+The canonical repository provides **11 specialized custom agents** in `.github/agents/`:
 
 When a task falls into one of the following categories, invoke the corresponding custom agent:
 
@@ -1850,20 +1849,24 @@ Before making ANY code changes, conduct a thorough discovery session with the pr
 
 ### How It Works
 
-Each project has its own `AGENTS.md` in the project root. This local file:
+Each project has two related but distinct files:
 
-1. **References the canonical rules by URL** — agents fetch the base rules (§1–§29) from `https://raw.githubusercontent.com/LoneEngineer99/AgentInstructions/main/AGENTS.md`
-2. **Contains the project's own notes** — project overview, architecture, build commands, database schema, status, and overrides
-3. **Is the agent's cross-session memory** — agents update this file after every major code change to ensure continuity
-4. **Is never the canonical rules** — the project's local file only has project-specific context; the rules are always fetched from the canonical URL
+1. **Canonical `AGENTS.md`** — the rules file fetched from `https://raw.githubusercontent.com/LoneEngineer99/AgentInstructions/main/AGENTS.md` on every agent session. Agents read this for all conventions, principles, and standards. **Never store a local copy in a project** — always fetch fresh so agents get the latest rules.
+2. **Project context file** — a separate file (commonly named `AGENTS-project.md` or kept as the project notes alongside the canonical rules) that contains the project's own notes, architecture, build commands, database schema, status, and overrides. This is created from the §30 template and IS meant to be edited.
+
+Both files live in the project root (or the project context file can be placed anywhere the agent will read it). Agents read the canonical rules first, then the project context file. Where they conflict, the project context file takes precedence.
+
+The project context file:
+- **Contains the project's own notes** — project overview, architecture, build commands, database schema, status, and overrides
+- **Is the agent's cross-session memory** — agents update this file after every major code change to ensure continuity
 
 ### Expected Sections in the Project's Local `AGENTS.md`
 
-The project's local `AGENTS.md` should contain these sections (see §30 Step 0 for the full template):
+The project context file should contain these sections (see §30 Step 0 for the full template):
 
 | Section | Purpose |
 |---------|---------|
-| **Canonical Rules Reference** | URL to fetch the base rules from; reading strategy |
+| **Canonical Rules Reference** | Path to `AGENTS.md` (canonical copy); reading strategy |
 | **Available Custom Agents** | Reference to the agent index URL and agent selection guide |
 | **Project Overview** | Project name, description, components, tech stack |
 | **Repository Structure** | Directory tree showing actual project layout |
@@ -1889,8 +1892,8 @@ Each project must also maintain a **`.github/roadmap.md`** file (see §29) where
 ## 32. Custom Agents Overview & Selection Guide
 
 > **🤖 This repository provides 11 specialized custom agents for GitHub Copilot coding agent.**
-> Fetch the full agent index (with descriptions, file paths, and setup details) at:
-> **Agent Index URL:** `https://raw.githubusercontent.com/LoneEngineer99/AgentInstructions/main/.github/agents/README.md`
+> After downloading the files locally, all agent files are available at `.github/agents/` in your project.
+> Read `.github/agents/README.md` (local file) for the full index with descriptions, file paths, and setup details.
 
 These agents are designed to be used by **any project** that references this canonical repository. When a task falls into one of the specialized domains below, invoke the corresponding custom agent instead of handling it generically.
 
@@ -1912,36 +1915,35 @@ These agents are designed to be used by **any project** that references this can
 
 ### How Remote Projects Use These Agents
 
-Projects that reference this canonical repository should add the following to their local `AGENTS.md`:
+Projects store all agent files locally at `.github/agents/`. Add the following to your project's local `AGENTS.md` so agents know where to find them:
 
 ```markdown
 ## Available Custom Agents
 
-This project uses the specialized custom agents from the canonical repository.
-Fetch the agent index to discover all available agents:
+This project uses the specialized custom agents synced from the canonical repository.
+All agent files are available locally at `.github/agents/`.
+Read `.github/agents/README.md` for the full agent index and selection guide.
 
-**Agent Index URL:** `https://raw.githubusercontent.com/LoneEngineer99/AgentInstructions/main/.github/agents/README.md`
-
-When a task falls into one of the following categories, invoke the corresponding agent:
-- **Code formatting / naming** → `code-formatter`
-- **Post-task reports** → `agent-reporter`
-- **UI / front-end work** → `ui-designer`
-- **Binary analysis / security research** → `binary-analyst`
-- **Writing tests** → `test-engineer`
-- **New project setup** → `project-initializer`
-- **Database schema / migrations** → `database-architect`
-- **Security audit** → `security-auditor`
-- **REST API design** → `api-designer`
-- **Documentation updates** → `documentation-writer`
-- **Long-running / continuous development** → `continuous-developer`
+When a task falls into one of the following categories, read the corresponding agent file and invoke it:
+- **Code formatting / naming** → `.github/agents/code-formatter.md`
+- **Post-task reports** → `.github/agents/agent-reporter.md`
+- **UI / front-end work** → `.github/agents/ui-designer.md`
+- **Binary analysis / security research** → `.github/agents/binary-analyst.md`
+- **Writing tests** → `.github/agents/test-engineer.md`
+- **New project setup** → `.github/agents/project-initializer.md`
+- **Database schema / migrations** → `.github/agents/database-architect.md`
+- **Security audit** → `.github/agents/security-auditor.md`
+- **REST API design** → `.github/agents/api-designer.md`
+- **Documentation updates** → `.github/agents/documentation-writer.md`
+- **Long-running / continuous development tasks** → `.github/agents/continuous-developer.md`
 ```
 
 ### Agent Invocation in Projects
 
-When working in a project that references this canonical repository:
+When working in a project that has synced these agent files:
 
 1. **Check the task type** — does it match one of the 11 agent domains above?
-2. **If yes**, fetch the agent index URL and read the relevant agent's `.md` file for full instructions
+2. **If yes**, read `.github/agents/README.md` (local) and the relevant agent's `.md` file for full instructions
 3. **Invoke the agent** — either via the Copilot UI agent selector or the Copilot CLI
 4. **After the agent completes**, always use `agent-reporter` to document the work with screenshots
 
@@ -1951,7 +1953,7 @@ The `agent-reporter` custom agent is the designated tool for all post-task summa
 
 ---
 
-*Last updated: 2026-03-11 — Added `continuous-developer` agent (§28, §32); updated agent count to 11*
+*Last updated: 2026-04-02 — Switched from URL-fetch model to local-copy model; updated §30, §31, §32 and all references throughout*
 *Last updated: 2026-03-11 — Refactored: removed duplicate content delegated to custom agents; §14, §15, §16, §17, §21, §25, §27, §30 trimmed to rule summaries + agent references*
 *Last updated: 2026-03-11 — Added §32 Custom Agents and 10 specialized agent profiles in .github/agents/*
 *Last updated: 2026-03-04 — Updated to reference-based model: canonical rules + local project AGENTS.md*

@@ -2,9 +2,17 @@
 
 This directory contains **custom agent profiles** for GitHub Copilot coding agent. Each agent is a specialized expert that can be invoked for specific tasks.
 
-> **Remote projects:** Fetch this index file to discover all available agents:
+> **Remote projects:** Download all files from this directory into your project's `.github/agents/` directory so AI agents can read them **without requiring internet access at runtime**. The canonical `AGENTS.md` rules file should be **fetched by URL** on every agent session (not stored locally) — see below.
+>
+> Agent file download URLs follow this pattern:
 > ```
 > https://raw.githubusercontent.com/LoneEngineer99/AgentInstructions/main/.github/agents/README.md
+> https://raw.githubusercontent.com/LoneEngineer99/AgentInstructions/main/.github/agents/<agent-name>.md
+> ```
+>
+> Canonical rules URL (fetch each session, do not store locally):
+> ```
+> https://raw.githubusercontent.com/LoneEngineer99/AgentInstructions/main/AGENTS.md
 > ```
 
 ---
@@ -29,35 +37,40 @@ This directory contains **custom agent profiles** for GitHub Copilot coding agen
 
 ## How to Use These Agents in Your Project
 
-### Option 1: Reference by URL in your local AGENTS.md
+### Option 1 (Recommended): Download agent files locally
 
-Add this block to your project's local `AGENTS.md` so agents know to look for specialized help:
+Download all `.github/agents/*.md` files from the AgentInstructions repository and save them into your project's `.github/agents/` directory. Commit them so AI agents can read them without needing network access.
 
-```markdown
-## Available Custom Agents
-
-This project uses the specialized custom agents from the canonical repository.
-Fetch the agent index to discover all available agents:
-
-**Agent Index URL:** `https://raw.githubusercontent.com/LoneEngineer99/AgentInstructions/main/.github/agents/README.md`
-
-When a task falls into one of the following categories, invoke the corresponding agent:
-- **Code formatting / naming** → `code-formatter`
-- **Post-task reports** → `agent-reporter`
-- **UI / front-end work** → `ui-designer`
-- **Binary analysis / security research** → `binary-analyst`
-- **Writing tests** → `test-engineer`
-- **New project setup** → `project-initializer`
-- **Database schema / migrations** → `database-architect`
-- **Security audit** → `security-auditor`
-- **REST API design** → `api-designer`
-- **Documentation updates** → `documentation-writer`
-- **Long-running / continuous development tasks** → `continuous-developer`
+The canonical `AGENTS.md` rules file is **not** downloaded — agents fetch it by URL on each session to always get the latest version:
+```
+https://raw.githubusercontent.com/LoneEngineer99/AgentInstructions/main/AGENTS.md
 ```
 
-### Option 2: Copy agent files into your repository
+Agent files to download and store locally:
+- `.github/agents/README.md`
+- `.github/agents/agent-reporter.md`
+- `.github/agents/api-designer.md`
+- `.github/agents/binary-analyst.md`
+- `.github/agents/code-formatter.md`
+- `.github/agents/continuous-developer.md`
+- `.github/agents/database-architect.md`
+- `.github/agents/documentation-writer.md`
+- `.github/agents/project-initializer.md`
+- `.github/agents/security-auditor.md`
+- `.github/agents/test-engineer.md`
+- `.github/agents/ui-designer.md`
 
-If your repository needs these agents available locally (for offline use or customization), copy the relevant `.md` files from this directory into your own `.github/agents/` directory. You can then customize the instructions for your project's specific needs.
+Then commit the files to your repository:
+```bash
+git add .github/agents/
+git commit -m "chore: add AgentInstructions custom agent files"
+```
+
+**To update files** when this repository changes: re-download and re-commit the updated agent files.
+
+### Option 2: Copy individual agent files manually
+
+If you only need specific agents, copy the relevant `.md` files from `.github/agents/` into your own `.github/agents/` directory.
 
 ### Option 3: Invoke from the Copilot CLI
 
