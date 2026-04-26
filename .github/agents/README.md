@@ -93,21 +93,27 @@ gh copilot agent run documentation -- "Document and report the session I just co
 
 ### Agent Collaboration Patterns
 
-These agents are designed to work together within a `continuous-developer` session:
+These agents are designed to work together. `continuous-developer` is the **orchestrator** — it delegates to specialized agents rather than implementing everything itself:
 
 ```
-project-initializer  →  database-architect  →  api-designer
-       ↓                       ↓                     ↓
-   sets up project        creates schema        builds endpoints
-                               ↓
-                     code-formatter  →  test-engineer  →  security-auditor
-                           ↓                  ↓                  ↓
-                     clean code          unit tests          security review
-                                                ↓
-                                         documentation
-                                               ↓
-                                       post-task report
+continuous-developer (orchestrator)
+    │
+    ├── project-initializer   sets up new project structure
+    │
+    ├── database-architect    designs schema, creates migrations
+    │
+    ├── api-designer          builds endpoint layer
+    │
+    ├── code-formatter        cleans up each layer before committing
+    │
+    ├── test-engineer         writes unit tests after each service
+    │
+    ├── security-auditor      reviews auth and data-access code
+    │
+    └── documentation         wraps up the session (docs + report)
 ```
+
+The specialist agents (`database-architect`, `api-designer`, etc.) can also be invoked standalone for targeted tasks without `continuous-developer`.
 
 ---
 

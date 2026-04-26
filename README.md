@@ -230,6 +230,12 @@ Or ask your AI agent to do it:
 > [!NOTE]
 > **`AGENTS.md` is not downloaded.** Agents fetch it from `https://raw.githubusercontent.com/LoneEngineer99/AgentInstructions/main/AGENTS.md` on every session so they always read the latest canonical rules.
 
+> [!NOTE]
+> **Upgrading from an older version?** If your project has the old `agent-reporter.md` or `documentation-writer.md` files, remove them — they have been merged into `documentation.md`:
+> ```bash
+> rm -f .github/agents/agent-reporter.md .github/agents/documentation-writer.md
+> ```
+
 ### Step 2 — Create Your Project Context File
 
 Create a project context file named `AGENTS-project.md` using the template from **§30 (Step 0)** of the canonical `AGENTS.md`. This is the editable file where your project's notes, architecture, and status live.
