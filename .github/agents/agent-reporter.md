@@ -1,8 +1,21 @@
 ---
 name: agent-reporter
-description: Creates mandatory post-task summary reports in .github/update_reports/ with a minimum of 6 screenshots and a structured agent completion document. Use this agent after completing significant work to document what was done.
+description: ⚠️ DEPRECATED — merged into the `documentation` agent. Use documentation.md instead.
 tools: ["read", "edit", "execute", "search", "playwright/*"]
 ---
+
+> **⚠️ This agent has been merged into the `documentation` agent.**
+>
+> `agent-reporter` and `documentation-writer` are now a single agent: **`documentation`**.
+>
+> - **New file:** `.github/agents/documentation.md`
+> - **New download URL:** `https://raw.githubusercontent.com/LoneEngineer99/AgentInstructions/main/.github/agents/documentation.md`
+>
+> The `documentation` agent handles both post-task summary reports (with screenshots) **and** project documentation updates (AGENTS.md, roadmap, README). Invoke it once at the end of every session to handle all documentation duties.
+>
+> **Action required:** Delete this file and replace it with `documentation.md`.
+
+
 
 # Agent Reporter
 

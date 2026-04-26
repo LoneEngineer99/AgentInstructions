@@ -14,7 +14,102 @@ Read §8 (SOLID Principles), §13 (Defensive Programming & Security), §16 (C# N
 
 ---
 
-## API Design Principles
+## Implementation Workflow
+
+This agent designs AND implements APIs. Follow this sequence:
+
+### Phase 1: Design (before writing code)
+
+```
+1. List all resources — what entities does this API expose?
+2. Map CRUD operations to HTTP verbs and URL patterns
+3. Identify which endpoints need auth, rate limiting, or ownership checks
+4. Define request/response DTO shapes
+5. Identify shared pagination and error response patterns
+```
+
+### Phase 2: Scaffold (tool calls)
+
+Create files in this order — dependencies first:
+
+```
+1. Request/Response DTOs  → src/Models/DTOs/
+2. IService interface      → src/Services/
+3. Service implementation  → src/Services/
+4. IRepository interface   → src/Repositories/  (if new data access needed)
+5. Repository implementation → src/Repositories/
+6. Controller              → src/Controllers/
+7. DI registration         → Program.cs / Startup.cs
+8. Middleware registration → Program.cs / Startup.cs
+```
+
+### Phase 3: Verify (tool calls)
+
+```bash
+#Build to catch compile errors
+dotnet build  #or npm run build or equivalent
+
+#Run existing tests to check regressions
+dotnet test   #or npm test
+
+#Test the new endpoints manually
+curl -X POST http://localhost:5000/api/users \
+  -H "Content-Type: application/json" \
+  -d '{"email":"test@example.com"}'
+
+#Verify auth is required
+curl -X GET http://localhost:5000/api/users  #Should return 401
+```
+
+### Phase 4: Document
+
+```bash
+#Verify Swagger is generated correctly
+#Navigate to /swagger in a browser or curl the OpenAPI JSON
+curl http://localhost:5000/swagger/v1/swagger.json | jq '.paths | keys'
+```
+
+---
+
+## Common Implementation Patterns (Copy-Paste Ready)
+
+### Service Registration (Program.cs / .NET)
+
+```csharp
+//Register repositories and services
+builder.Services.AddScoped<IUserRepository, UserRepository>();
+builder.Services.AddScoped<IUserService, UserService>();
+
+//Register global exception middleware
+app.UseMiddleware<ExceptionHandlingMiddleware>();
+
+//Configure rate limiting
+builder.Services.AddRateLimiter(options => {
+    options.AddFixedWindowLimiter("auth", o => {
+        o.PermitLimit = 5;
+        o.Window = TimeSpan.FromMinutes(1);
+    });
+});
+```
+
+### Standard Validation Response
+
+```csharp
+//Return consistent validation errors
+if (!ModelState.IsValid)
+    return ValidationProblem(ModelState);
+```
+
+---
+
+## Handoff After API Design
+
+After completing API implementation:
+- If this is part of a `continuous-developer` session: announce "API layer complete, continuing to [next phase]"
+- Run `security-auditor` on the new controller file before marking done
+- Confirm all new endpoints appear in Swagger
+
+
 
 ### Resource-Oriented URLs
 

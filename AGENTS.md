@@ -11,7 +11,7 @@
 > - **Setup:** See §30 for instructions on fetching this file and downloading the custom agent files.
 
 > **🤖 Custom Agents Available:**
-> This repository also provides **11 specialized custom agents** for the GitHub Copilot coding agent. These agents cover specific domains — code formatting, UI design, testing, security auditing, database design, API design, binary analysis, reporting, documentation, project initialization, and continuous long-running development.
+> This repository also provides **10 specialized custom agents** for the GitHub Copilot coding agent. These agents cover specific domains — code formatting, UI design, testing, security auditing, database design, API design, binary analysis, documentation + reporting, project initialization, and continuous long-running development.
 > - **Download and save all agent files** from `.github/agents/` in this repository into your project's local `.github/agents/` directory so agents can read them without network access.
 > - **Agent Index:** `.github/agents/README.md` (local file after download)
 > - **IMPORTANT:** Whenever a task in your project falls into one of these specialized domains, read the relevant agent file from your local `.github/agents/` directory and invoke the appropriate custom agent. See the Agent Selection Guide in `.github/agents/README.md`.
@@ -86,7 +86,7 @@
 - **Track progress** via TODO lists — review after each phase, never lose track
 - **Use custom agents** for specialized tasks — see §32 and `.github/agents/README.md` (local file after sync) for the full list
 - **Update your project's local `AGENTS.md`** (project notes & context) after every major code change (see §26)
-- **Create post-task reports** in `.github/update_reports/` with minimum 6 screenshots using the `agent-reporter` custom agent (see §27)
+- **Create post-task reports** in `.github/update_reports/` with minimum 6 screenshots using the `documentation` custom agent (see §27)
 - **Update your project's roadmap** (`.github/roadmap.md`) after every task (see §29)
 - **Three-pass review** (functional, visual, security) is mandatory before task completion (see §7)
 - **No containerization** (Docker, Kubernetes) unless explicitly requested
@@ -220,7 +220,7 @@
 ### Phase 4: Post-Task Reporting (MANDATORY)
 
 ```markdown
-- [ ] Invoke the `agent-reporter` custom agent to create the post-task summary report (see §27 and §32)
+- [ ] Invoke the `documentation` custom agent to create the post-task summary report (see §27 and §32)
 - [ ] Ensure minimum 6 screenshots are captured and embedded in the report
 - [ ] Update the project's local `AGENTS.md` with new patterns and progress
 - [ ] Update the project's `.github/roadmap.md` to reflect completed work and status (see §29)
@@ -1276,13 +1276,13 @@ Update the corresponding sections in the project's local `AGENTS.md`:
 
 🚨 **NON-NEGOTIABLE: Every agent session that completes significant work MUST create a post-task summary document in the `.github/update_reports/` directory. A task is NOT considered complete without this report. This is a mandatory deliverable — not optional.**
 
-> For the complete report template, screenshot requirements, media organization rules, and iteration update format, invoke the **`agent-reporter`** custom agent or read `.github/agents/agent-reporter.md`.
+> For the complete report template, screenshot requirements, media organization rules, and iteration update format, invoke the **`documentation`** custom agent or read `.github/agents/documentation.md`.
 
 ### Key Requirements
 
 1. **File location and naming:** `.github/update_reports/session-YYYY-MM-DD-descriptive-task-name.md`
 2. **Minimum 6 screenshots** — captured with Playwright, terminal output, diff views, or file trees. This is not optional.
-3. **Agent Completion Checklist** must be included and evaluated — see `agent-reporter.md` for the full checklist template.
+3. **Agent Completion Checklist** must be included and evaluated — see `documentation.md` for the full checklist template.
 4. **Media files** stored in `.github/update_reports/img/session-YYYY-MM-DD-task-name/` alongside the report.
 5. If additional work is needed after a report is created, **update the existing document** — do not create a new one.
 
@@ -1518,22 +1518,21 @@ The canonical rules contain:
 
 ## Available Custom Agents
 
-The canonical repository provides **11 specialized custom agents** in `.github/agents/`:
+The canonical repository provides **10 specialized custom agents** in `.github/agents/`:
 
 When a task falls into one of the following categories, invoke the corresponding custom agent:
 
 | Task Type | Agent |
 |-----------|-------|
 | Code formatting, naming conventions, comments | `code-formatter` |
-| Post-task reports with screenshots | `agent-reporter` |
+| Post-task reports + doc updates (AGENTS.md, roadmap, README) | `documentation` |
 | Web UI / front-end components | `ui-designer` |
 | Binary reverse engineering / attack surface | `binary-analyst` |
 | Writing unit tests | `test-engineer` |
 | New project setup | `project-initializer` |
 | Database schema, migrations, Dapper repos | `database-architect` |
 | Security vulnerability review | `security-auditor` |
-| REST API design and documentation | `api-designer` |
-| README, AGENTS.md, roadmap updates | `documentation-writer` |
+| REST API design and implementation | `api-designer` |
 | Long-running / continuous development tasks | `continuous-developer` |
 
 ---
@@ -1891,7 +1890,7 @@ Each project must also maintain a **`.github/roadmap.md`** file (see §29) where
 
 ## 32. Custom Agents Overview & Selection Guide
 
-> **🤖 This repository provides 11 specialized custom agents for GitHub Copilot coding agent.**
+> **🤖 This repository provides 10 specialized custom agents for GitHub Copilot coding agent.**
 > After downloading the files locally, all agent files are available at `.github/agents/` in your project.
 > Read `.github/agents/README.md` (local file) for the full index with descriptions, file paths, and setup details.
 
@@ -1902,15 +1901,14 @@ These agents are designed to be used by **any project** that references this can
 | Agent Name | Domain | When to Use |
 |-----------|--------|-------------|
 | `code-formatter` | Code quality | Naming violations, missing inline comments, missing XML doc blocks |
-| `agent-reporter` | Reporting | Creating post-task reports with screenshots after completing significant work |
+| `documentation` | Documentation + Reporting | Post-task reports with screenshots AND updating AGENTS.md, roadmap, README, ADRs |
 | `ui-designer` | Front-end UI | Building dashboards, forms, cards, tables, modals, navigation |
 | `binary-analyst` | Security research | Reverse engineering binaries, finding attack surfaces, creating signatures |
 | `test-engineer` | Testing | Writing unit tests for input validation and business logic |
 | `project-initializer` | Project setup | Setting up a brand new project from scratch |
 | `database-architect` | Data layer | Schema design, migrations, Dapper repository implementations |
 | `security-auditor` | Security review | Auditing code for XSS, SQL injection, auth issues, exposed internals |
-| `api-designer` | REST APIs | Designing endpoints, DTOs, versioning, OpenAPI documentation |
-| `documentation-writer` | Documentation | Updating README, AGENTS.md, roadmap, ADRs |
+| `api-designer` | REST APIs | Designing and implementing endpoints, DTOs, versioning, OpenAPI documentation |
 | `continuous-developer` | Long-running tasks | Maximizing session progress — implements as much as possible without stopping |
 
 ### How Remote Projects Use These Agents
@@ -1926,15 +1924,14 @@ Read `.github/agents/README.md` for the full agent index and selection guide.
 
 When a task falls into one of the following categories, read the corresponding agent file and invoke it:
 - **Code formatting / naming** → `.github/agents/code-formatter.md`
-- **Post-task reports** → `.github/agents/agent-reporter.md`
+- **Post-task reports + doc updates** → `.github/agents/documentation.md`
 - **UI / front-end work** → `.github/agents/ui-designer.md`
 - **Binary analysis / security research** → `.github/agents/binary-analyst.md`
 - **Writing tests** → `.github/agents/test-engineer.md`
 - **New project setup** → `.github/agents/project-initializer.md`
 - **Database schema / migrations** → `.github/agents/database-architect.md`
 - **Security audit** → `.github/agents/security-auditor.md`
-- **REST API design** → `.github/agents/api-designer.md`
-- **Documentation updates** → `.github/agents/documentation-writer.md`
+- **REST API design + implementation** → `.github/agents/api-designer.md`
 - **Long-running / continuous development tasks** → `.github/agents/continuous-developer.md`
 ```
 
@@ -1942,17 +1939,18 @@ When a task falls into one of the following categories, read the corresponding a
 
 When working in a project that has synced these agent files:
 
-1. **Check the task type** — does it match one of the 11 agent domains above?
+1. **Check the task type** — does it match one of the 10 agent domains above?
 2. **If yes**, read `.github/agents/README.md` (local) and the relevant agent's `.md` file for full instructions
 3. **Invoke the agent** — either via the Copilot UI agent selector or the Copilot CLI
-4. **After the agent completes**, always use `agent-reporter` to document the work with screenshots
+4. **After the agent completes**, always use `documentation` to document the work with screenshots
 
 ### Mandatory Post-Task Reporting
 
-The `agent-reporter` custom agent is the designated tool for all post-task summary reports. It produces structured reports in `.github/update_reports/` with **minimum 6 screenshots** — this is the enforced standard throughout this document.
+The `documentation` custom agent is the designated tool for all post-task summary reports and documentation updates. It produces structured reports in `.github/update_reports/` with **minimum 6 screenshots** — this is the enforced standard throughout this document.
 
 ---
 
+*Last updated: 2026-04-26 — Merged agent-reporter + documentation-writer → documentation agent; expanded all agents with agentic workflows, tool-call sequences, and cross-agent collaboration patterns; updated agent count from 11 to 10; improved README download UX with one-command script*
 *Last updated: 2026-04-02 — Switched from URL-fetch model to local-copy model; updated §30, §31, §32 and all references throughout*
 *Last updated: 2026-03-11 — Refactored: removed duplicate content delegated to custom agents; §14, §15, §16, §17, §21, §25, §27, §30 trimmed to rule summaries + agent references*
 *Last updated: 2026-03-11 — Added §32 Custom Agents and 10 specialized agent profiles in .github/agents/*

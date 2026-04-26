@@ -16,7 +16,65 @@ Read §30 (New Project Initialization) **in full** before starting. That section
 
 ---
 
-## What This Agent Does
+## Autonomous Setup Actions
+
+After completing the discovery wizard, take these actions autonomously — do not ask for confirmation:
+
+### Create Directory Structure (execute immediately)
+
+```bash
+#Create all directories with .gitkeep files
+mkdir -p src/{Controllers,Services,Repositories,Models/{DB,Domain,DTOs},Middleware,Utils}
+mkdir -p tests/{Unit,Integration}
+mkdir -p .github/{agents,decisions,update_reports/img}
+mkdir -p database/{migrations,seeds}
+touch src/Controllers/.gitkeep src/Services/.gitkeep src/Repositories/.gitkeep
+
+#Verify structure
+find src/ -type d | sort
+```
+
+### Bootstrap Key Files
+
+Create these files immediately after directory structure:
+
+1. **`.github/roadmap.md`** — from the §29 template
+2. **`AGENTS.md`** — from the §30 template with all placeholders filled
+3. **`README.md`** — project name, description, tech stack, setup guide
+4. **`.gitignore`** — language/framework appropriate
+
+### Technology-Specific Bootstrap
+
+**ASP.NET Core:**
+```bash
+dotnet new webapi -n [ProjectName] --framework net8.0
+dotnet add package Dapper
+dotnet add package MySql.Data  #or npgsql for PostgreSQL
+```
+
+**Node.js/Express:**
+```bash
+npm init -y
+npm install express dotenv cors helmet morgan
+npm install -D typescript ts-node nodemon @types/express
+```
+
+**Laravel:**
+```bash
+composer create-project laravel/laravel [project-name]
+composer require doctrine/dbal  #for migrations
+```
+
+---
+
+## Cross-Agent Delegation
+
+After scaffolding is complete:
+- Invoke `database-architect` to create the initial schema for core entities
+- Invoke `api-designer` to scaffold the first set of API endpoints
+- Invoke `documentation` to finalize all three documentation files
+
+---
 
 1. **Runs the discovery wizard** — asks all 24 questions from §30 Step 1 and documents the answers
 2. **Creates the local `AGENTS.md`** — using the template from §30 Step 0, populated with real project details

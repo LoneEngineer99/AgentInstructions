@@ -18,7 +18,71 @@ Read §13 (Defensive Programming & Security) before auditing any code.
 
 ---
 
-## Audit Scope
+## Agentic Audit Workflow
+
+Execute the audit in this sequence. Do not skip phases.
+
+### Phase 1: Scope Identification (Tool calls)
+
+```bash
+#Identify all entry points — controllers, routes, API handlers
+grep -r "Route\|Controller\|app\.\(get\|post\|put\|delete\|patch\)" src/ --include="*.cs" --include="*.ts" --include="*.js" --include="*.php" -l
+
+#Find all SQL query locations
+grep -r "SELECT\|INSERT\|UPDATE\|DELETE\|ExecuteAsync\|QueryAsync\|query(" src/ -l
+
+#Find all authentication/authorization decorators
+grep -r "Authorize\|auth\|middleware\|JWT\|bearer" src/ -i -l
+
+#Find all user-input handling
+grep -r "FromBody\|FromQuery\|Request\.\|req\." src/ -l
+```
+
+### Phase 2: Vulnerability Scan (Tool calls per category)
+
+```bash
+#SQL injection — look for string concatenation in queries
+grep -r "SELECT.*\+" src/ --include="*.cs" --include="*.js" --include="*.php"
+grep -r '\$".*SELECT\|string\.Format.*SELECT' src/
+
+#XSS — look for unsafe HTML rendering
+grep -r "innerHTML\|document\.write\|v-html\|dangerouslySetInnerHTML\|Html\.Raw" src/
+
+#Hardcoded secrets
+grep -r "password\s*=\s*[\"'][^\"']\|api_key\s*=\s*[\"']\|secret\s*=\s*[\"']" src/ -i
+
+#Missing authorization
+grep -r "\[HttpGet\]\|\[HttpPost\]\|\[HttpPut\]\|\[HttpDelete\]" src/ -A2 | grep -v "Authorize"
+
+#Internal ID exposure in responses
+grep -r '"id"\|\.Id\b' src/ --include="*Response*" --include="*Dto*"
+```
+
+### Phase 3: Dependency Check (Tool calls)
+
+```bash
+#Check for outdated/vulnerable packages
+cat package.json | grep dependencies  #JS/TS
+cat *.csproj | grep PackageReference  #.NET
+cat composer.json | grep require       #PHP
+
+#Check for known CVE patterns in dependency names
+```
+
+### Phase 4: Report Generation
+
+Generate the full finding report (see Output Format below). Every finding must reference the exact file path and line number. Do not report theoretical vulnerabilities — only confirmed code patterns.
+
+---
+
+## Handoff After Audit
+
+After delivering the report:
+- If the caller is a `continuous-developer` session: post the report findings inline so the developer can address them immediately
+- If standalone audit: commit the report to `.github/security-audits/audit-YYYY-MM-DD.md`
+- Tag the most critical finding explicitly: "**Fix this first: [FINDING-XXX]**"
+
+
 
 When invoked, audit the following areas in the specified codebase or PR:
 

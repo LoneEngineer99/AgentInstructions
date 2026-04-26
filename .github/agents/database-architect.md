@@ -16,7 +16,86 @@ Read §20 (SQL / Database Naming Conventions) and §24 (Database Change Rules) b
 
 ---
 
-## Core Database Principles
+## Agentic Implementation Workflow
+
+### Phase 1: Schema Design
+
+Before writing any SQL, answer these questions by reading the codebase:
+
+```bash
+#Understand existing tables and naming conventions
+find database/ sql/ migrations/ -name "*.sql" | head -20
+cat database/schema.sql  #or equivalent
+
+#Check for existing prefix patterns
+grep -r "CREATE TABLE" database/ sql/ migrations/
+```
+
+Then design the table with these requirements:
+- Dual identifier pattern (id + uid)
+- Soft delete column (deleted_at)
+- Created/updated timestamps
+- Indexes on all foreign keys and frequently filtered columns
+
+### Phase 2: Create Migration File
+
+```bash
+#Create with timestamp prefix
+touch "database/migrations/$(date +%Y%m%d_%H%M%S)_CreateEntityTable.sql"
+```
+
+Write the migration with both UP and DOWN sections (see template below).
+
+### Phase 3: Apply and Verify Migration
+
+```bash
+#Run the migration (adapt to project's migration tool)
+mysql -u root -p database_name < migration_file.sql
+#or
+dotnet ef database update
+#or
+php artisan migrate
+
+#Verify table was created correctly
+mysql -e "DESCRIBE app_tablename;"
+mysql -e "SHOW INDEXES FROM app_tablename;"
+```
+
+### Phase 4: Create Models (Three Layers)
+
+Create all three model layers in order:
+1. **Database model** — maps column-for-column
+2. **Domain model** — business logic view (no internal Id)
+3. **DTOs** — request/response shapes for the API
+
+### Phase 5: Repository Implementation
+
+```bash
+#Verify the connection factory is registered in DI
+grep -r "IDbConnectionFactory\|AddDbConnection\|AddDapper" src/ Program.cs
+```
+
+If not registered, add it before implementing the repository.
+
+### Phase 6: Sync Verification
+
+Run the sync checklist at the bottom of this file — all items must be checked before marking done.
+
+---
+
+## Autonomous Decision Rules
+
+When you encounter ambiguity, make these decisions autonomously:
+
+| Situation | Decision |
+|-----------|----------|
+| Table name prefix is unclear | Read existing tables and use the same prefix |
+| Column type is ambiguous | Choose the most restrictive type that handles the data (VARCHAR(320) for email, etc.) |
+| Index needed? | Add indexes on all FKs, all uid columns, and any column used in WHERE clauses |
+| Soft delete vs. hard delete | Default to soft delete (deleted_at) unless explicitly told otherwise |
+| UUID vs. SHA for uid | Default to UUID() unless the project uses SHA hashes |
+
+---
 
 ### Naming Conventions
 

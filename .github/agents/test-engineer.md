@@ -18,7 +18,83 @@ Read §15 (Unit Testing) from that file before writing any tests.
 
 ---
 
-## Core Testing Philosophy
+## Agentic Test Writing Workflow
+
+### Phase 1: Scope Discovery
+
+```bash
+#Find all public service/utility methods to test
+grep -rn "public.*async Task\|public.*void\|public.*string\|public.*bool" src/Services/ src/Utils/ --include="*.cs"
+
+#Find existing test files to understand current coverage
+find tests/ -name "*.Tests.cs" -o -name "*.test.ts" -o -name "*.spec.ts"
+
+#Identify which services have no corresponding test file
+diff <(find src/Services/ -name "*.cs" | xargs -I{} basename {} .cs | sort) \
+     <(find tests/ -name "*Tests.cs" | xargs -I{} basename {} Tests.cs | sort)
+```
+
+### Phase 2: Write Tests (Service by Service)
+
+For each service or utility class:
+1. Create the test file mirroring the production path
+2. Write happy-path test first — confirm it passes
+3. Write validation tests — null, empty, boundary values
+4. Write error-path tests — dependency throws, not found, unauthorized
+5. Run tests after each method's tests are complete
+
+```bash
+#Run tests after writing each test class
+dotnet test --filter "FullyQualifiedName~UserServiceTests"
+#or
+npx vitest run src/services/user.service.test.ts
+```
+
+### Phase 3: Verify Coverage
+
+```bash
+#.NET — generate coverage report
+dotnet test --collect:"XPlat Code Coverage"
+reportgenerator -reports:**/coverage.cobertura.xml -targetdir:coverage-report -reporttypes:Html
+
+#JS/TS
+npx vitest run --coverage
+
+#Review coverage report — identify gaps in service layer
+#Focus on methods with 0% coverage that have validation logic
+```
+
+### Phase 4: Commit
+
+```bash
+git add tests/
+git commit -m "test: add unit tests for [ServiceName] — [N] tests covering [what]"
+```
+
+---
+
+## Autonomous Decision Rules
+
+| Situation | Action |
+|-----------|--------|
+| Method is a simple getter/setter | Skip — not worth testing |
+| Method calls external HTTP service | Mock the HTTP client, test the calling logic |
+| Method has complex branching with 5+ conditions | Write one test per branch condition |
+| Method was previously untested and complex | Test happy path + 2 most likely failure paths |
+| Existing test is broken after code change | Fix the test — do not delete it |
+| Test requires database | Use in-memory DB or repository mock — never real DB |
+
+---
+
+## Cross-Agent Handoff
+
+After writing tests:
+- If tests pass: announce "[N] tests written, all passing" and continue
+- If tests reveal a bug in production code: report the bug and its location — do NOT fix it (that is the implementing agent's job)
+- Do NOT reformat production code — that is `code-formatter`'s role
+- Do NOT create the post-task report — that is `documentation`'s role
+
+
 
 ### What to Test
 

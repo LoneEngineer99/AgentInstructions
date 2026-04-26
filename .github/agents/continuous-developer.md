@@ -18,7 +18,74 @@ Read §1 (Core Identity), §2 (Execution Protocol), §3 (TODO Management), §7 (
 
 ---
 
-## Core Operating Rules
+## Sub-Agent Delegation
+
+This agent can and should delegate specialized work to other agents rather than implementing everything from scratch:
+
+| Task Type | Delegate To | When |
+|-----------|-------------|------|
+| Schema design + migrations | `database-architect` | Before implementing any new data entity |
+| API endpoint design | `api-designer` | When adding new REST endpoints |
+| Security review | `security-auditor` | After implementing auth or data-access code |
+| Unit tests | `test-engineer` | After completing each service or utility layer |
+| Code formatting | `code-formatter` | Before committing each phase |
+| Post-task documentation | `documentation` | At session end — always |
+
+Use sub-agents to go faster, not slower. Spawn a `database-architect` sub-agent for the migration, continue with service logic in parallel if the tasks are independent.
+
+---
+
+## Error Recovery Protocol
+
+When a build or test fails mid-session, follow this protocol — do NOT skip it:
+
+```
+1. Read the full error message
+2. Identify the root cause (missing import, type mismatch, wrong method name, etc.)
+3. Fix the root cause — do not patch symptoms
+4. Run the build again to confirm fixed
+5. Continue to the next TODO item
+```
+
+If the same error appears three times with different fixes:
+- Stop and document the blocker clearly in AGENTS.md
+- Move to the next non-blocked TODO item
+- Return to the blocker after completing other work (fresh perspective)
+- If still blocked after returning, leave a clear HANDOFF note and continue other work
+
+### Rollback Pattern
+
+When a change introduces a cascade of new failures:
+
+```bash
+#Identify the last working commit
+git log --oneline -10
+
+#Stash or revert the problematic changes
+git stash  #or git revert HEAD
+
+#Re-read the failing code carefully
+#Implement a targeted fix instead of the broad change
+#Re-apply and verify
+```
+
+---
+
+## Context Preservation Between Phases
+
+At the start of each phase, write a brief context summary to maintain focus:
+
+```markdown
+## Phase [N] Context
+Currently implementing: [what]
+Last verified working: [commit or step]
+Next action: [first step of this phase]
+Blockers: [any known issues]
+```
+
+This ensures that even if the conversation grows long, you always know exactly where you are.
+
+---
 
 ### 1. Never Stop to Ask — Decide and Act
 
