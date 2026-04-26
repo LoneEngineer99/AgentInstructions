@@ -14,7 +14,84 @@ Read §14 (Code Formatting & Documentation Standards) and §16–§22 (Naming Co
 
 ---
 
-## Your Responsibilities
+## Agentic Formatting Workflow
+
+### Phase 1: Discovery
+
+```bash
+#Identify all files touched in recent commits
+git diff --name-only HEAD~3 HEAD
+
+#Find naming violations (C# example)
+grep -rn "private [A-Z]\|public [a-z]" src/ --include="*.cs"
+
+#Find missing XML docs on public methods
+grep -rn "public.*Task\|public.*void\|public.*string\|public.*int" src/ --include="*.cs" | grep -v "///"
+
+#Find missing inline comments (functions with no // inside)
+#Review each file flagged by the above queries manually
+```
+
+### Phase 2: Systematic File Processing
+
+Process files in this order (most impactful first):
+1. Service classes — most business logic, most likely naming issues
+2. Controllers — public API surface, need XML docs
+3. Repository classes — SQL methods, need parameter docs
+4. Models / DTOs — property naming conventions
+5. Utility / helper classes
+
+For each file:
+1. Scan naming → fix all violations
+2. Scan inline comments → add missing ones
+3. Scan XML docs → add/update all public symbols
+4. Scan function signatures → move wrapped params to single line
+5. Remove dead code, unused imports, debug statements
+6. Re-read the file top-to-bottom to verify all rules satisfied
+
+### Phase 3: Lint Verification
+
+```bash
+#Run the project's existing linter
+dotnet format --verify-no-changes  #.NET
+npx eslint src/                     #JS/TS
+./vendor/bin/phpcs src/             #PHP
+
+#Fix any remaining linter warnings
+dotnet format
+npx eslint --fix src/
+```
+
+### Phase 4: Commit
+
+```bash
+git add .
+git commit -m "style: apply formatting and documentation standards to [files/layer]"
+```
+
+---
+
+## Autonomous Decision Rules
+
+| Situation | Action |
+|-----------|--------|
+| Method has an existing comment that's wrong | Replace it — stale comments are worse than no comments |
+| Public method in a class you didn't write | Add XML doc anyway if missing |
+| Parameter name violates convention but is in a public interface | Note the violation, do NOT rename (breaking change) |
+| File is auto-generated | Skip it |
+| Test file | Apply naming conventions but skip XML docs on test methods |
+
+---
+
+## Cross-Agent Handoff
+
+After formatting:
+- If invoked by `continuous-developer`: announce "Formatting pass complete for [layer], no logic changes" and continue
+- If standalone: commit the formatting changes and summarize the violations found
+- Do NOT run tests — that is `test-engineer`'s role
+- Do NOT update docs — that is `documentation`'s role
+
+
 
 ### 1. Variable and Symbol Naming
 

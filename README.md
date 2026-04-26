@@ -53,7 +53,7 @@ Without shared rules, every AI agent session starts from scratch — inconsisten
 flowchart LR
     subgraph This_Repo["📦 AgentInstructions Repo"]
         A["AGENTS.md\n(Canonical Rules)"]
-        B[".github/agents/\n(11 Agent Profiles)"]
+        B[".github/agents/\n(10 Agent Profiles)"]
     end
     subgraph Project_A["🗂️ Project A"]
         D["AGENTS.md\n(fetched by URL — always fresh)"]
@@ -93,7 +93,7 @@ flowchart LR
 | Layer | File | Location | Purpose |
 |:-----:|------|----------|---------|
 | 📜 | **`AGENTS.md`** | Fetched by URL each session | Canonical rules — always fresh, **never stored locally** |
-| 🤖 | **`.github/agents/`** | Each project (downloaded) | 11 agent profiles — stored locally, **never edited** |
+| 🤖 | **`.github/agents/`** | Each project (downloaded) | 10 agent profiles — stored locally, **never edited** |
 | 📁 | **`AGENTS-project.md`** | Each project | Project-specific notes, architecture, status |
 | 🗺️ | **`roadmap.md`** | Each project's `.github/` | Living project roadmap updated by agents |
 
@@ -115,7 +115,7 @@ The canonical `AGENTS.md` is organized into **8 parts** covering everything an A
 | **V** | 📝 Documentation & Evolution | Post-task reporting, agent work ethic, roadmap management |
 | **VI** | 🚀 Initialization Protocol | 24 discovery questions + local `AGENTS.md` template |
 | **VII** | 📋 Template Reference | Structure for each project's local `AGENTS.md` |
-| **VIII** | 🤖 Custom Agents | 11 specialized agents and selection guide |
+| **VIII** | 🤖 Custom Agents | 10 specialized agents and selection guide |
 
 </td></tr>
 </table>
@@ -140,23 +140,22 @@ The canonical `AGENTS.md` is organized into **8 parts** covering everything an A
 
 ## 🤖 Custom Agents
 
-This repository provides **11 specialized GitHub Copilot custom agents** in `.github/agents/`:
+This repository provides **10 specialized GitHub Copilot custom agents** in `.github/agents/`:
 
 | Agent | Purpose |
 |-------|---------|
-| `code-formatter` | Naming conventions, inline comments, XML doc blocks |
-| `agent-reporter` | Post-task reports with minimum 6 screenshots |
-| `ui-designer` | Web UI components with design system compliance |
-| `binary-analyst` | x64 reverse engineering and attack surface mapping |
-| `test-engineer` | Focused unit tests for input validation and business logic |
-| `project-initializer` | New project setup with AGENTS.md scaffolding |
-| `database-architect` | Schema design, migrations, Dapper repositories |
-| `security-auditor` | Code security review with prioritized findings |
-| `api-designer` | REST API design, DTOs, versioning, OpenAPI docs |
-| `documentation-writer` | README, AGENTS.md, roadmap, and ADR maintenance |
-| `continuous-developer` | Long-running tasks — works continuously to maximize session progress and bring the project as close to completion as possible without stopping |
+| `code-formatter` | Naming conventions, inline comments, XML doc blocks, dead code removal |
+| `documentation` | End-of-session wrap-up: updates AGENTS.md + roadmap + README **and** creates post-task reports with screenshots |
+| `ui-designer` | Web UI components with design system compliance and Playwright visual verification |
+| `binary-analyst` | x64 reverse engineering, attack surface mapping, YARA signature creation |
+| `test-engineer` | Focused unit tests for input validation, boundary conditions, and business logic |
+| `project-initializer` | New project setup — discovery wizard, directory scaffolding, AGENTS.md + roadmap creation |
+| `database-architect` | Schema design, timestamped migrations, Dapper repositories, full layer sync |
+| `security-auditor` | Code security review with concrete tool-call sequences and prioritized findings |
+| `api-designer` | REST API design and implementation — DTOs, versioning, Swagger, global exception middleware |
+| `continuous-developer` | Marathon development — works continuously without stopping to maximize session progress |
 
-👉 **[View the full agent index](.github/agents/README.md)** for descriptions, selection guide, and remote usage instructions.
+👉 **[View the full agent index](.github/agents/README.md)** for descriptions, one-command download, collaboration patterns, and selection guide.
 
 ---
 
@@ -169,18 +168,17 @@ AgentInstructions/
 │   ├── ui-design-index.md              Design catalog with tokens & principles
 │   └── *.jpg                           42 curated high-quality UI screenshots
 └── 🤖 .github/agents/
-    ├── README.md                       Agent index & selection guide
-    ├── code-formatter.md               Naming, comments, XML doc blocks
-    ├── agent-reporter.md               Post-task reports (6+ screenshots)
+    ├── README.md                       Agent index, one-command download & selection guide
+    ├── code-formatter.md               Naming, comments, XML doc blocks, dead code
+    ├── documentation.md                Post-task reports (6+ screenshots) + doc updates
     ├── ui-designer.md                  Web UI design with Playwright MCP + full template registry
     ├── binary-analyst.md               x64 RE with Radare2 + Ghidra MCP
-    ├── test-engineer.md                Focused unit tests
-    ├── project-initializer.md          New project setup wizard
-    ├── database-architect.md           Schema, migrations, Dapper
-    ├── security-auditor.md             Security vulnerability review
-    ├── api-designer.md                 REST API design
-    ├── documentation-writer.md         README/AGENTS.md/roadmap
-    └── continuous-developer.md         Long-running tasks — maximize session progress
+    ├── test-engineer.md                Focused unit tests with coverage verification
+    ├── project-initializer.md          New project setup wizard + scaffolding
+    ├── database-architect.md           Schema, migrations, Dapper + layer sync
+    ├── security-auditor.md             Security vulnerability review with tool-call sequences
+    ├── api-designer.md                 REST API design and implementation
+    └── continuous-developer.md         Marathon sessions — maximize progress without stopping
 ```
 
 <details>
@@ -214,16 +212,19 @@ Add AI agent instructions to **any project** in 3 steps:
 
 ### Step 1 — Download the Custom Agent Files
 
-Download all `.github/agents/*.md` files from this repository and save them at the same relative paths in your project. Commit them so AI agents can read them without needing network access.
+Run this one-liner from your project root:
 
 ```bash
+BASE="https://raw.githubusercontent.com/LoneEngineer99/AgentInstructions/main/.github/agents"
 mkdir -p .github/agents
-# Download each agent file, e.g.:
-curl -fsSL https://raw.githubusercontent.com/LoneEngineer99/AgentInstructions/main/.github/agents/README.md -o .github/agents/README.md
-# ... repeat for each agent .md file listed in .github/agents/README.md
+for agent in README.md api-designer.md binary-analyst.md code-formatter.md \
+             continuous-developer.md database-architect.md documentation.md \
+             project-initializer.md security-auditor.md test-engineer.md ui-designer.md; do
+  curl -fsSL "$BASE/$agent" -o ".github/agents/$agent"
+done
 ```
 
-You can also ask your AI agent to do this for you:
+Or ask your AI agent to do it:
 > *"Download all .github/agents/*.md files from https://github.com/LoneEngineer99/AgentInstructions and save them locally in .github/agents/."*
 
 > [!NOTE]
@@ -241,7 +242,7 @@ git commit -m "chore: add AI agent instructions"
 ```
 
 > [!NOTE]
-> **Keeping files up to date:** Re-download the agent files whenever you want to pull the latest agent profiles from this repository. The canonical `AGENTS.md` is always fetched fresh — no action needed.
+> **Keeping files up to date:** Re-run the download script whenever you want to pull the latest agent profiles. The canonical `AGENTS.md` is always fetched fresh — no action needed.
 
 > [!NOTE]
 > **Forking?** Update the fetch URL used by agents to point to your own fork's raw `AGENTS.md`.

@@ -1,8 +1,21 @@
 ---
 name: documentation-writer
-description: Writes and maintains project documentation — README.md, local AGENTS.md, .github/roadmap.md, API changelogs, and architectural decision records. Keeps documentation accurate and current after code changes. Does not modify source code.
+description: ⚠️ DEPRECATED — merged into the `documentation` agent. Use documentation.md instead.
 tools: ["read", "edit", "search", "execute", "web"]
 ---
+
+> **⚠️ This agent has been merged into the `documentation` agent.**
+>
+> `documentation-writer` and `agent-reporter` are now a single agent: **`documentation`**.
+>
+> - **New file:** `.github/agents/documentation.md`
+> - **New download URL:** `https://raw.githubusercontent.com/LoneEngineer99/AgentInstructions/main/.github/agents/documentation.md`
+>
+> The `documentation` agent handles both project documentation updates (AGENTS.md, roadmap, README, ADRs) **and** post-task summary reports with screenshots. Invoke it once at the end of every session.
+>
+> **Action required:** Delete this file and replace it with `documentation.md`.
+
+
 
 # Documentation Writer Agent
 
